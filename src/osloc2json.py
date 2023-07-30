@@ -14,7 +14,7 @@ import argparse
 import re
 import json
 
-def osloc2json(infilename, verbose):
+def osloc2json(infilename, show, verbose):
     """ Open the OSLOC file, convert it to JSON and store it under the original name suffixed by '.json' """
     outfilename = infilename.replace('.txt', '') + '.json'
     infileparts = infilename.split('/')
@@ -66,6 +66,9 @@ def osloc2json(infilename, verbose):
         if len(osloc) == 0:
             break
     json.dump(jsondata, jsonfile, indent = 4)
+    if show:
+        json.dump(jsondata, sys.stdout, indent = 4)
+        print('')
     return
 
 def main(argv):
@@ -75,13 +78,17 @@ def main(argv):
     parser.add_argument('filename',
       metavar = 'OSLOC',
       help = 'file name of an OSLOC file to process')
+    parser.add_argument('-s', '--show',
+      action = 'store_true',
+      default = False,
+      help = 'also list the output to screen')
     parser.add_argument('-v', '--verbose',
       action = 'store_true',
       default = False,
       help = 'show names and texts the program is using')
     args = parser.parse_args()
 
-    osloc2json(args.filename, args.verbose)
+    osloc2json(args.filename, args.show, args.verbose)
 
 if __name__ == '__main__':
     main(sys.argv)
