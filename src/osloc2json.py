@@ -14,7 +14,7 @@ import argparse
 import re
 import json
 
-def osloc2json(infilename):
+def osloc2json(infilename, verbose):
     """ Open the OSLOC file, convert it to JSON and store it under the original name suffixed by '.json' """
     outfilename = infilename.replace('.txt', '') + '.json'
     infileparts = infilename.split('/')
@@ -30,7 +30,8 @@ def osloc2json(infilename):
     while True:
         endlinepos = osloc.find('\n')
         line = osloc[0:endlinepos]
-        print(line)
+        if verbose:
+            print(line)
         tabs = line.count('\t')
         if oldtabs == -1:
             oldtabs = tabs
@@ -80,7 +81,7 @@ def main(argv):
       help = 'show names and texts the program is using')
     args = parser.parse_args()
 
-    osloc2json(args.filename)
+    osloc2json(args.filename, args.verbose)
 
 if __name__ == '__main__':
     main(sys.argv)
