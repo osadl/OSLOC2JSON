@@ -61,6 +61,18 @@ def osloc2json(infilename, show, verbose):
             if iftag not in parents[tabs]:
                 parents[tabs][iftag] = {}
             parents[tabs + 1] = parents[tabs][iftag][ifcond] = {}
+        elif line[0:13] == 'COMPATIBILITY':
+            pass
+        elif line[0:15] == 'COPYLEFT CLAUSE':
+            pass
+        elif line[0:23] == 'DEPENDING COMPATIBILITY':
+            pass
+        elif line[0:15] == 'INCOMPATIBILITY':
+            pass
+        elif line[0:12] == 'PATENT HINTS':
+            pass
+        else:
+            print('Warning: Unidentified language element encountered: ' + line)
         osloc = osloc[endlinepos + 1:]
         oldtabs = tabs
         if len(osloc) == 0:
@@ -72,7 +84,7 @@ def osloc2json(infilename, show, verbose):
     return
 
 def main(argv):
-    parser = argparse.ArgumentParser(prog = 'jar2src.py',
+    parser = argparse.ArgumentParser(prog = 'osloc2json.py',
       epilog = 'Parse OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json"')
 
     parser.add_argument('filename',
