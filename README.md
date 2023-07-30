@@ -8,7 +8,7 @@ Convert Open Source License Obligations Checklist to JSON format
 osloc2json.py --help
 ```
 ```
-usage: jar2src.py [-h] [-v] OSLOC
+usage: osloc2json.py [-h] [-v] OSLOC
 
 positional arguments:
   OSLOC          file name of an OSLOC file to process
