@@ -49,14 +49,7 @@ def osloc2json(infilename, json, optimize, show, verbose):
         line = re.sub(r' \(.*\)', '', line)
         if verbose:
             print(line)
-        nextosloc = osloc[endlinepos + 1:]
-        nextendlinepos = nextosloc.find('\n')
-        nextline = nextosloc[0:nextendlinepos]
         tabs = line.count('\t')
-        if nextline != '':
-            nextlinetabs = nextline.count('\t')
-        else:
-            nextlinetabs = 0
         tag = ''
         text = ''
         if line[0:8] == 'USE CASE':
@@ -104,7 +97,7 @@ def osloc2json(infilename, json, optimize, show, verbose):
             if tag not in parents[tabs]:
                 parents[tabs][tag] = {}
             parents[tabs + 1] = parents[tabs][tag][text] = {}
-        osloc = nextosloc
+        osloc = osloc[endlinepos + 1:]
         if len(osloc) == 0:
             break
 
