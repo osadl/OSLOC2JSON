@@ -46,9 +46,7 @@ def osloc2json(infilename, json, optimize, show, verbose):
     while True:
         endlinepos = osloc.find('\n')
         line = osloc[0:endlinepos]
-        bracket = line.find('(')
-        if bracket > 0:
-            line = line[0: bracket - 1]
+        line = re.sub(r' \(.*\)', '', line)
         if verbose:
             print(line)
         nextosloc = osloc[endlinepos + 1:]
@@ -68,16 +66,20 @@ def osloc2json(infilename, json, optimize, show, verbose):
                 data[tag] = {}
             parents[tabs + 1] = data[tag][text] = {}
             tag = ''
-        elif re.match('\t*YOU MUST', line) and not re.match('\t*YOU MUST NOT', line):
-            tag = 'YOU MUST'
         elif re.match('\t*YOU MUST NOT', line):
             tag = 'YOU MUST NOT'
+        elif re.match('\t*YOU MUST', line):
+            tag = 'YOU MUST'
         elif re.match('\t*ATTRIBUTE', line):
             tag = 'ATTRIBUTE'
         elif re.match('\t*IF', line):
             tag = 'IF'
         elif re.match('\t*EXCEPT IF', line):
             tag = 'EXCEPT IF'
+        elif re.match('\t*EITHER IF', line):
+            tag = 'EITHER IF'
+        elif re.match('\t*OR IF', line):
+            tag = 'OR IF'
         elif re.match('\t*EITHER', line):
             tag = 'SELECTION'
             text = 'EITHER'
