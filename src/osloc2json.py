@@ -12,9 +12,13 @@ import os
 import subprocess
 import argparse
 import re
-import json
+if int(sys.version[0]) < 3:
+    import simplejson
+    json = simplejson
+else:
+    import json
 
-def osloc2json(infilename, show, verbose):
+def osloc2json(infilename, json, show, verbose):
     """ Open the OSLOC file, convert it to JSON and store it under the original name suffixed by '.json' """
     outfilename = infilename.replace('.txt', '') + '.json'
     infileparts = infilename.split('/')
@@ -61,6 +65,18 @@ def osloc2json(infilename, show, verbose):
             if iftag not in parents[tabs]:
                 parents[tabs][iftag] = {}
             parents[tabs + 1] = parents[tabs][iftag][ifcond] = {}
+        elif re.match('\t*EITHER', line):
+            selectiontag = 'SELECTION'
+            lasttag = selectiontag
+            if selectiontag not in parents[tabs]:
+                parents[tabs][selectiontag] = {}
+            parents[tabs + 1] = parents[tabs][selectiontag]['EITHER'] = {}
+        elif re.match('\t*OR', line):
+            selectiontag = 'SELECTION'
+            lasttag = selectiontag
+            if selectiontag not in parents[tabs]:
+                parents[tabs][selectiontag] = {}
+            parents[tabs + 1] = parents[tabs][selectiontag]['OR'] = {}
         elif line[0:13] == 'COMPATIBILITY':
             pass
         elif line[0:15] == 'COPYLEFT CLAUSE':
@@ -100,7 +116,7 @@ def main(argv):
       help = 'show names and texts the program is using')
     args = parser.parse_args()
 
-    osloc2json(args.filename, args.show, args.verbose)
+    osloc2json(args.filename, json, args.show, args.verbose)
 
 if __name__ == '__main__':
     main(sys.argv)
