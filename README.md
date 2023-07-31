@@ -54,6 +54,51 @@ the following output is available in the file "FTL.json":
     "FTL": {
         "USE CASE": {
             "Source code delivery": {
+                "YOU MUST": {
+                    "Forward License text": {},
+                    "Forward Copyright notices": {},
+                    "Credit FreeType Team": {}
+                },
+                "YOU MUST NOT": {
+                    "Modify License text": {},
+                    "Promote": {}
+                },
+                "IF": {
+                    "Software modification": {
+                        "YOU MUST": {
+                            "Provide Modification report": {}
+                        }
+                    }
+                }
+            },
+            "Binary delivery": {
+                "YOU MUST": {
+                    "Credit In Documentation FreeType Team": {},
+                    "Credit FreeType Team": {}
+                },
+                "YOU MUST NOT": {
+                    "Promote": {}
+                }
+            }
+        }
+    }
+}
+```
+
+### Optimization
+Because of the freedom offered by the OSLOC "language", JSON dict keys can have
+no values. If all keys of a dict do not have values, the dict can be converted
+into a list of keys. This is done when the "--optimize" flag is selected. Thus,
+after running
+```bash
+osloc2json.py -o FTL.txt
+```
+the following optimized output is available in the file "FTL-opt.json":
+```json
+{
+    "FTL": {
+        "USE CASE": {
+            "Source code delivery": {
                 "YOU MUST": [
                     "Forward License text",
                     "Forward Copyright notices",
@@ -84,3 +129,60 @@ the following output is available in the file "FTL.json":
     }
 }
 ```
+As can be seen in this diff
+```diff
+--- ../OSLOC/unreflicenses/FTL.json 2023-07-31 22:10:36.065513054 +0200
++++ ../OSLOC/unreflicenses/FTL-opt.json 2023-07-31 22:15:33.383434885 +0200
+@@ -2,31 +2,31 @@
+     "FTL": {
+         "USE CASE": {
+             "Source code delivery": {
+-                "YOU MUST": {
+-                    "Forward License text": {},
+-                    "Forward Copyright notices": {},
+-                    "Credit FreeType Team": {}
+-                },
+-                "YOU MUST NOT": {
+-                    "Modify License text": {},
+-                    "Promote": {}
+-                },
++                "YOU MUST": [
++                    "Forward License text",
++                    "Forward Copyright notices",
++                    "Credit FreeType Team"
++                ],
++                "YOU MUST NOT": [
++                    "Modify License text",
++                    "Promote"
++                ],
+                 "IF": {
+                     "Software modification": {
+-                        "YOU MUST": {
+-                            "Provide Modification report": {}
+-                        }
++                        "YOU MUST": [
++                            "Provide Modification report"
++                        ]
+                     }
+                 }
+             },
+             "Binary delivery": {
+-                "YOU MUST": {
+-                    "Credit In Documentation FreeType Team": {},
+-                    "Credit FreeType Team": {}
+-                },
+-                "YOU MUST NOT": {
+-                    "Promote": {}
+-                }
++                "YOU MUST": [
++                    "Credit In Documentation FreeType Team",
++                    "Credit FreeType Team"
++                ],
++                "YOU MUST NOT": [
++                    "Promote"
++                ]
+             }
+         }
+     }
+```
+all dicts with keys without values have been converted to simple lists.
