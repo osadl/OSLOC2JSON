@@ -15,6 +15,7 @@ if int(sys.version[0]) < 3:
 else:
     import json
     import argparse
+    import pathlib
 
 def optjson(l):
     """ If a dict has only keys, but no values, convert it to a list of keys """
@@ -27,87 +28,100 @@ def optjson(l):
             if allvalues == 0:
                 l[e] = list(l[e].keys())
 
-def osloc2json(infilename, json, optimize, show, verbose):
-    """ Open the OSLOC file, convert it to JSON and store it under the original name suffixed by '.json' """
-    if optimize:
-        optsuffix = '-opt'
-    else:
-        optsuffix = ''
-    outfilename = infilename.replace('.txt', '') + optsuffix + '.json'
-    infileparts = infilename.split('/')
-    basename = infileparts[len(infileparts) - 1]
-    license = basename.replace('.txt', '')
-    osloc = open(infilename, 'r').read()
-    jsonfile = open(outfilename, 'w')
-    jsondata = {}
-    jsondata[license] = {}
-    data = jsondata[license]
-    parents = {}
-    while True:
-        endlinepos = osloc.find('\n')
-        line = osloc[0:endlinepos]
-        line = re.sub(r' \(.*\)', '', line)
-        if verbose:
-            print(line)
-        tabs = line.count('\t')
-        tag = ''
-        text = ''
-        if line[0:8] == 'USE CASE':
-            tag = line[0:8]
-            text = line[9:]
-            if tag not in data:
-                data[tag] = {}
-            parents[tabs + 1] = data[tag][text] = {}
-            tag = ''
-        elif re.match('\t*YOU MUST NOT', line):
-            tag = 'YOU MUST NOT'
-        elif re.match('\t*YOU MUST', line):
-            tag = 'YOU MUST'
-        elif re.match('\t*ATTRIBUTE', line):
-            tag = 'ATTRIBUTE'
-        elif re.match('\t*IF', line):
-            tag = 'IF'
-        elif re.match('\t*EXCEPT IF', line):
-            tag = 'EXCEPT IF'
-        elif re.match('\t*EITHER IF', line):
-            tag = 'EITHER IF'
-        elif re.match('\t*OR IF', line):
-            tag = 'OR IF'
-        elif re.match('\t*EITHER', line):
-            tag = 'SELECTION'
-            text = 'EITHER'
-        elif re.match('\t*OR', line):
-            tag = 'SELECTION'
-            text = 'OR'
-        elif line[0:13] == 'COMPATIBILITY':
-            pass
-        elif line[0:15] == 'COPYLEFT CLAUSE':
-            pass
-        elif line[0:23] == 'DEPENDING COMPATIBILITY':
-            pass
-        elif line[0:15] == 'INCOMPATIBILITY':
-            pass
-        elif line[0:12] == 'PATENT HINTS':
-            pass
+def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
+    """ Open the OSLOC file or files, convert it or them to a JSON object and store it as specified """
+    licenses = len(licensefilenames)
+    if licenses == 1:
+        if optimize:
+            optsuffix = '-opt'
         else:
-            print('Warning: Unidentified language element encountered: ' + line)
-        if tag != '':
-            if text == '':
-                text = line[line.find(tag) + len(tag) + 1:];
-            if tag not in parents[tabs]:
-                parents[tabs][tag] = {}
-            parents[tabs + 1] = parents[tabs][tag][text] = {}
-        osloc = osloc[endlinepos + 1:]
-        if len(osloc) == 0:
-            break
+            optsuffix = ''
+        outfilename = licensefilenames[0].replace('.txt', '') + optsuffix + '.json'
+
+    jsondata = {}
+
+    for licensefilename in licensefilenames:
+        licensefilenameparts = licensefilename.split('/')
+        basename = licensefilenameparts[len(licensefilenameparts) - 1]
+        license = basename.replace('.txt', '')
+        oslocfile = open(licensefilename, 'r')
+        osloc = oslocfile.read()
+        oslocfile.close()
+        jsondata[license] = {}
+        data = jsondata[license]
+        parents = {}
+        while True:
+            endlinepos = osloc.find('\n')
+            line = osloc[0:endlinepos]
+            line = re.sub(r' \(.*\)', '', line)
+            if verbose:
+                print(line)
+            tabs = line.count('\t')
+            tag = ''
+            text = ''
+            if line[0:8] == 'USE CASE':
+                tag = line[0:8]
+                text = line[9:]
+                if tag not in data:
+                    data[tag] = {}
+                parents[tabs + 1] = data[tag][text] = {}
+                tag = ''
+            elif re.match('\t*YOU MUST NOT', line):
+                tag = 'YOU MUST NOT'
+            elif re.match('\t*YOU MUST', line):
+                tag = 'YOU MUST'
+            elif re.match('\t*ATTRIBUTE', line):
+                tag = 'ATTRIBUTE'
+            elif re.match('\t*IF', line):
+                tag = 'IF'
+            elif re.match('\t*EXCEPT IF', line):
+                tag = 'EXCEPT IF'
+            elif re.match('\t*EITHER IF', line):
+                tag = 'EITHER IF'
+            elif re.match('\t*OR IF', line):
+                tag = 'OR IF'
+            elif re.match('\t*EITHER', line):
+                tag = 'SELECTION'
+                text = 'EITHER'
+            elif re.match('\t*OR', line):
+                tag = 'SELECTION'
+                text = 'OR'
+            elif line[0:13] == 'COMPATIBILITY':
+                pass
+            elif line[0:15] == 'COPYLEFT CLAUSE':
+                pass
+            elif line[0:23] == 'DEPENDING COMPATIBILITY':
+                pass
+            elif line[0:15] == 'INCOMPATIBILITY':
+                pass
+            elif line[0:12] == 'PATENT HINTS':
+                pass
+            else:
+                print('Warning: Unidentified language element encountered in "' + license + '": ' + line)
+            if tag != '':
+                if text == '':
+                    text = line[line.find(tag) + len(tag) + 1:];
+                if tag not in parents[tabs]:
+                    parents[tabs][tag] = {}
+                parents[tabs + 1] = parents[tabs][tag][text] = {}
+            osloc = osloc[endlinepos + 1:]
+            if len(osloc) == 0:
+                break
 
     if optimize:
         optjson(jsondata)
 
+    if int(sys.version[0]) >= 3:
+        jsondata = dict(sorted(jsondata.items()))
+
+    jsonfile = open(outfilename, 'w')
     json.dump(jsondata, jsonfile, indent = 4)
+    jsonfile.close()
+
     if show:
         json.dump(jsondata, sys.stdout, indent = 4)
-        print('')
+        sys.stdout.write('\n')
+
     return
 
 def main(argv):
@@ -121,16 +135,27 @@ positional arguments:\n\
 options:\n\
   -h, --help      show this help message and exit\n\
 \n\
-Parse OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json"')
+Either parse a single OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json", or\n\
+parse all OSLOC files, convert them to a single JSON object and store it under a provided name or "osloc.json" if none given')
             return
-        osloc2json(argv[1], json, True, False, False)
+        argv.pop(0)
+        osloc2json(argv, 'osloc.json', json, True, False, False)
     else:
-        parser = argparse.ArgumentParser(prog = 'osloc2json.py',
-          epilog = 'Parse OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json"')
+        parser = argparse.ArgumentParser(prog = 'osloc2json.py', formatter_class = argparse.RawTextHelpFormatter,
+          epilog = 'Either parse a single OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json", or\n\
+parse all OSLOC files, convert them to a single JSON object and store it under the file OUTPUT or "osloc.json" if none given')
 
-        parser.add_argument('filename',
+        parser.add_argument('licensefilenames',
           metavar = 'OSLOC',
+          nargs='+',
           help = 'file name of an OSLOC file to process')
+        parser.add_argument('-f',
+          '--filename',
+          type = pathlib.Path,
+          metavar = 'OUTPUT',
+          default = 'osloc.json',
+          nargs='?',
+          help = 'name of output file for multiple licenses, has no effect if single license, default "osloc.json"')
         parser.add_argument('-o', '--optimize',
           action = 'store_true',
           default = False,
@@ -145,7 +170,7 @@ Parse OSLOC file, convert it to JSON format and store it under the original name
           help = 'show names and texts the program is using')
         args = parser.parse_args()
 
-        osloc2json(args.filename, json, args.optimize, args.show, args.verbose)
+        osloc2json(args.licensefilenames, args.filename, json, args.optimize, args.show, args.verbose)
 
 if __name__ == '__main__':
     main(sys.argv)
