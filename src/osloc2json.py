@@ -9,24 +9,25 @@
 
 import sys
 import re
-if int(sys.version[0]) < 3:
-    import simplejson
-    json = simplejson
-else:
-    import json
+try:
     import argparse
     import pathlib
+    import json
+except ImportError:
+    import simplejson as json
 
 def optjson(l):
     """ If a dict has only keys, but no values, convert it to a list of keys """
-    for e in l.keys():
-        if l[e]:
-            optjson(l[e])
-            allvalues = 0
-            for v in l[e].values():
-                allvalues += len(v)
-            if allvalues == 0:
-                l[e] = list(l[e].keys())
+    if type(l) is dict:
+        for e in l.keys():
+            if l[e]:
+                optjson(l[e])
+                allvalues = 0
+                if type(l[e]) is dict:
+                    for v in l[e].values():
+                        allvalues += len(v)
+                    if allvalues == 0:
+                        l[e] = list(l[e].keys())
 
 def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
     """ Open the OSLOC file or files, convert it or them to a JSON object and store it as specified """
@@ -86,24 +87,28 @@ def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
             elif re.match('\t*OR', line):
                 tag = 'SELECTION'
                 text = 'OR'
-            elif line[0:13] == 'COMPATIBILITY':
-                pass
+            elif line[0:12] == 'PATENT HINTS':
+                tag = line[0:12]
             elif line[0:15] == 'COPYLEFT CLAUSE':
+                tag = line[0:15]
+            elif line[0:13] == 'COMPATIBILITY':
                 pass
             elif line[0:23] == 'DEPENDING COMPATIBILITY':
                 pass
             elif line[0:15] == 'INCOMPATIBILITY':
-                pass
-            elif line[0:12] == 'PATENT HINTS':
                 pass
             else:
                 print('Warning: Unidentified language element encountered in "' + license + '": ' + line)
             if tag != '':
                 if text == '':
                     text = line[line.find(tag) + len(tag) + 1:];
-                if tag not in parents[tabs]:
-                    parents[tabs][tag] = {}
-                parents[tabs + 1] = parents[tabs][tag][text] = {}
+                if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable'):
+                    if tag not in data:
+                        data[tag] = text
+                else:
+                    if tag not in parents[tabs]:
+                        parents[tabs][tag] = {}
+                    parents[tabs + 1] = parents[tabs][tag][text] = {}
             osloc = osloc[endlinepos + 1:]
             if len(osloc) == 0:
                 break
@@ -111,20 +116,17 @@ def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
     if optimize:
         optjson(jsondata)
 
-    if int(sys.version[0]) >= 3:
-        jsondata = dict(sorted(jsondata.items()))
-
     if licenses > 1:
         alljsondata = {}
         alljsondata['OSADL OSLOC'] = jsondata
         jsondata = alljsondata
 
     jsonfile = open(outfilename, 'w')
-    json.dump(jsondata, jsonfile, indent = 4)
+    json.dump(jsondata, jsonfile, indent = 4, sort_keys = True)
     jsonfile.close()
 
     if show:
-        json.dump(jsondata, sys.stdout, indent = 4)
+        json.dump(jsondata, sys.stdout, indent = 4, sort_keys = True)
         sys.stdout.write('\n')
 
     return
