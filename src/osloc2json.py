@@ -114,6 +114,11 @@ def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
     if int(sys.version[0]) >= 3:
         jsondata = dict(sorted(jsondata.items()))
 
+    if licenses > 1:
+        alljsondata = {}
+        alljsondata['OSADL OSLOC'] = jsondata
+        jsondata = alljsondata
+
     jsonfile = open(outfilename, 'w')
     json.dump(jsondata, jsonfile, indent = 4)
     jsonfile.close()
