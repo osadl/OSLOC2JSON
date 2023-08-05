@@ -86,6 +86,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
     show = args.show
     verbose = args.verbose
     licenses = len(licensefilenames)
+    eitherlevels = {}
 
     if licenses == 1:
         if optimize:
@@ -137,11 +138,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
             elif re.match('\t*OR IF', line):
                 tag = 'OR IF'
             elif re.match('\t*EITHER', line):
-                tag = 'SELECTION'
-                text = 'EITHER'
+                tag = 'EITHER'
             elif re.match('\t*OR', line):
-                tag = 'SELECTION'
-                text = 'OR'
+                tag = 'OR'
             elif line[0:12] == 'PATENT HINTS':
                 tag = line[0:12]
             elif line[0:15] == 'COPYLEFT CLAUSE':
@@ -161,20 +160,14 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     if tag not in data:
                         data[tag] = text
                 else:
-                    if text == 'OR':
-                        if tag not in parents[tabs]:
-                            parents[tabs][tag] = {}
-                        parents[tabs + 1] = parents[tabs][tag][text] = []
-                    else:
-                        if tabs > 1 and isinstance(parents[tabs], list):
-                            ordict = {}
-                            ordict[tag] = {}
-                            parents[tabs].append(ordict)
-                            parents[tabs + 1] = ordict[tag][text] = {}
-                        else:
-                            if tag not in parents[tabs]:
-                                parents[tabs][tag] = {}
-                            parents[tabs + 1] = parents[tabs][tag][text] = {}
+                    if tag == 'EITHER':
+                        eitherlevels[tabs] = 0
+                    elif tag == 'OR':
+                        text = '#' + str(eitherlevels[tabs])
+                        eitherlevels[tabs] = eitherlevels[tabs] + 1
+                    if tag not in parents[tabs]:
+                        parents[tabs][tag] = {}
+                    parents[tabs + 1] = parents[tabs][tag][text] = {}
             osloc = osloc[endlinepos + 1:]
             if len(osloc) == 0:
                 break
