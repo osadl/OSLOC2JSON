@@ -20,16 +20,33 @@ except ImportError:
 def optjson(l):
     """ 1. If a dict has only keys, but no values, convert it to a list of keys """
     """ 2. If a dict has a list with a single element that is a dict, propagate the dict to the parent dict """
+    """ 3. If a dict has a dict with a single element with an empty key, propagate the dict to the parent dict """
+    """ 4. If a dict has only dicts with consecutively numbered numeric keys, propagate the dicts into a list """
     if type(l) is dict:
         for e in l:
             if l[e]:
                 optjson(l[e])
-                allvalues = 0
                 if type(l[e]) is dict:
+                    allvalues = 0
                     for v in l[e].values():
                         allvalues += len(v)
                     if allvalues == 0:
                         l[e] = list(l[e].keys())
+                    dictno = 0
+                    for k in l[e]:
+                        if len(k) == 0 and len(l[e]) == 1:
+                            l[e] = l[e][k]
+                        break
+                    for k in l[e]:
+                        if len(k) != 0 and not re.search('[^0-9]', k):
+                            if int(k) != dictno:
+                               break
+                            dictno = dictno + 1
+                    if dictno == len(l[e]):
+                        newlist = []
+                        for k in l[e]:
+                            newlist.append(l[e][k])
+                        l[e] = newlist
                 elif type(l[e]) is list and len(l[e]) == 1 and type(l[e][0]) is dict:
                     l[e] = l[e][0]
 
@@ -78,6 +95,8 @@ def back2osloc(l, indent, key):
                 else:
                     printnonl(e)
                 count = count + 1
+    elif type(l) is str:
+        printnonl(l)
 
 def osloc2json(licensefilenames, outfilename, json, args):
     """ Open OSLOC files, convert them to JSON objects and store them as specified """
@@ -163,7 +182,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     if tag == 'EITHER':
                         eitherlevels[tabs] = 0
                     elif tag == 'OR':
-                        text = '#' + str(eitherlevels[tabs])
+                        text = str(eitherlevels[tabs])
                         eitherlevels[tabs] = eitherlevels[tabs] + 1
                     if tag not in parents[tabs]:
                         parents[tabs][tag] = {}
