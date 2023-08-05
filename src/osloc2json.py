@@ -17,9 +17,10 @@ except ImportError:
     import simplejson as json
 
 def optjson(l):
-    """ If a dict has only keys, but no values, convert it to a list of keys """
+    """ 1. If a dict has only keys, but no values, convert it to a list of keys """
+    """ 2. If a dict has a list with a single element that is a dict, propagate the dict to the parent dict """
     if type(l) is dict:
-        for e in l.keys():
+        for e in l:
             if l[e]:
                 optjson(l[e])
                 allvalues = 0
@@ -28,9 +29,60 @@ def optjson(l):
                         allvalues += len(v)
                     if allvalues == 0:
                         l[e] = list(l[e].keys())
+                elif type(l[e]) is list and len(l[e]) == 1 and type(l[e][0]) is dict:
+                    l[e] = l[e][0]
 
-def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
+def back2osloc(l, indent, key):
+    if type(l) is dict:
+        count = 0
+        for e in l:
+            if not re.search('[a-z]', e):
+                print()
+                if indent == 0:
+                    print(e + ' ', end='')
+                else:
+                    print(' '*indent, e + ' ', end='')
+                increment = 4
+            else:
+                if count == 0:
+                    print(e, end='')
+                else:
+                    if indent == 0:
+                        print(key, e, end='')
+                    else:
+                        if count == 0:
+                            print(' '*indent, key, e, end='')
+                        else:
+                            print()
+                            if indent - 4 == 0:
+                                print(key, e, end='')
+                            else:
+                                print(' '*(indent - 4), key, e, end='')
+                increment = 0
+            back2osloc(l[e], indent + increment, e)
+            count = count + 1
+    elif type(l) is list:
+        count = 0
+        for e in l:
+            if type(e) is dict:
+                back2osloc(e, indent, key)
+            else:
+                if count == 0:
+                    print()
+                if indent != 0:
+                    print(' '*indent, end='')
+                if l.index(e) != len(l) -1:
+                    print(e)
+                else:
+                    print(e, end = '')
+                count = count + 1
+
+def osloc2json(licensefilenames, outfilename, json, args):
     """ Open the OSLOC file or files, convert it or them to a JSON object and store it as specified """
+    optimize = args.optimize
+    recreate = args.recreate
+    show = args.show
+    verbose = args.verbose
     licenses = len(licensefilenames)
     if licenses == 1:
         if optimize:
@@ -106,9 +158,20 @@ def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
                     if tag not in data:
                         data[tag] = text
                 else:
-                    if tag not in parents[tabs]:
-                        parents[tabs][tag] = {}
-                    parents[tabs + 1] = parents[tabs][tag][text] = {}
+                    if text == 'OR':
+                        if tag not in parents[tabs]:
+                            parents[tabs][tag] = {}
+                        parents[tabs + 1] = parents[tabs][tag][text] = []
+                    else:
+                        if tabs > 1 and isinstance(parents[tabs], list):
+                            ordict = {}
+                            ordict[tag] = {}
+                            parents[tabs].append(ordict)
+                            parents[tabs + 1] = ordict[tag][text] = {}
+                        else:
+                            if tag not in parents[tabs]:
+                                parents[tabs][tag] = {}
+                            parents[tabs + 1] = parents[tabs][tag][text] = {}
             osloc = osloc[endlinepos + 1:]
             if len(osloc) == 0:
                 break
@@ -128,6 +191,12 @@ def osloc2json(licensefilenames, outfilename, json, optimize, show, verbose):
     if show:
         json.dump(jsondata, sys.stdout, indent = 4, sort_keys = True)
         sys.stdout.write('\n')
+
+    if recreate:
+        l = jsondata
+        if len(jsondata.keys()) == 1:
+            l = l[list(jsondata.keys())[0]]
+        back2osloc(l, 0, '')
 
     return
 
@@ -167,6 +236,10 @@ parse all OSLOC files, convert them to a single JSON object and store it under t
           action = 'store_true',
           default = False,
           help = 'convert a dict with no values to a list of keys, add "-opt" to output file name')
+        parser.add_argument('-r', '--recreate',
+          action = 'store_true',
+          default = False,
+          help = 'recreate original checklist from JSON (for debugging)')
         parser.add_argument('-s', '--show',
           action = 'store_true',
           default = False,
@@ -177,7 +250,7 @@ parse all OSLOC files, convert them to a single JSON object and store it under t
           help = 'show names and texts the program is using')
         args = parser.parse_args()
 
-        osloc2json(args.licensefilenames, args.filename, json, args.optimize, args.show, args.verbose)
+        osloc2json(args.licensefilenames, args.filename, json, args)
 
 if __name__ == '__main__':
     main(sys.argv)
