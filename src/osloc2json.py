@@ -15,6 +15,7 @@ try:
     import json
 except ImportError:
     import simplejson as json
+    from optparse import OptionParser
 
 def optjson(l):
     """ 1. If a dict has only keys, but no values, convert it to a list of keys """
@@ -32,6 +33,7 @@ def optjson(l):
                 elif type(l[e]) is list and len(l[e]) == 1 and type(l[e][0]) is dict:
                     l[e] = l[e][0]
 
+printnonl = sys.stdout.write
 def back2osloc(l, indent, key):
     if type(l) is dict:
         count = 0
@@ -39,25 +41,25 @@ def back2osloc(l, indent, key):
             if not re.search('[a-z]', e):
                 print()
                 if indent == 0:
-                    print(e + ' ', end='')
+                    printnonl(e + ' ')
                 else:
-                    print(' '*indent, e + ' ', end='')
+                    printnonl(' '*indent + e + ' ')
                 increment = 4
             else:
                 if count == 0:
-                    print(e, end='')
+                    printnonl(e)
                 else:
                     if indent == 0:
-                        print(key, e, end='')
+                        printnonl(key + ' ' + e)
                     else:
                         if count == 0:
-                            print(' '*indent, key, e, end='')
+                            printnonl(' '*indent + key + ' ' + e)
                         else:
                             print()
                             if indent - 4 == 0:
-                                print(key, e, end='')
+                                printnonl(key + ' ' + e)
                             else:
-                                print(' '*(indent - 4), key, e, end='')
+                                printnonl(' '*(indent - 4) + key + ' ' + e)
                 increment = 0
             back2osloc(l[e], indent + increment, e)
             count = count + 1
@@ -70,20 +72,21 @@ def back2osloc(l, indent, key):
                 if count == 0:
                     print()
                 if indent != 0:
-                    print(' '*indent, end='')
+                    printnonl(' '*indent)
                 if l.index(e) != len(l) -1:
                     print(e)
                 else:
-                    print(e, end = '')
+                    printnonl(e)
                 count = count + 1
 
 def osloc2json(licensefilenames, outfilename, json, args):
-    """ Open the OSLOC file or files, convert it or them to a JSON object and store it as specified """
+    """ Open OSLOC files, convert them to JSON objects and store them as specified """
     optimize = args.optimize
     recreate = args.recreate
     show = args.show
     verbose = args.verbose
     licenses = len(licensefilenames)
+
     if licenses == 1:
         if optimize:
             optsuffix = '-opt'
@@ -197,60 +200,58 @@ def osloc2json(licensefilenames, outfilename, json, args):
         if len(jsondata.keys()) == 1:
             l = l[list(jsondata.keys())[0]]
         back2osloc(l, 0, '')
+        print()
 
     return
 
 def main(argv):
+    filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
-        if len(argv) < 2 or argv[1] == '-h' or argv[1] == '--help':
-            print('usage: osloc2json.py [-h] OSLOC\n\
-\n\
-positional arguments:\n\
-  OSLOC           file name of an OSLOC file to process\n\
-\n\
-options:\n\
-  -h, --help      show this help message and exit\n\
-\n\
-Either parse a single OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json", or\n\
-parse all OSLOC files, convert them to a single JSON object and store it under a provided name or "osloc.json" if none given')
-            return
-        argv.pop(0)
-        osloc2json(argv, 'osloc.json', json, True, False, False)
+        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]',
+          description = 'positional arguments:   ' + filenamehelp)
+        parser.add_argument = parser.add_option
+        filenametype = 'string'
     else:
         parser = argparse.ArgumentParser(prog = 'osloc2json.py', formatter_class = argparse.RawTextHelpFormatter,
           epilog = 'Either parse a single OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json", or\n\
 parse all OSLOC files, convert them to a single JSON object and store it under the file OUTPUT or "osloc.json" if none given')
-
         parser.add_argument('licensefilenames',
           metavar = 'OSLOC',
           nargs='+',
-          help = 'file name of an OSLOC file to process')
-        parser.add_argument('-f',
-          '--filename',
-          type = pathlib.Path,
-          metavar = 'OUTPUT',
-          default = 'osloc.json',
-          nargs='?',
-          help = 'name of output file for multiple licenses, has no effect if single license, default "osloc.json"')
-        parser.add_argument('-o', '--optimize',
-          action = 'store_true',
-          default = False,
-          help = 'convert a dict with no values to a list of keys, add "-opt" to output file name')
-        parser.add_argument('-r', '--recreate',
-          action = 'store_true',
-          default = False,
-          help = 'recreate original checklist from JSON (for debugging)')
-        parser.add_argument('-s', '--show',
-          action = 'store_true',
-          default = False,
-          help = 'also list the output to screen')
-        parser.add_argument('-v', '--verbose',
-          action = 'store_true',
-          default = False,
-          help = 'show names and texts the program is using')
+          help = filenamehelp)
+        filenametype = pathlib.Path
+    parser.add_argument('-f',
+      '--filename',
+      type = filenametype,
+      metavar = 'OUTPUT',
+      default = 'osloc.json',
+      nargs='?',
+      help = 'name of output file for multiple licenses, has no effect if single license, default "osloc.json"')
+    parser.add_argument('-o', '--optimize',
+      action = 'store_true',
+      default = False,
+      help = 'convert a dict with no values to a list of keys, add "-opt" to output file name')
+    parser.add_argument('-r', '--recreate',
+      action = 'store_true',
+      default = False,
+      help = 'recreate original checklist from JSON (for debugging)')
+    parser.add_argument('-s', '--show',
+      action = 'store_true',
+      default = False,
+      help = 'also list the output to screen')
+    parser.add_argument('-v', '--verbose',
+      action = 'store_true',
+      default = False,
+      help = 'show names and texts the program is using')
+    if int(sys.version[0]) < 3:
+        (args, filenames) = parser.parse_args()
+        if len(filenames) < 1:
+            print("error: the following arguments are required: OSLOC")
+    else:
         args = parser.parse_args()
+        filenames = args.licensefilenames
 
-        osloc2json(args.licensefilenames, args.filename, json, args)
+    osloc2json(filenames, args.filename, json, args)
 
 if __name__ == '__main__':
     main(sys.argv)
