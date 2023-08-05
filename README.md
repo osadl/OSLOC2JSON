@@ -8,16 +8,17 @@ Convert Open Source License Obligations Checklist to JSON format
 osloc2json.py --help
 ```
 ```
-usage: osloc2json.py [-h] [-f [OUTPUT]] [-o] [-s] [-v] OSLOC [OSLOC ...]
+usage: osloc2json.py [-h] [-f [OUTPUT]] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]
 
 positional arguments:
-  OSLOC                 file name of an OSLOC file to process
+  OSLOC                 file names of OSLOC files to process
 
 options:
   -h, --help            show this help message and exit
   -f [OUTPUT], --filename [OUTPUT]
                         name of output file for multiple licenses, has no effect if single license, default "osloc.json"
   -o, --optimize        convert a dict with no values to a list of keys, add "-opt" to output file name
+  -r, --recreate        recreate original checklist from JSON (for debugging)
   -s, --show            also list the output to screen
   -v, --verbose         show names and texts the program is using
 
