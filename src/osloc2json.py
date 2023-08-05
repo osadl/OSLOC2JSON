@@ -100,12 +100,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
     for licensefilename in licensefilenames:
         licensefilenameparts = licensefilename.split('/')
         basename = licensefilenameparts[len(licensefilenameparts) - 1]
-        license = basename.replace('.txt', '')
+        licensename = basename.replace('.txt', '')
         oslocfile = open(licensefilename, 'r')
         osloc = oslocfile.read()
         oslocfile.close()
-        jsondata[license] = {}
-        data = jsondata[license]
+        jsondata[licensename] = {}
+        data = jsondata[licensename]
         parents = {}
         while True:
             endlinepos = osloc.find('\n')
@@ -152,10 +152,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
             elif line[0:15] == 'INCOMPATIBILITY':
                 pass
             else:
-                print('Warning: Unidentified language element encountered in "' + license + '": ' + line)
+                print('Warning: Unidentified language element encountered in "' + licensename + '": ' + line)
             if tag != '':
                 if text == '':
-                    text = line[line.find(tag) + len(tag) + 1:];
+                    text = line[line.find(tag) + len(tag) + 1:]
                 if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable'):
                     if tag not in data:
                         data[tag] = text
@@ -195,9 +195,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
         back2osloc(l, 0, '')
         print()
 
-    return
-
-def main(argv):
+def main():
     filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
         parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]',
@@ -247,4 +245,4 @@ parse all OSLOC files, convert them to a single JSON object and store it under t
     osloc2json(filenames, args.filename, json, args)
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main()
