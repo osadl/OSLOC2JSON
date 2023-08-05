@@ -217,6 +217,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
 def main():
     filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
+# pragma pylint: disable=used-before-assignment
         parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]',
           description = 'positional arguments:   ' + filenamehelp)
         parser.add_argument = parser.add_option
