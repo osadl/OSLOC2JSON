@@ -17,6 +17,98 @@ except ImportError:
     import simplejson as json
     from optparse import OptionParser
 
+def extend(l1, l2, new):
+    for k1, v1 in l1.copy().items():
+        for k2, v2 in l2.copy().items():
+            if isinstance(v1, str) and isinstance(v2, str):
+                if k1 == k2 and v1 == v2:
+                    new[k1] = v1
+                elif k1 == k2 and v1 != v2:
+                    new[k1] = v1
+                    new[k1].append(v2)
+                else:
+                    new[k1] = v1
+                    new[k2] = v2
+
+            elif isinstance(v1, list) and isinstance(v2, list):
+                if k1 == k2:
+                    new[k1] = v1
+                    new[k1] += v2
+                    new[k1] = list(dict.fromkeys(new[k1]))
+                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
+                else:
+                    new[k1] = v1
+                    new[k1] = list(dict.fromkeys(new[k1]))
+                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
+                    new[k2] = v2
+                    new[k2] = list(dict.fromkeys(new[k2]))
+                    new[k2] = sorted(new[k2], key = lambda s: s.lower())
+
+            elif isinstance(v1, str) and isinstance(v2, list):
+                if k1 == k2:
+                    new[k1] = []
+                    new[k1].append(v1)
+                    new[k1] += v2
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+
+            elif isinstance(v1, list) and isinstance(v2, str):
+                if k1 == k2:
+                    new[k1] = []
+                    new[k1].append(v2)
+                    new[k1] += v1
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+
+            elif isinstance(v1, dict) and isinstance(v2, dict):
+                if k1 == k2:
+                    if k1 not in new:
+                        new[k1] = {}
+                    new[k1] = extend(v1, v2, new[k1])
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+
+            elif isinstance(v1, list) and isinstance(v2, dict):
+                if k1 == k2:
+                    if k1 not in new:
+                        new[k1] = {}
+                    newdict = {k1: v1}
+                    new[k1] = extend(newdict, v2, new[k1])
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+
+            elif isinstance(v1, dict) and isinstance(v2, list):
+                if k1 == k2:
+                    if k1 not in new:
+                        new[k1] = {}
+                    newdict = {}
+                    newdict[k1] = v2
+                    new[k1] = extend(v1, newdict, new[k1])
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+            else:
+                if k1 == k2:
+                    print('Warning: ', k1, k2, 'not handled')
+                    print('v1: ', v1)
+                    print('v2: ', v2)
+
+    return new
+
 def optjson(l):
     """ 1. If a dict has only keys, but no values, convert it to a list of keys """
     """ 2. If a dict has a list with a single element that is a dict, propagate the dict to the parent dict """
@@ -100,6 +192,7 @@ def back2osloc(l, indent, key):
 
 def osloc2json(licensefilenames, outfilename, json, args):
     """ Open OSLOC files, convert them to JSON objects and store them as specified """
+    merge = args.merge
     optimize = args.optimize
     recreate = args.recreate
     show = args.show
@@ -174,19 +267,25 @@ def osloc2json(licensefilenames, outfilename, json, args):
             elif line[0:15] == 'COPYLEFT CLAUSE':
                 tag = line[0:15]
             elif line[0:13] == 'COMPATIBILITY':
-                pass
+                tag = line[0:13]
             elif line[0:23] == 'DEPENDING COMPATIBILITY':
-                pass
+                tag = line[0:24]
             elif line[0:15] == 'INCOMPATIBILITY':
-                pass
+                tag = line[0:15]
             else:
                 print('Warning: Unidentified language element encountered in "' + licensename + '": ' + line)
             if tag != '':
                 if text == '':
                     text = line[line.find(tag) + len(tag) + 1:]
-                if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable'):
+                if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable' or tag.find('COMPATIBILITY') != -1):
                     if tag not in data:
                         data[tag] = text
+                    else:
+                        if isinstance(data[tag], str):
+                            oldtext = data[tag]
+                            data[tag] = []
+                            data[tag].append(oldtext)
+                        data[tag].append(text)
                 else:
                     if len(eitheror) > 0:
                         for i in eitheror:
@@ -239,7 +338,25 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
     if licenses > 1:
         alljsondata = {}
-        alljsondata['OSADL OSLOC'] = jsondata
+        if merge:
+            new = {}
+            mergednames = ''
+            for licensename in jsondata:
+                licensedata = jsondata[licensename]
+                if mergednames == '':
+                    mergednames = licensename
+                    mergeddata = licensedata
+                else:
+                    mergednames = mergednames + '|' + licensename
+                    if verbose:
+                        print(mergednames)
+                    new = extend(mergeddata, licensedata, new)
+
+            if optimize:
+                optjson(new)
+            alljsondata[mergednames] = new
+        else:
+            alljsondata['OSADL OSLOC'] = jsondata
         jsondata = alljsondata
 
     jsonfile = open(outfilename, 'w')
@@ -261,14 +378,15 @@ def main():
     filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
 # pragma pylint: disable=used-before-assignment
-        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]',
+        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-m] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]',
           description = 'positional arguments:   ' + filenamehelp)
         parser.add_argument = parser.add_option
         filenametype = 'string'
     else:
         parser = argparse.ArgumentParser(prog = 'osloc2json.py', formatter_class = argparse.RawTextHelpFormatter,
-          epilog = 'Either parse a single OSLOC file, convert it to JSON format and store it under the original name suffixed by ".json", or\n\
-parse all OSLOC files, convert them to a single JSON object and store it under the file OUTPUT or "osloc.json" if none given')
+          epilog = 'Either a single OSLOC file is parsed, converted to JSON format and saved under the original name with the suffix ".json", or\n\
+all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or OUTPUT if specified, or\n\
+(-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under "merged.json" or OUTPUT if specified')
         parser.add_argument('licensefilenames',
           metavar = 'OSLOC',
           nargs='+',
@@ -281,6 +399,10 @@ parse all OSLOC files, convert them to a single JSON object and store it under t
       default = 'osloc.json',
       nargs='?',
       help = 'name of output file for multiple licenses, has no effect if single license, default "osloc.json"')
+    parser.add_argument('-m', '--merge',
+      action = 'store_true',
+      default = False,
+      help = 'merge all licenses into a single one, has no effect if single license, default file name "merged.json"')
     parser.add_argument('-o', '--optimize',
       action = 'store_true',
       default = False,
@@ -299,10 +421,16 @@ parse all OSLOC files, convert them to a single JSON object and store it under t
       help = 'show names and texts the program is using')
     if int(sys.version[0]) < 3:
         (args, filenames) = parser.parse_args()
+        if args.merge:
+            parser.set_defaults(filename='merged.json')
+            (args, filenames) = parser.parse_args()
         if len(filenames) < 1:
             print("error: the following arguments are required: OSLOC")
     else:
         args = parser.parse_args()
+        if args.merge:
+            parser.set_defaults(filename='merged.json')
+            args = parser.parse_args()
         filenames = args.licensefilenames
 
     osloc2json(filenames, args.filename, json, args)
