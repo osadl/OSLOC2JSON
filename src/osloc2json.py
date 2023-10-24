@@ -17,6 +17,16 @@ except ImportError:
     import simplejson as json
     from optparse import OptionParser
 
+def expandor(d):
+    if isinstance(d, dict):
+        for k, v in d.copy().items():
+            if isinstance(v, dict):
+                if k.find(' OR ') != -1:
+                    for k1 in k.split(' OR '):
+                        d[k1] = v
+                    d.pop(k)
+                expandor(v)
+
 def extend(l1, l2, new):
     for k1, v1 in l1.copy().items():
         for k2, v2 in l2.copy().items():
@@ -29,20 +39,6 @@ def extend(l1, l2, new):
                 else:
                     new[k1] = v1
                     new[k2] = v2
-
-            elif isinstance(v1, list) and isinstance(v2, list):
-                if k1 == k2:
-                    new[k1] = v1
-                    new[k1] += v2
-                    new[k1] = list(dict.fromkeys(new[k1]))
-                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
-                else:
-                    new[k1] = v1
-                    new[k1] = list(dict.fromkeys(new[k1]))
-                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
-                    new[k2] = v2
-                    new[k2] = list(dict.fromkeys(new[k2]))
-                    new[k2] = sorted(new[k2], key = lambda s: s.lower())
 
             elif isinstance(v1, str) and isinstance(v2, list):
                 if k1 == k2:
@@ -66,41 +62,78 @@ def extend(l1, l2, new):
                     if k2 not in new:
                         new[k2] = v2
 
-            elif isinstance(v1, dict) and isinstance(v2, dict):
+            elif isinstance(v1, list) and isinstance(v2, list):
                 if k1 == k2:
                     if k1 not in new:
-                        new[k1] = {}
-                    new[k1] = extend(v1, v2, new[k1])
+                        new[k1] = v1
+                    else:
+                        new[k1] += v1
+                    new[k1] += v2
+                    new[k1] = list(dict.fromkeys(new[k1]))
+                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
                 else:
                     if k1 not in new:
                         new[k1] = v1
+                    else:
+                        new[k1] += v1
+                    new[k1] = list(dict.fromkeys(new[k1]))
+                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
+
                     if k2 not in new:
                         new[k2] = v2
+                    else:
+                        new[k2] += v2
+                    new[k2] = list(dict.fromkeys(new[k2]))
+                    new[k2] = sorted(new[k2], key = lambda s: s.lower())
 
             elif isinstance(v1, list) and isinstance(v2, dict):
                 if k1 == k2:
-                    if k1 not in new:
-                        new[k1] = {}
-                    newdict = {k1: v1}
-                    new[k1] = extend(newdict, v2, new[k1])
+                    newdict = {k2: v1}
+                    new[k2] = extend(newdict, v2, new[k2])
                 else:
                     if k1 not in new:
                         new[k1] = v1
+                    else:
+                        if isinstance(new[k1], list):
+                            new[k1] += v1
+                            new[k1] = list(dict.fromkeys(new[k1]))
+                        else:
+                            new[k1] = extend(new[k1], v2, new[k2])
+
                     if k2 not in new:
                         new[k2] = v2
+                    else:
+                        new[k2] = extend(new[k2], v2, new[k2])
 
             elif isinstance(v1, dict) and isinstance(v2, list):
                 if k1 == k2:
-                    if k1 not in new:
-                        new[k1] = {}
-                    newdict = {}
-                    newdict[k1] = v2
+                    newdict = {k1: v2}
                     new[k1] = extend(v1, newdict, new[k1])
                 else:
                     if k1 not in new:
                         new[k1] = v1
+                    else:
+                        new[k1] = extend(new[k1], v1, new[k1])
+
                     if k2 not in new:
                         new[k2] = v2
+                    else:
+                        new[k2] += v2
+                        new[k2] = list(dict.fromkeys(new[k2]))
+
+            elif isinstance(v1, dict) and isinstance(v2, dict):
+                if k1 == k2:
+                    if v1 == v2:
+                        new[k1] = v1
+                    else:
+                        new[k1] = {}
+                        new[k1] = extend(v1, v2, new[k1])
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+
             else:
                 if k1 == k2:
                     print('Warning: ', k1, k2, 'not handled')
@@ -192,6 +225,7 @@ def back2osloc(l, indent, key):
 
 def osloc2json(licensefilenames, outfilename, json, args):
     """ Open OSLOC files, convert them to JSON objects and store them as specified """
+    expand = args.expand
     merge = args.merge
     optimize = args.optimize
     recreate = args.recreate
@@ -343,6 +377,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
             mergednames = ''
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
+                if expand:
+                    expandor(licensedata)
                 if mergednames == '':
                     mergednames = licensename
                     mergeddata = licensedata
@@ -392,13 +428,16 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
           nargs='+',
           help = filenamehelp)
         filenametype = pathlib.Path
-    parser.add_argument('-f',
-      '--filename',
+    parser.add_argument('-f', '--filename',
       type = filenametype,
       metavar = 'OUTPUT',
       default = 'osloc.json',
       nargs='?',
       help = 'name of output file for multiple licenses, has no effect if single license, default "osloc.json"')
+    parser.add_argument('-e', '--expand',
+      action = 'store_true',
+      default = False,
+      help = 'replace keys connected by OR with the individual keys and assign the value of the key to all of them')
     parser.add_argument('-m', '--merge',
       action = 'store_true',
       default = False,
