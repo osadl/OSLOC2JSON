@@ -17,15 +17,30 @@ except ImportError:
     import simplejson as json
     from optparse import OptionParser
 
-def expandor(d):
+def expandor(d, parent):
     if isinstance(d, dict):
-        for k, v in d.copy().items():
+        for k, v in d.items():
             if isinstance(v, dict):
-                if k.find(' OR ') != -1:
+                if (parent == 'USE CASE' or parent == 'IF') and k.find(' OR ') != -1:
                     for k1 in k.split(' OR '):
                         d[k1] = v
                     d.pop(k)
-                expandor(v)
+                expandor(v, k)
+
+def printdict(d):
+    for k, v in d.items():
+        if isinstance(v, dict):
+            printdict(v)
+        else:
+            print("{0} : {1}".format(k, v))
+
+def showinstance(v):
+    if isinstance(v, str):
+        print('str')
+    elif isinstance(v, list):
+        print('list')
+    elif isinstance(v, dict):
+        print('dict')
 
 def extend(l1, l2, new):
     for k1, v1 in l1.copy().items():
@@ -65,12 +80,32 @@ def extend(l1, l2, new):
             elif isinstance(v1, list) and isinstance(v2, list):
                 if k1 == k2:
                     if k1 not in new:
-                        new[k1] = v1
+                        new[k1] = []
+                        for v in v1:
+                            new[k1].append(v)
+                        for v in v2:
+                            new[k1].append(v)
                     else:
-                        new[k1] += v1
-                    new[k1] += v2
-                    new[k1] = list(dict.fromkeys(new[k1]))
-                    new[k1] = sorted(new[k1], key = lambda s: s.lower())
+                        if isinstance(new[k1], dict):
+                            inew = {}
+                            for ik, iv in new[k1].items():
+                                inew[ik] = iv
+                            inew[v1[0]] = ''
+                            new[k1] = inew
+                        else:
+                            new[k1] += v1
+                        if isinstance(new[k2], dict):
+                            inew = {}
+                            for ik, iv in new[k2].items():
+                                inew[ik] = iv
+                            inew[v2[0]] = ''
+                            new[k1] = inew
+                        else:
+                            new[k1] += v2
+
+                    if isinstance(new[k1], list):
+                        new[k1] = list(dict.fromkeys(new[k1]))
+                        new[k1] = sorted(new[k1], key = lambda s: s.lower())
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -88,46 +123,85 @@ def extend(l1, l2, new):
 
             elif isinstance(v1, list) and isinstance(v2, dict):
                 if k1 == k2:
-                    newdict = {k2: v1}
-                    new[k2] = extend(newdict, v2, new[k2])
+                    inew = {}
+                    for ik in v1:
+                       if len(ik) > 0:
+                           inew[ik] = ''
+                    for ik, iv in v2.items():
+                       inew[ik] = iv
+                    new[k1] = inew
                 else:
                     if k1 not in new:
                         new[k1] = v1
                     else:
                         if isinstance(new[k1], list):
                             new[k1] += v1
-                            new[k1] = list(dict.fromkeys(new[k1]))
-                        else:
-                            new[k1] = extend(new[k1], v2, new[k2])
-
                     if k2 not in new:
                         new[k2] = v2
-                    else:
-                        new[k2] = extend(new[k2], v2, new[k2])
 
             elif isinstance(v1, dict) and isinstance(v2, list):
                 if k1 == k2:
-                    newdict = {k1: v2}
-                    new[k1] = extend(v1, newdict, new[k1])
+                    inew = {}
+                    for ik, iv in v1.items():
+                       inew[ik] = iv
+                    for ik in v2:
+                       if len(ik) > 0:
+                           inew[ik] = ''
+                    new[k1] = inew
                 else:
                     if k1 not in new:
                         new[k1] = v1
-                    else:
-                        new[k1] = extend(new[k1], v1, new[k1])
-
                     if k2 not in new:
                         new[k2] = v2
                     else:
-                        new[k2] += v2
-                        new[k2] = list(dict.fromkeys(new[k2]))
+                        if isinstance(new[k2], list):
+                            new[k2] += v2
 
             elif isinstance(v1, dict) and isinstance(v2, dict):
                 if k1 == k2:
                     if v1 == v2:
                         new[k1] = v1
                     else:
+                        if k1 not in new:
+                            new[k1] = {}
+                        if v1 == {}:
+                            new[k1] = v2
+                        elif v2 == {}:
+                            new[k1] = v1
+                        else:
+                            new[k1] = extend(v1, v2, new[k1])
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    else:
+                        if new[k1] != v1:
+                            new[k1] = extend(v1, new[k1], new[k1])
+                    if k2 not in new:
+                        new[k2] = v2
+                    else:
+                        if new[k2] != v2:
+                            new[k2] = extend(new[k2], v2, new[k1])
+
+            elif isinstance(v1, dict) and isinstance(v2, str):
+                if k1 == k2:
+                    if k1 not in new:
                         new[k1] = {}
-                        new[k1] = extend(v1, v2, new[k1])
+                    for k, v in v1.items():
+                        new[k1][k] = v
+                    new[k1][v2] = {}
+                else:
+                    if k1 not in new:
+                        new[k1] = v1
+                    if k2 not in new:
+                        new[k2] = v2
+
+            elif isinstance(v1, str) and isinstance(v2, dict):
+                if k1 == k2:
+                    if k1 not in new:
+                        new[k1] = {}
+                    new[k1][v1] = {}
+                    for k, v in v2.items():
+                        new[k1][k] = v
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -367,6 +441,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
             if len(osloc) == 0:
                 break
 
+    if expand:
+        expandor(jsondata, licensename)
+
     if optimize:
         optjson(jsondata)
 
@@ -377,8 +454,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
             mergednames = ''
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
-                if expand:
-                    expandor(licensedata)
                 if mergednames == '':
                     mergednames = licensename
                     mergeddata = licensedata
