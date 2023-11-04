@@ -105,30 +105,26 @@ the following optimized output is available in the file "FTL-opt.json":
 {
     "FTL": {
         "USE CASE": {
-            "Source code delivery": {
+            "Binary delivery": {
                 "YOU MUST": [
-                    "Forward License text",
+                    "Credit FreeType Team",
+                    "Credit In Documentation FreeType Team"
+                ],
+                "YOU MUST NOT": "Promote"
+            },
+            "Source code delivery": {
+                "IF": {
+                    "Software modification": {
+                        "YOU MUST": "Provide Modification report"
+                    }
+                },
+                "YOU MUST": [
+                    "Credit FreeType Team",
                     "Forward Copyright notices",
-                    "Credit FreeType Team"
+                    "Forward License text"
                 ],
                 "YOU MUST NOT": [
                     "Modify License text",
-                    "Promote"
-                ],
-                "IF": {
-                    "Software modification": {
-                        "YOU MUST": [
-                            "Provide Modification report"
-                        ]
-                    }
-                }
-            },
-            "Binary delivery": {
-                "YOU MUST": [
-                    "Credit In Documentation FreeType Team",
-                    "Credit FreeType Team"
-                ],
-                "YOU MUST NOT": [
                     "Promote"
                 ]
             }
@@ -138,54 +134,50 @@ the following optimized output is available in the file "FTL-opt.json":
 ```
 As can be seen in this diff
 ```diff
---- ../OSLOC/unreflicenses/FTL.json 2023-07-31 22:10:36.065513054 +0200
-+++ ../OSLOC/unreflicenses/FTL-opt.json 2023-07-31 22:15:33.383434885 +0200
-@@ -2,31 +2,31 @@
+--- ../OSLOC/unreflicenses/FTL.json 2023-11-04 02:34:06.978179221 +0100
++++ ../OSLOC/unreflicenses/FTL-opt.json 2023-11-04 02:34:15.882344590 +0100
+@@ -2,31 +2,27 @@
      "FTL": {
          "USE CASE": {
-             "Source code delivery": {
--                "YOU MUST": {
--                    "Forward License text": {},
--                    "Forward Copyright notices": {},
--                    "Credit FreeType Team": {}
--                },
--                "YOU MUST NOT": {
--                    "Modify License text": {},
--                    "Promote": {}
--                },
-+                "YOU MUST": [
-+                    "Forward License text",
-+                    "Forward Copyright notices",
-+                    "Credit FreeType Team"
-+                ],
-+                "YOU MUST NOT": [
-+                    "Modify License text",
-+                    "Promote"
-+                ],
-                 "IF": {
-                     "Software modification": {
--                        "YOU MUST": {
--                            "Provide Modification report": {}
--                        }
-+                        "YOU MUST": [
-+                            "Provide Modification report"
-+                        ]
-                     }
-                 }
-             },
              "Binary delivery": {
 -                "YOU MUST": {
--                    "Credit In Documentation FreeType Team": {},
--                    "Credit FreeType Team": {}
+-                    "Credit FreeType Team": {},
+-                    "Credit In Documentation FreeType Team": {}
 -                },
 -                "YOU MUST NOT": {
 -                    "Promote": {}
 -                }
 +                "YOU MUST": [
-+                    "Credit In Documentation FreeType Team",
-+                    "Credit FreeType Team"
++                    "Credit FreeType Team",
++                    "Credit In Documentation FreeType Team"
++                ],
++                "YOU MUST NOT": "Promote"
+             },
+             "Source code delivery": {
+                 "IF": {
+                     "Software modification": {
+-                        "YOU MUST": {
+-                            "Provide Modification report": {}
+-                        }
++                        "YOU MUST": "Provide Modification report"
+                     }
+                 },
+-                "YOU MUST": {
+-                    "Credit FreeType Team": {},
+-                    "Forward Copyright notices": {},
+-                    "Forward License text": {}
+-                },
+-                "YOU MUST NOT": {
+-                    "Modify License text": {},
+-                    "Promote": {}
+-                }
++                "YOU MUST": [
++                    "Credit FreeType Team",
++                    "Forward Copyright notices",
++                    "Forward License text"
 +                ],
 +                "YOU MUST NOT": [
++                    "Modify License text",
 +                    "Promote"
 +                ]
              }
@@ -267,7 +259,7 @@ respective conditions of the FTL checklist:
 This can be further illustrated in the context diff between the original FTL and
 the FTL/MIT merged checklist:
 ```diff
---- ../unreflicenses/FTL-opt.json 2023-11-04 00:55:05.376730567 +0100
+--- ../OSLOC/unreflicenses/FTL-opt.json 2023-11-04 00:55:05.376730567 +0100
 +++ merged.json 2023-11-04 00:50:35.531616943 +0100
 @@ -1,10 +1,15 @@
  {
