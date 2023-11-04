@@ -228,6 +228,8 @@ respective conditions of the FTL checklist:
 ```json
 {
     "FTL|MIT": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": "No",
         "USE CASE": {
             "Binary delivery": {
                 "YOU MUST": [
@@ -237,16 +239,12 @@ respective conditions of the FTL checklist:
                     "Provide License text",
                     "Provide Warranty disclaimer"
                 ],
-                "YOU MUST NOT": [
-                    "Promote"
-                ]
+                "YOU MUST NOT": "Promote"
             },
             "Source code delivery": {
                 "IF": {
                     "Software modification": {
-                        "YOU MUST": [
-                            "Provide Modification report"
-                        ]
+                        "YOU MUST": "Provide Modification report"
                     }
                 },
                 "YOU MUST": [
@@ -269,61 +267,63 @@ respective conditions of the FTL checklist:
 This can be further illustrated in the context diff between the original FTL and
 the FTL/MIT merged checklist:
 ```diff
---- ../OSLOC/unreflicenses/FTL-opt.json 2023-10-24 21:42:15.194994158 +0200
-+++ merged.json 2023-10-24 21:42:24.139169948 +0200
-@@ -1,10 +1,13 @@
+--- ../unreflicenses/FTL-opt.json 2023-11-04 00:55:05.376730567 +0100
++++ merged.json 2023-11-04 00:50:35.531616943 +0100
+@@ -1,10 +1,15 @@
  {
 -    "FTL": {
 +    "FTL|MIT": {
++        "COPYLEFT CLAUSE": "No",
++        "PATENT HINTS": "No",
          "USE CASE": {
              "Binary delivery": {
                  "YOU MUST": [
                      "Credit FreeType Team",
-                     "Credit In Documentation FreeType Team",
+-                    "Credit In Documentation FreeType Team"
++                    "Credit In Documentation FreeType Team",
 +                    "Provide Copyright notices",
 +                    "Provide License text",
 +                    "Provide Warranty disclaimer"
                  ],
-                 "YOU MUST NOT": [
-                     "Promote"
-@@ -22,6 +25,9 @@
+                 "YOU MUST NOT": "Promote"
+             },
+@@ -17,7 +22,10 @@
+                 "YOU MUST": [
                      "Credit FreeType Team",
                      "Forward Copyright notices",
-                     "Forward License text",
+-                    "Forward License text"
++                    "Forward License text",
 +                    "Provide Copyright notices",
 +                    "Provide License text",
 +                    "Provide Warranty disclaimer"
                  ],
                  "YOU MUST NOT": [
                      "Modify License text",
-
 ```
 Without the option to expand OR-ed conditions the merged checklist would look like
 ```json
 {
     "FTL|MIT": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": "No",
         "USE CASE": {
             "Binary delivery": {
                 "YOU MUST": [
-                    "Credit In Documentation FreeType Team",
-                    "Credit FreeType Team"
+                    "Credit FreeType Team",
+                    "Credit In Documentation FreeType Team"
                 ],
-                "YOU MUST NOT": [
-                    "Promote"
-                ]
+                "YOU MUST NOT": "Promote"
             },
             "Source code delivery": {
                 "IF": {
                     "Software modification": {
-                        "YOU MUST": [
-                            "Provide Modification report"
-                        ]
+                        "YOU MUST": "Provide Modification report"
                     }
                 },
                 "YOU MUST": [
-                    "Forward License text",
+                    "Credit FreeType Team",
                     "Forward Copyright notices",
-                    "Credit FreeType Team"
+                    "Forward License text"
                 ],
                 "YOU MUST NOT": [
                     "Modify License text",

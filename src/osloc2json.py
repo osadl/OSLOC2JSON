@@ -24,7 +24,7 @@ def sanitizelist(l):
 
 def expandor(d, parent):
     if isinstance(d, dict):
-        for k, v in d.items():
+        for k, v in d.copy().items():
             if isinstance(v, dict):
                 if (parent == 'USE CASE' or parent == 'IF') and k.find(' OR ') != -1:
                     for k1 in k.split(' OR '):
@@ -39,247 +39,331 @@ def printdict(d):
         else:
             print("{0} : {1}".format(k, v))
 
-def showinstance(v):
+def getinstance(v):
     if isinstance(v, str):
-        print('str')
+        return 'str'
     elif isinstance(v, list):
-        print('list')
+        return 'list'
     elif isinstance(v, dict):
-        print('dict')
+        return 'dict'
+
+def add(fromvar, tovar):
+    if isinstance(fromvar, str):
+        if isinstance(tovar, str):
+            oldto = tovar
+            tovar = []
+            tovar.append(fromvar)
+            tovar.append(oldto)
+        elif isinstance(tovar, list):
+            tovar.append(fromvar)
+        elif isinstance(tovar, dict):
+            if fromvar not in tovar:
+                tovar[fromvar] = {}
+            else:
+                oldto = tovar
+                tovar[fromvar] = []
+                tovar[fromvar].append(oldto)
+                tovar[fromvar].append(fromvar)
+
+    elif isinstance(fromvar, list):
+        if isinstance(tovar, str):
+            tovar = add(tovar, fromvar)
+        elif isinstance(tovar, list):
+            tovar = fromvar + tovar
+        elif isinstance(tovar, dict):
+            newdict = {}
+            for k, v in fromvar.items():
+                newdict[k] = v
+            for k, v in tovar.items():
+                if k not in newdict:
+                    newdict[k] = v
+                else:
+                    oldv = newdict[k]
+                    newdict[k] = []
+                    newdict[k].append(oldv)
+                    newdict[k].append(v)
+            tovar = newdict
+
+    elif isinstance(fromvar, dict):
+        if isinstance(tovar, str):
+            tovar = add(tovar, fromvar)
+        elif isinstance(tovar, list):
+            tovar = add(tovar, fromvar)
+        elif isinstance(tovar, dict):
+            newdict = {}
+            for k, v in fromvar.items():
+                newdict[k] = v
+            for k, v in tovar.items():
+                if k not in newdict:
+                    newdict[k] = v
+                else:
+                    oldv = newdict[k]
+                    newdict[k] = []
+                    newdict[k].append(oldv)
+                    newdict[k].append(v)
+            tovar = newdict
+
+    if isinstance(tovar, list):
+        tovar = sanitizelist(tovar)
+    return tovar
 
 def extend(l1, l2, new):
     for k1, v1 in l1.copy().items():
         for k2, v2 in l2.copy().items():
             if isinstance(v1, str) and isinstance(v2, str):
-                if k1 == k2 and v1 == v2:
-                    new[k1] = v1
-                elif k1 == k2 and v1 != v2:
-                    new[k1] = v1
-                    new[k1].append(v2)
+                if k1 == k2:
+                    if v1 == v2:
+                        if k1 not in new:
+                            new[k1] = v1
+                    else:
+                        if k1 not in new:
+                            new[k1] = [v1, v2]
+                        else:
+                            if isinstance(new[k1], str):
+                                if new[k1] != v1 and new[k1] != v2:
+                                    new[k1] = [new[k1], v1, v2]
+                                elif new[k1] != v1:
+                                    new[k1] = [new[k1], v1]
+                                elif new[k1] != v2:
+                                    new[k1] = [new[k1], v2]
+                            if isinstance(new[k1], list):
+                                new[k1].append(v1)
+                                new[k1].append(v2)
+                                new[k1] = sanitizelist(new[k1])
                 else:
-                    new[k1] = v1
-                    new[k2] = v2
+                    if k1 not in new:
+                        new[k1] = v1
+                    else:
+                        if isinstance(new[k1], str):
+                            if new[k1] != v1:
+                                new[k1] = [new[k1], v1]
+                        elif isinstance(new[k1], list):
+                            if v1 not in new[k1]:
+                                new[k1].append(v1)
+                    if k2 not in new:
+                        new[k2] = v2
+                    else:
+                        if isinstance(new[k2], str):
+                            if new[k2] != v2:
+                                new[k2] = [new[k2], v2]
+                        elif isinstance(new[k2], list):
+                            if v2 not in new[k2]:
+                                new[k2].append(v2)
 
             elif isinstance(v1, str) and isinstance(v2, list):
-                if k1 == k2:
-                    new[k1] = []
-                    new[k1].append(v1)
-                    new[k1] += v2
+                if k1 not in new:
+                    new[k1] = v1
                 else:
-                    if k1 not in new:
-                        new[k1] = v1
-                    if k2 not in new:
-                        new[k2] = v2
+                    if isinstance(new[k1], str):
+                        if new[k1] != v1:
+                            new[k1] = [new[k1], v1]
+                    elif isinstance(new[k1], list):
+                        if v1 not in new[k1]:
+                            new[k1].append(v1)
+                    elif isinstance(new[k1], dict):
+                        print('t.b.d. str/list new[k1], dict')
+                if k2 not in new:
+                    new[k2] = v2
+                else:
+                    if isinstance(new[k2], str):
+                        if new[k2] not in v2:
+                            new[k2] = v2.append(new[k2])
+                    elif isinstance(new[k2], list):
+                        new[k2] += v2
+                        new[k2] = sanitizelist(new[k2])
+                    elif isinstance(new[k2], dict):
+                        print('t.b.d. str/list new[k2], dict')
 
-            elif isinstance(v1, list) and isinstance(v2, str):
-                if k1 == k2:
-                    new[k1] = []
-                    new[k1].append(v2)
-                    new[k1] += v1
+            elif isinstance(v1, str) and isinstance(v2, dict):
+                if k1 not in new:
+                    new[k1] = v1
                 else:
-                    if k1 not in new:
-                        new[k1] = v1
-                    if k2 not in new:
-                        new[k2] = v2
+                    if isinstance(new[k1], str):
+                        if new[k1] != v1:
+                            new[k1] = [new[k1], v1]
+                    elif isinstance(new[k1], list):
+                        if v1 not in new[k1]:
+                            new[k1].append(v1)
+                if k2 not in new:
+                    new[k2] = v2
+                else:
+                    if isinstance(new[k2], str):
+                        print('t.b.d. str/dict new[k2], str')
+                    elif isinstance(new[k2], list):
+                        print('t.b.d. str/dict new[k2], list')
+                    elif isinstance(new[k2], dict):
+                        new[k2] = extend(new[k2], v2, {})
 
             elif isinstance(v1, list) and isinstance(v2, list):
+                v1 = sanitizelist(v1)
+                v2 = sanitizelist(v2)
                 if k1 == k2:
-                    if k1 not in new:
-                        new[k1] = []
-                        for v in v1:
-                            new[k1].append(v)
-                        for v in v2:
-                            new[k1].append(v)
+                    if v1 == v2:
+                        if k1 not in new:
+                            new[k1] = v1
                     else:
-                        if isinstance(new[k1], dict):
-                            inew = {}
-                            for ik, iv in new[k1].items():
-                                inew[ik] = iv
-                            for v in v1:
-                                inew[v] = {}
-                            for v in v2:
-                                inew[v] = {}
-                            new[k1] = inew
+                        if k1 not in new:
+                            new[k1] = v1 + v2
                         else:
-                            new[k1] += v1
-                            new[k1] += v2
-                    if isinstance(new[k1], list):
+                            if isinstance(new[k1], list):
+                                new[k1] += v1 + v2
                         new[k1] = sanitizelist(new[k1])
                 else:
                     if k1 not in new:
                         new[k1] = v1
                     else:
                         if isinstance(new[k1], str):
-                            s = new[k1]
-                            new[k1] = []
-                            new[k1].append(s)
+                            if new[k1] not in v1:
+                                v1.append(new[k1])
+                        elif isinstance(new[k1], list):
                             new[k1] += v1
+                            new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            inew = {}
-                            for ik, iv in new[k1].items():
-                                inew[ik] = iv
-                            for v in v1:
-                                inew[v] = {}
-                            new[k1] = inew
-                        else:
-                            new[k1] += v1
-                    if isinstance(new[k1], list):
-                        new[k1] = sanitizelist(new[k1])
-
+                            print('t.b.d. list/list new[k1], dict')
                     if k2 not in new:
                         new[k2] = v2
                     else:
                         if isinstance(new[k2], str):
-                            s = new[k2]
-                            new[k2] = []
-                            new[k2].append(s)
-                            new[k2] += v2
-                        elif isinstance(new[k2], dict):
-                            inew = {}
-                            for ik, iv in new[k2].items():
-                                inew[ik] = iv
-                            for v in v2:
-                                inew[v] = {}
-                            new[k2] = inew
-                        else:
-                            new[k2] += v2
-                    if isinstance(new[k2], list):
-                        new[k2] = sanitizelist(new[k2])
-
-            elif isinstance(v1, list) and isinstance(v2, dict):
-                if k1 == k2:
-                    inew = {}
-                    for ik in v1:
-                       if len(ik) > 0:
-                           inew[ik] = {}
-                    for ik, iv in v2.items():
-                       inew[ik] = iv
-                    new[k1] = inew
-                else:
-                    if k1 not in new:
-                        new[k1] = v1
-                    else:
-                        if isinstance(new[k1], list):
-                            new[k1] += v1
-                    if k2 not in new:
-                        new[k2] = v2
-
-            elif isinstance(v1, dict) and isinstance(v2, list):
-                if k1 == k2:
-                    inew = {}
-                    for ik, iv in v1.items():
-                       inew[ik] = iv
-                    for ik in v2:
-                       if len(ik) > 0:
-                           inew[ik] = {}
-                    new[k1] = inew
-                else:
-                    if k1 not in new:
-                        new[k1] = v1
-                    else:
-                        if isinstance(new[k1], list):
-                            newdict = {}
-                            for k, v in v1.items():
-                               newdict[k] = v
-                            for v in new[k1]:
-                               newdict[v] = {}
-                            new[k1] = newdict
-                    if k2 not in new:
-                        new[k2] = v2
-                    else:
-                        if isinstance(new[k2], list):
+                            if new[k2] not in v2:
+                                v2.append(new[k2])
+                        elif isinstance(new[k2], list):
                             new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
-                            newdict = {}
-                            for k, v in new[k2].items():
-                                newdict[k] = v
-                            for v in v2:
-                                newdict[v] = {}
-                            new[k2] = newdict
+                            print('t.b.d. list/list new[k2], dict')
+
+            elif isinstance(v1, list) and isinstance(v2, str):
+                if k1 not in new:
+                    new[k1] = v1
+                else:
+                    if isinstance(new[k1], str):
+                        if new[k1] not in v1:
+                            new[k1] = v1.append(new[k1])
+                    elif isinstance(new[k1], list):
+                        new[k1] += v1
+                        new[k1] = sanitizelist(new[k1])
+                    elif isinstance(new[k1], dict):
+                        print('t.b.d. list/str new[k1], dict')
+                if k2 not in new:
+                    new[k2] = v2
+                else:
+                    if isinstance(new[k2], str):
+                        if new[k2] != v2:
+                            new[k2] = [new[k2], v2]
+                    elif isinstance(new[k2], list):
+                        if v2 not in new[k2]:
+                            new[k2].append(v2)
+                    elif isinstance(new[k2], dict):
+                        print('t.b.d. list/str new[k2], dict')
+
+            elif isinstance(v1, list) and isinstance(v2, dict):
+                if k1 not in new:
+                    new[k1] = v1
+                else:
+                    if isinstance(new[k1], str):
+                        if new[k1] not in v1:
+                            new[k1] = v1.append(new[k1])
+                    elif isinstance(new[k1], list):
+                        new[k1] += v1
+                        new[k1] = sanitizelist(new[k1])
+                    elif isinstance(new[k1], dict):
+                        print('t.b.d. list/dict new[k1], dict')
+                if k2 not in new:
+                    new[k2] = v2
+                else:
+                    if isinstance(new[k2], str):
+                        print('t.b.d. list/dict new[k2], str')
+                    elif isinstance(new[k2], list):
+                        newdict = {}
+                        newdict[k2] = new[k2]
+                        new[k2] = extend(newdict, v2, {})
+                    elif isinstance(new[k2], dict):
+                        new[k2] = extend(new[k2], v2, {})
 
             elif isinstance(v1, dict) and isinstance(v2, dict):
                 if k1 == k2:
                     if v1 == v2:
-                        new[k1] = v1
+                        if k1 not in new:
+                            new[k1] = v1
                     else:
                         if k1 not in new:
-                            new[k1] = {}
-                        if v1 == {}:
-                            new[k1] = v2
-                        elif v2 == {}:
-                            new[k1] = v1
+                            new[k1] = extend(v1, v2, {})
                         else:
                             new[k1] = extend(v1, v2, new[k1])
                 else:
                     if k1 not in new:
                         new[k1] = v1
                     else:
-                        if new[k1] != v1:
-                            new[k1] = extend(v1, new[k1], new[k1])
+                        if isinstance(new[k1], str):
+                            print('t.b.d. dict/dict new[k1], str')
+                        elif isinstance(new[k1], list):
+                            print('t.b.d. dict/dict new[k1], list')
+                        elif isinstance(new[k1], dict):
+                            new[k1] = extend(new[k1], v1, {})
                     if k2 not in new:
                         new[k2] = v2
                     else:
-                        if new[k2] != v2:
-                            new[k2] = extend(new[k2], v2, new[k1])
+                        if isinstance(new[k2], str):
+                            print('t.b.d. dict/dict new[k2], str')
+                        elif isinstance(new[k2], list):
+                            print('t.b.d. dict/dict new[k2], list')
+                        elif isinstance(new[k2], dict):
+                            new[k2] = extend(new[k2], v2, {})
 
             elif isinstance(v1, dict) and isinstance(v2, str):
-                if k1 == k2:
-                    if k1 not in new:
-                        new[k1] = {}
-                    else:
-                        if isinstance(new[k1], list):
-                            newdict = {}
-                            for v in new[k1]:
-                                newdict[v] = {}
-                            new[k1] = newdict
-                        elif isinstance(new[k1], str):
-                            newdict = {}
-                            newdict[new[k1]] = {}
-                            new[k1] = newdict
-                    for k, v in v1.items():
-                        new[k1][k] = v
-                    new[k1][v2] = {}
+                if k1 not in new:
+                    new[k1] = v1
                 else:
-                    if k1 not in new:
-                        new[k1] = v1
-                    if k2 not in new:
-                        new[k2] = v2
+                    if isinstance(new[k1], str):
+                        print('t.b.d. dict/str new[k1], str')
+                    elif isinstance(new[k1], list):
+                        print('t.b.d. dict/str new[k1], list')
+                    elif isinstance(new[k1], dict):
+                        new[k1] = extend(new[k1], v1, {})
+                if k2 not in new:
+                    new[k2] = v2
+                else:
+                    if isinstance(new[k2], str):
+                        if new[k2] != v2:
+                            new[k2] = [new[k2], v2]
+                    elif isinstance(new[k2], list):
+                        if v2 not in new[k2]:
+                            new[k2].append(v2)
+                    elif isinstance(new[k2], dict):
+                        print('t.b.d. dict/str new[k2], dict')
 
-            elif isinstance(v1, str) and isinstance(v2, dict):
-                if k1 == k2:
-                    if k1 not in new:
-                        new[k1] = {}
-                    else:
-                        if isinstance(new[k1], list):
-                            newdict = {}
-                            for v in new[k1]:
-                                newdict[v] = {}
-                            new[k1] = newdict
-                        elif isinstance(new[k1], str):
-                            newdict = {}
-                            newdict[new[k1]] = {}
-                            new[k1] = newdict
-                    new[k1][v1] = {}
-                    for k, v in v2.items():
-                        new[k1][k] = v
+            elif isinstance(v1, dict) and isinstance(v2, list):
+                if k1 not in new:
+                    new[k1] = v1
                 else:
-                    if k1 not in new:
-                        new[k1] = v1
-                    if k2 not in new:
-                        new[k2] = v2
+                    if isinstance(new[k1], str):
+                        print('t.b.d. dict/list new[k1], str')
+                    elif isinstance(new[k1], list):
+                        print('t.b.d. dict/list new[k1], list')
+                    elif isinstance(new[k1], dict):
+                        new[k1] = extend(new[k1], v1, {})
+                if k2 not in new:
+                    new[k2] = v2
+                else:
+                    if isinstance(new[k2], str):
+                        if new[k2] not in v2:
+                            new[k2] = v2.append(new[k2])
+                    elif isinstance(new[k2], list):
+                        new[k2] += v2
+                        new[k2] = sanitizelist(new[k2])
+                    elif isinstance(new[k2], dict):
+                        print('t.b.d. dict/list new[k2], dict')
 
             else:
-                if k1 == k2:
-                    print('Warning: ', k1, k2, 'not handled')
-                    print('v1: ', v1)
-                    print('v2: ', v2)
+                print('Not considered:')
+                print(v1)
+                print(v2)
 
     return new
 
 def optjson(l):
     """ 1. If a dict has only keys, but no values, convert it to a list of keys """
-    """ 2. If a dict has a list with a single element that is a dict, propagate the dict to the parent dict """
+    """ 2. If a dict has a list with a single element, propagate it to the parent dict """
     """ 3. If a dict has a dict with a single element with an empty key, propagate the dict to the parent dict """
     """ 4. If a dict has only dicts with consecutively numbered numeric keys, propagate the dicts into a list """
     if type(l) is dict:
@@ -307,8 +391,11 @@ def optjson(l):
                         for k in l[e]:
                             newlist.append(l[e][k])
                         l[e] = newlist
-                elif type(l[e]) is list and len(l[e]) == 1 and type(l[e][0]) is dict:
-                    l[e] = l[e][0]
+                if type(l[e]) is list:
+                    if len(l[e]) == 1:
+                        l[e] = l[e][0]
+                    else:
+                        l[e] = sorted(l[e], key = lambda s: s.lower())
 
 printnonl = sys.stdout.write
 def back2osloc(l, indent, key):
@@ -515,6 +602,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
             mergednames = ''
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
+                if 'COPYLEFT CLAUSE' not in licensedata:
+                    licensedata['COPYLEFT CLAUSE'] = 'No'
+                if 'PATENT HINTS' not in licensedata:
+                    licensedata['PATENT HINTS'] = 'No'
                 if mergednames == '':
                     mergednames = licensename
                     mergeddata = licensedata
