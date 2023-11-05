@@ -262,7 +262,7 @@ def extend(l1, l2, new, devel):
                                 if new[k1] != v2:
                                     if isinstance(new[k1], str):
                                         new[k1] = [new[k1], v2]
-                                    elif isintance(new[k1], list):
+                                    elif isinstance(new[k1], list):
                                         new[k1].append(v2)
                             elif isinstance(new[k1], list):
                                 new[k1] += v1
