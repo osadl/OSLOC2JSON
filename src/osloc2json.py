@@ -738,7 +738,7 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
     parser.add_argument('-o', '--optimize',
       action = 'store_true',
       default = False,
-      help = 'convert a dict with no values to a list of keys, add "-opt" to output file name')
+      help = 'convert a dict with no values to a list of keys or string, if only one, add "-opt" to output file name')
     parser.add_argument('-r', '--recreate',
       action = 'store_true',
       default = False,

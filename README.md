@@ -19,7 +19,7 @@ options:
                         name of output file for multiple licenses, has no effect if single license, default "osloc.json"
   -e, --expand          replace keys connected by OR with the individual keys and assign the value of the key to all of them
   -m, --merge           merge all licenses into a single one, has no effect if single license, default file name "merged.json"
-  -o, --optimize        convert a dict with no values to a list of keys, add "-opt" to output file name
+  -o, --optimize        convert a dict with no values to a list of keys or string, if only one, add "-opt" to output file name
   -r, --recreate        recreate original checklist from JSON (for debugging)
   -s, --show            also list the output to screen
   -v, --verbose         show names and texts the program is using
@@ -95,8 +95,8 @@ the following output is available in the file "FTL.json":
 ### Optimization
 Because of the freedom offered by the OSLOC "language", JSON dict keys can have
 no values. If all keys of a dict do not have values, the dict can be converted
-into a list of keys. This is done when the "--optimize" flag is selected. Thus,
-after running
+into a list of keys or even to a string, if the list has only one element. This
+is done when the "--optimize" flag is selected. Thus, after running
 ```bash
 osloc2json.py -o FTL.txt
 ```
