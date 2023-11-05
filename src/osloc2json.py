@@ -196,8 +196,11 @@ def extend(l1, l2, new, devel):
                         if devel:
                             print('t.b.d. str/dict new[k2]', new[k2], k2, v2)
                     elif isinstance(new[k2], list):
-                        if devel:
-                            print('t.b.d. list/dict new[k2]', new[k2], k2, v2)
+                        newdict = {}
+                        for v in new[k2]:
+                            newdict[v] = {}
+                        new[k2] = newdict
+                        new[k2] = extend(newdict, v2, new[k2], devel)
                     elif isinstance(new[k2], dict):
                         if v2 != new[k2]:
                             new[k2] = extend(new[k2], v2, new[k2], devel)
@@ -324,7 +327,9 @@ def extend(l1, l2, new, devel):
                             print('t.b.d. str/dict new[k2]', new[k2], k2, v2)
                     elif isinstance(new[k2], list):
                         newdict = {}
-                        newdict[k2] = new[k2]
+                        for v in new[k2]:
+                            newdict[v] = {}
+                        new[k2] = newdict
                         new[k2] = extend(newdict, v2, new[k2], devel)
                     elif isinstance(new[k2], dict):
                         if v2 != new[k2]:
@@ -346,8 +351,11 @@ def extend(l1, l2, new, devel):
                         if devel:
                             print('t.b.d. str/dict new[k1]', new[k1], k1, v1)
                     elif isinstance(new[k1], list):
-                        if devel:
-                            print('t.b.d. list/dict new[k1]', new[k1], k1, v1)
+                        newdict = {}
+                        for v in new[k1]:
+                            newdict[v] = {}
+                        newdict[k1] = newdict
+                        new[k1] = extend(newdict, v1, new[k1], devel)
                     elif isinstance(new[k1], dict):
                         if v1 != new[k1]:
                             new[k1] = extend(new[k1], v1, new[k1], devel)
@@ -357,8 +365,11 @@ def extend(l1, l2, new, devel):
                         if devel:
                             print('t.b.d. str/dict new[k2], str', new[k2], k2, v2)
                     elif isinstance(new[k2], list):
-                        if devel:
-                            print('t.b.d. list/dict new[k2], list', new[k2], k2, v2)
+                        newdict = {}
+                        for v in new[k2]:
+                            newdict[v] = {}
+                        new[k2] = newdict
+                        new[k2] = extend(newdict, v2, new[k2], devel)
                     elif isinstance(new[k2], dict):
                         if v2 != new[k2]:
                             new[k2] = extend(new[k2], v2, new[k2], devel)
@@ -371,8 +382,11 @@ def extend(l1, l2, new, devel):
                         if devel:
                             print('t.b.d. str/dict new[k1]', new[k1], k1, v1)
                     elif isinstance(new[k1], list):
-                        if devel:
-                            print('t.b.d. list/dict new[k1]', new[k1], k1, v1)
+                        newdict = {}
+                        for v in new[k1]:
+                            newdict[v] = {}
+                        newdict[k1] = newdict
+                        new[k1] = extend(newdict, v1, new[k1], devel)
                     elif isinstance(new[k1], dict):
                         if v1 != new[k1]:
                             new[k1] = extend(new[k1], v1, new[k1], devel)
@@ -397,8 +411,11 @@ def extend(l1, l2, new, devel):
                         if devel:
                             print('t.b.d. str/dict new[k1]', new[k1], k1, v1)
                     elif isinstance(new[k1], list):
-                        if devel:
-                            print('t.b.d. list/dict new[k1]', new[k1], k1, v1)
+                        newdict = {}
+                        for v in new[k1]:
+                            newdict[v] = {}
+                        newdict[k1] = newdict
+                        new[k1] = extend(newdict, v1, new[k1], devel)
                     elif isinstance(new[k1], dict):
                         if v1 != new[k1]:
                             new[k1] = extend(new[k1], v1, new[k1], devel)
