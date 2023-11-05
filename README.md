@@ -345,6 +345,7 @@ shown. The merging steps were
 * FTL + MIT + BSD-2-Clause
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause
+* FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause + Apache-2.0
 
 #### Added BSD-2-Clause license
 ```diff
@@ -427,4 +428,82 @@ license.
                      "Software modification": {
                          "YOU MUST": "Provide Modification report"
                      }
+```
+#### Added Apache-2.0 license
+```diff
+--- FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json	2023-11-05 11:55:30.927851180 +0100
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause+Apache-2.0.json	2023-11-05 19:07:21.877218819 +0100
+@@ -1,12 +1,35 @@
+ {
+-    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause": {
++    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause|Apache-2.0": {
+         "COPYLEFT CLAUSE": "No",
+-        "PATENT HINTS": "No",
++        "PATENT HINTS": [
++            "No",
++            "Yes"
++        ],
+         "USE CASE": {
+             "Binary delivery": {
+                 "IF": {
+                     "Advertisement": {
+                         "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
++                    },
++                    "Service offerings": {
++                        "YOU MUST": "Indemnify Other contributors"
++                    },
++                    "Software modification": {
++                        "IF": {
++                            "Work Includes File \"NOTICE\"": {
++                                "EITHER": {
++                                    "1": {
++                                        "OR": {
++                                            "1": {
++                                                "YOU MUST": "Display File \"NOTICE\""
++                                            }
++                                        },
++                                        "YOU MUST": "Provide File \"NOTICE\""
++                                    }
++                                },
++                                "YOU MUST": "Delete Irrelevant parts"
++                            }
++                        }
+                     }
+                 },
+                 "YOU MUST": [
+@@ -26,8 +49,33 @@
+                     "Advertisement": {
+                         "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
+                     },
++                    "Service offerings": {
++                        "YOU MUST": "Indemnify Other contributors"
++                    },
+                     "Software modification": {
+-                        "YOU MUST": "Provide Modification report"
++                        "IF": {
++                            "Work Includes File \"NOTICE\"": {
++                                "EITHER": {
++                                    "1": {
++                                        "OR": {
++                                            "1": {
++                                                "YOU MUST": "Display File \"NOTICE\""
++                                            }
++                                        },
++                                        "YOU MUST": "Provide File \"NOTICE\""
++                                    }
++                                },
++                                "YOU MUST": "Delete Irrelevant parts"
++                            }
++                        },
++                        "YOU MUST": [
++                            "Forward Attribution notices",
++                            "Forward Copyright notices",
++                            "Forward Patent notices",
++                            "Forward Trademark notices",
++                            "Provide Modification notice",
++                            "Provide Modification report"
++                        ]
+                     }
+                 },
+                 "YOU MUST": [
 ```

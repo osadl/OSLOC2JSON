@@ -1,0 +1,98 @@
+{
+    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause|Apache-2.0": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": [
+            "No",
+            "Yes"
+        ],
+        "USE CASE": {
+            "Binary delivery": {
+                "IF": {
+                    "Advertisement": {
+                        "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
+                    },
+                    "Service offerings": {
+                        "YOU MUST": "Indemnify Other contributors"
+                    },
+                    "Software modification": {
+                        "IF": {
+                            "Work Includes File \"NOTICE\"": {
+                                "EITHER": {
+                                    "1": {
+                                        "OR": {
+                                            "1": {
+                                                "YOU MUST": "Display File \"NOTICE\""
+                                            }
+                                        },
+                                        "YOU MUST": "Provide File \"NOTICE\""
+                                    }
+                                },
+                                "YOU MUST": "Delete Irrelevant parts"
+                            }
+                        }
+                    }
+                },
+                "YOU MUST": [
+                    "Credit FreeType Team",
+                    "Credit In Documentation FreeType Team",
+                    "Provide Copyright notices",
+                    "Provide Copyright notices In Documentation OR Distribution material",
+                    "Provide License text",
+                    "Provide License text In Documentation OR Distribution material",
+                    "Provide Warranty disclaimer",
+                    "Provide Warranty disclaimer In Documentation OR Distribution material"
+                ],
+                "YOU MUST NOT": "Promote"
+            },
+            "Source code delivery": {
+                "IF": {
+                    "Advertisement": {
+                        "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
+                    },
+                    "Service offerings": {
+                        "YOU MUST": "Indemnify Other contributors"
+                    },
+                    "Software modification": {
+                        "IF": {
+                            "Work Includes File \"NOTICE\"": {
+                                "EITHER": {
+                                    "1": {
+                                        "OR": {
+                                            "1": {
+                                                "YOU MUST": "Display File \"NOTICE\""
+                                            }
+                                        },
+                                        "YOU MUST": "Provide File \"NOTICE\""
+                                    }
+                                },
+                                "YOU MUST": "Delete Irrelevant parts"
+                            }
+                        },
+                        "YOU MUST": [
+                            "Forward Attribution notices",
+                            "Forward Copyright notices",
+                            "Forward Patent notices",
+                            "Forward Trademark notices",
+                            "Provide Modification notice",
+                            "Provide Modification report"
+                        ]
+                    }
+                },
+                "YOU MUST": [
+                    "Credit FreeType Team",
+                    "Credit In Documentation FreeType Team",
+                    "Forward Copyright notices",
+                    "Forward License text",
+                    "Forward Warranty disclaimer",
+                    "Provide Copyright notices",
+                    "Provide License text",
+                    "Provide Warranty disclaimer"
+                ],
+                "YOU MUST NOT": [
+                    "Modify License text",
+                    "Promote"
+                ]
+            }
+        }
+    }
+}
