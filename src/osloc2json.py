@@ -9,6 +9,7 @@
 
 import sys
 import re
+
 try:
     import argparse
     import pathlib
@@ -16,6 +17,11 @@ try:
 except ImportError:
     import simplejson as json
     from optparse import OptionParser
+
+try:
+    from inspect import currentframe, getframeinfo
+except ImportError:
+    pass
 
 def sanitizelist(l):
     sane = list(dict.fromkeys(l))
@@ -38,6 +44,19 @@ def printdict(d):
             printdict(v)
         else:
             print("{0} : {1}".format(k, v))
+
+def nonecheck(d):
+    for k, v in d.items():
+        if isinstance(v, dict):
+            if nonecheck(v):
+                return True
+        elif isinstance(v, list):
+            if None in v:
+                return True
+        else:
+            if v is None:
+                return True
+    return False
 
 def getinstance(v):
     if isinstance(v, str):
@@ -350,7 +369,8 @@ def optjson(l):
                 if type(l[e]) is dict:
                     allvalues = 0
                     for v in l[e].values():
-                        allvalues += len(v)
+                        if v is not None:
+                            allvalues += len(v)
                     if allvalues == 0:
                         l[e] = list(l[e].keys())
                     dictno = 0

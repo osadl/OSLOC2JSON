@@ -1,0 +1,42 @@
+{
+    "FTL|MIT|BSD-2-Clause|BSD-3-Clause": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": "No",
+        "USE CASE": {
+            "Binary delivery": {
+                "YOU MUST": [
+                    "Credit FreeType Team",
+                    "Credit In Documentation FreeType Team",
+                    "Provide Copyright notices",
+                    "Provide Copyright notices In Documentation OR Distribution material",
+                    "Provide License text",
+                    "Provide License text In Documentation OR Distribution material",
+                    "Provide Warranty disclaimer",
+                    "Provide Warranty disclaimer In Documentation OR Distribution material"
+                ],
+                "YOU MUST NOT": "Promote"
+            },
+            "Source code delivery": {
+                "IF": {
+                    "Software modification": {
+                        "YOU MUST": "Provide Modification report"
+                    }
+                },
+                "YOU MUST": [
+                    "Credit FreeType Team",
+                    "Credit In Documentation FreeType Team",
+                    "Forward Copyright notices",
+                    "Forward License text",
+                    "Forward Warranty disclaimer",
+                    "Provide Copyright notices",
+                    "Provide License text",
+                    "Provide Warranty disclaimer"
+                ],
+                "YOU MUST NOT": [
+                    "Modify License text",
+                    "Promote"
+                ]
+            }
+        }
+    }
+}

@@ -193,6 +193,7 @@ By default, the resulting merged checklist will be written to a file named
 "merged.json", but can be specified using the -f option. Here also, the -o
 option can be used.
 
+#### Extending OR-linked conditions
 Conditions that contain multiple OR-linked subconditions may optionally split
 into independent individual conditions, which can then be subsumed with the
 conditions of checklists that contain them in unlinked form in the first place.
@@ -214,9 +215,10 @@ and "Source code delivery" to "Binary delivery OR Source code delivery"
     }
 }
 ```
-which may be split into the single conditions "Binary delivery" and "Source
-code delivery". This makes it possible to subsume them, for example, with the
-respective conditions of the FTL checklist:
+which may be split into the single conditions "Binary delivery" and "Source code
+delivery" using the '-e' command line option of the Python script. This makes it
+possible to subsume them, for example, with the respective conditions of the FTL
+checklist:
 ```json
 {
     "FTL|MIT": {
@@ -334,3 +336,95 @@ Without the option to expand OR-ed conditions the merged checklist would look li
 }
 ```
 which would be rather meaningless.
+
+### Some more merging examples
+Based on the above example of merging the FTL with the MIT license, more
+licenses are stepwise added, and the context diffs to the previous checklist are
+shown. The merging steps were
+* FTL + MIT
+* FTL + MIT + BSD-2-Clause
+* FTL + MIT + BSD-2-Clause + BSD-3-Clause
+* FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause
+
+#### Added BSD-2-Clause license
+```diff
+--- FTL+MIT.json  2023-11-05 11:54:33.259803561 +0100
++++ FTL+MIT+BSD-2-Clause.json 2023-11-05 11:54:56.564226921 +0100
+@@ -1,5 +1,5 @@
+ {
+-    "FTL|MIT": {
++    "FTL|MIT|BSD-2-Clause": {
+         "COPYLEFT CLAUSE": "No",
+         "PATENT HINTS": "No",
+         "USE CASE": {
+@@ -8,8 +8,11 @@
+                     "Credit FreeType Team",
+                     "Credit In Documentation FreeType Team",
+                     "Provide Copyright notices",
++                    "Provide Copyright notices In Documentation OR Distribution material",
+                     "Provide License text",
+-                    "Provide Warranty disclaimer"
++                    "Provide License text In Documentation OR Distribution material",
++                    "Provide Warranty disclaimer",
++                    "Provide Warranty disclaimer In Documentation OR Distribution material"
+                 ],
+                 "YOU MUST NOT": "Promote"
+             },
+@@ -24,6 +27,7 @@
+                     "Credit In Documentation FreeType Team",
+                     "Forward Copyright notices",
+                     "Forward License text",
++                    "Forward Warranty disclaimer",
+                     "Provide Copyright notices",
+                     "Provide License text",
+                     "Provide Warranty disclaimer"
+```
+#### Added BSD-3-Clause license
+Here, only the name of the combined license has changed, as the additional
+obligations of the BSD-3 clause license "Neither the name of the copyright
+holder nor the names of its contributors may be used to endorse or promote
+products derived from this software" (in checklist language: "YOU MUST NOT
+Promote") were already introduced in the combined input checklist by the FTL
+license.
+```diff
+--- FTL+MIT+BSD-2-Clause.json 2023-11-05 11:54:56.564226921 +0100
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause.json  2023-11-05 11:55:14.225547767 +0100
+@@ -1,5 +1,5 @@
+ {
+-    "FTL|MIT|BSD-2-Clause": {
++    "FTL|MIT|BSD-2-Clause|BSD-3-Clause": {
+         "COPYLEFT CLAUSE": "No",
+         "PATENT HINTS": "No",
+         "USE CASE": {
+```
+#### Added BSD-4-Clause license
+```diff
+--- FTL+MIT+BSD-2-Clause+BSD-3-Clause.json  2023-11-05 11:55:14.225547767 +0100
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json 2023-11-05 11:55:30.927851180 +0100
+@@ -1,9 +1,14 @@
+ {
+-    "FTL|MIT|BSD-2-Clause|BSD-3-Clause": {
++    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause": {
+         "COPYLEFT CLAUSE": "No",
+         "PATENT HINTS": "No",
+         "USE CASE": {
+             "Binary delivery": {
++                "IF": {
++                    "Advertisement": {
++                        "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
++                    }
++                },
+                 "YOU MUST": [
+                     "Credit FreeType Team",
+                     "Credit In Documentation FreeType Team",
+@@ -18,6 +23,9 @@
+             },
+             "Source code delivery": {
+                 "IF": {
++                    "Advertisement": {
++                        "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
++                    },
+                     "Software modification": {
+                         "YOU MUST": "Provide Modification report"
+                     }
+```
