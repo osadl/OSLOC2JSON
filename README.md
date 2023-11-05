@@ -346,6 +346,8 @@ shown. The merging steps were
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause + Apache-2.0
+If not for demonstation purposes, it would, of course, sufficient to only
+execute the last merge operation.
 
 #### Added BSD-2-Clause license
 ```diff
