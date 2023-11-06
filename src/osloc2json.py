@@ -124,17 +124,15 @@ def extend(l1, l2, new, devel):
             elif isinstance(v1, str) and isinstance(v2, list):
                 if k1 == k2:
                     if k1 not in new:
-                        v2copy = v2
-                        v2copy.append(v1)
-                        new[k1] = v2copy
+                        v2.append(v1)
+                        new[k1] = v2
                     else:
                         if isinstance(new[k1], str):
                             if new[k1] != v1:
                                 new[k1] = [new[k1], v1]
                             if new[k1] not in v2:
-                                v2copy = v2
-                                v2copy.append(new[k1])
-                                new[k1] = v2copy
+                                v2.append(new[k1])
+                                new[k1] = v2
                         elif isinstance(new[k1], list):
                             if v1 not in new[k1]:
                                 new[k1].append(v1)
@@ -162,9 +160,8 @@ def extend(l1, l2, new, devel):
                     else:
                         if isinstance(new[k2], str):
                             if new[k2] not in v2:
-                                v2copy = v2
-                                v2copy.append(new[k2])
-                                new[k2] = v2copy
+                                v2.append(new[k2])
+                                new[k2] = v2
                         elif isinstance(new[k2], list):
                             new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
@@ -191,15 +188,16 @@ def extend(l1, l2, new, devel):
                 else:
                     if isinstance(new[k2], str):
                         if new[k2] not in v2:
-                            v2copy = v2
-                            v2copy[k2] = {}
-                            new[k2] = v2copy
+                            v2[k2] = {}
+                            new[k2] = v2
                     elif isinstance(new[k2], list):
-                        newdict = {}
+                        for k in v2.keys():
+                            if k in new[k2]:
+                                new[k2].remove(k)
                         for v in new[k2]:
-                            newdict[v] = {}
-                        new[k2] = newdict
-                        new[k2] = extend(newdict, v2, new[k2], devel)
+                            if v not in v2:
+                                v2[v] = {}
+                        new[k2] = v2
                     elif isinstance(new[k2], dict):
                         if v2 != new[k2]:
                             new[k2] = extend(new[k2], v2, new[k2], devel)
@@ -214,10 +212,23 @@ def extend(l1, l2, new, devel):
                     else:
                         if k1 not in new:
                             new[k1] = v1 + v2
+                            new[k1] = sanitizelist(new[k1])
                         else:
-                            if isinstance(new[k1], list):
+                            if isinstance(new[k1], str):
+                                if devel:
+                                    print('t.b.d. str/list/list new[k1]', new[k1], k1, v1, v2)
+                            elif isinstance(new[k1], list):
                                 new[k1] += v1 + v2
-                        new[k1] = sanitizelist(new[k1])
+                                new[k1] = sanitizelist(new[k1])
+                            elif isinstance(new[k1], dict):
+                                newlist = v1 + v2
+                                newlist = sanitizelist(newlist)
+                                for k in new[k1].keys():
+                                    if k in newlist:
+                                        newlist.remove(k)
+                                for v in newlist:
+                                    if v not in new[k1]:
+                                        new[k1][v] = {}
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -229,9 +240,12 @@ def extend(l1, l2, new, devel):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            newdict = {}
-                            newdict[k1] = v1
-                            new[k1] = extend(new[k1], newdict, {}, devel)
+                            for k in new[k1].keys():
+                                if k in v1:
+                                    v1.remove(k)
+                            for v in v1:
+                                if v not in new[k1]:
+                                    new[k1][v] = {}
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -242,22 +256,23 @@ def extend(l1, l2, new, devel):
                             new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
-                            newdict = {}
-                            newdict[k2] = v2
-                            new[k2] = extend(new[k2], newdict, {}, devel)
+                            for k in new[k2].keys():
+                                if k in v2:
+                                    v2.remove(k)
+                            for v in v2:
+                                if v not in new[k2]:
+                                    new[k2][v] = {}
 
             elif isinstance(v1, list) and isinstance(v2, str):
                 if k1 == k2:
                     if k1 not in new:
-                        v1copy = v1
-                        v1copy.append(v2)
-                        new[k1] = v1copy
+                        v1.append(v2)
+                        new[k1] = v1
                     else:
                         if isinstance(new[k1], str):
                             if new[k1] not in v1:
-                                v1copy = v1
-                                v1copy.append(new[k1])
-                                new[k1] = v1copy
+                                v1.append(new[k1])
+                                new[k1] = v1
                             if new[k1] != v2:
                                 if isinstance(new[k1], str):
                                     new[k1] = [new[k1], v2]
@@ -269,25 +284,31 @@ def extend(l1, l2, new, devel):
                             if v2 not in new[k1]:
                                 new[k1].append(v2)
                         elif isinstance(new[k1], dict):
-                            newdict = {}
-                            newdict[k1] = v1
-                            new[k1] = extend(new[k1], newdict, new[k1], devel)
+                            v1.append(v2)
+                            for k in new[k1].keys():
+                                if k in v1:
+                                    v1.remove(k)
+                            for v in v1:
+                                if v not in new[k1]:
+                                    new[k1][v] = {}
                 else:
                     if k1 not in new:
                         new[k1] = v1
                     else:
                         if isinstance(new[k1], str):
                             if new[k1] not in v1:
-                                v1copy = v1
-                                v1copy.append(new[k1])
-                                new[k1] = v1copy
+                                v1.append(new[k1])
+                                new[k1] = v1
                         elif isinstance(new[k1], list):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            newdict = {}
-                            newdict[k1] = v1
-                            new[k1] = extend(new[k1], newdict, {}, devel)
+                            for k in new[k1].keys():
+                                if k in v1:
+                                    v1.remove(k)
+                            for v in v1:
+                                if v not in new[k1]:
+                                    new[k1][v] = {}
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -302,65 +323,62 @@ def extend(l1, l2, new, devel):
                                 new[k2][v2] = {}
 
             elif isinstance(v1, list) and isinstance(v2, dict):
-                listmatches = 0
-                for v in v1:
-                    if v in v2:
-                        listmatches += 1
-                skipv1 = (listmatches == len(v1))
-
                 if k1 == k2:
                     if k1 not in new:
-                        if not skipv1:
-                            newdict = {}
-                            newdict[k1] = v1
-                            new[k1] = extend(newdict, v2, new[k1], devel)
-                        else:
-                            new[k1] = v2
+                        for k in v2.keys():
+                            if k in v1:
+                                v1.remove(k)
+                        for v in v1:
+                            if v not in v2:
+                                v2[v] = {}
+                        new[k1] = v2
                     else:
                         if isinstance(new[k1], str):
                             if devel:
                                 print('t.b.d. str/list/dict new[k1]', new[k1], k1, v1)
                         elif isinstance(new[k1], list):
-                            newlist = new[k1]
-                            if not skipv1:
-                                newlist += v1
-                                newlist = sanitizelist(newlist)
-                            newdict = {}
-                            newdict[k1] = newlist
-                            new[k1] = newdict
-                            new[k1] = extend(newdict, v2, new[k1], devel)
+                            newlist = new[k1] + v1
+                            newlist = sanitizelist(newlist)
+                            for k in v2.keys():
+                                if k in newlist:
+                                    newlist.remove(k)
+                            for v in newlist:
+                                if v not in v2:
+                                    v2[v] = {}
+                            new[k1] = v2
                         if isinstance(new[k1], dict):
-                            if not skipv1:
-                                newdict = {}
-                                newdict[k1] = v1
-                                new[k1] = extend(newdict, v2, new[k1], devel)
-                            else:
-                                new[k1] = v2
+                            for k in new[k1].keys():
+                                if k in v1:
+                                    v1.remove(k)
+                            for k in v2.keys():
+                                if k in v1:
+                                    v1.remove(k)
+                            for v in v1:
+                                if v not in v2:
+                                    v2[v] = {}
+                            new[k1] = extend(new[k1], v2, new[k1], devel)
                 else:
-                    if not skipv1:
-                        if k1 not in new:
-                            new[k1] = v1
-                        else:
-                            if isinstance(new[k1], str):
-                                if new[k1] not in v1:
-                                    v1copy = v1
-                                    v1copy.append(new[k1])
-                                    new[k1] = v1copy
-                            elif isinstance(new[k1], list):
-                                new[k1] += v1
-                                new[k1] = sanitizelist(new[k1])
-                            elif isinstance(new[k1], dict):
-                                newdict = {}
-                                newdict[k1] = v1
-                                new[k1] = extend(new[k1], newdict, new[k1], devel)
+                    if k1 not in new:
+                        new[k1] = v1
+                    else:
+                        if isinstance(new[k1], str):
+                            if new[k1] not in v1:
+                                v1.append(new[k1])
+                                new[k1] = v1
+                        elif isinstance(new[k1], list):
+                            new[k1] += v1
+                            new[k1] = sanitizelist(new[k1])
+                        elif isinstance(new[k1], dict):
+                            newdict = {}
+                            newdict[k1] = v1
+                            new[k1] = extend(new[k1], newdict, new[k1], devel)
                     if k2 not in new:
                         new[k2] = v2
                     else:
                         if isinstance(new[k2], str):
                             if new[k2] not in v2:
-                                v2copy = v2
-                                v2copy[k2] = {}
-                                new[k2] = v2copy
+                                v2[k2] = {}
+                                new[k2] = v2
                         elif isinstance(new[k2], list):
                             newdict = {}
                             for v in new[k2]:
@@ -376,18 +394,35 @@ def extend(l1, l2, new, devel):
                     if v1 == v2:
                         if k1 not in new:
                             new[k1] = v1
+                        else:
+                            if isinstance(new[k1], str):
+                                if devel:
+                                    print('t.b.d. str/dict new[k1]', new[k1], k1, v1)
+                            elif isinstance(new[k1], list):
+                                if devel:
+                                    print('t.b.d. list/dict new[k1]', new[k1], k1, v1)
+                            elif isinstance(new[k1], dict):
+                                new[k1] = extend(new[k1], v1, new[k1], devel)
                     else:
                         if k1 not in new:
                             new[k1] = {}
-                        new[k1] = extend(v1, v2, new[k1], devel)
+                            new[k1] = extend(v1, v2, new[k1], devel)
+                        else:
+                            if isinstance(new[k1], str):
+                                if devel:
+                                    print('t.b.d. str/dict/dict new[k1]', new[k1], k1, v1, v2)
+                            elif isinstance(new[k1], list):
+                                if devel:
+                                    print('t.b.d. list/dict/dict new[k1]', new[k1], k1, v1, v2)
+                            elif isinstance(new[k1], dict):
+                                 new[k1] = extend(v1, v2, new[k1], devel)
                 else:
                     if k1 not in new:
                         new[k1] = v1
                     if isinstance(new[k1], str):
                         if new[k1] not in v1:
-                            v1copy = v2
-                            v1copy[k1] = {}
-                            new[k1] = v1copy
+                            v2[k1] = {}
+                            new[k1] = v2
                     elif isinstance(new[k1], list):
                         newdict = {}
                         for v in new[k1]:
@@ -401,9 +436,8 @@ def extend(l1, l2, new, devel):
                         new[k2] = v2
                     if isinstance(new[k2], str):
                         if new[k2] not in v2:
-                            v2copy = v2
-                            v2copy[k2] = {}
-                            new[k2] = v2copy
+                            v2[k2] = {}
+                            new[k2] = v2
                     elif isinstance(new[k2], list):
                         newdict = {}
                         for v in new[k2]:
@@ -420,9 +454,8 @@ def extend(l1, l2, new, devel):
                 else:
                     if isinstance(new[k1], str):
                         if new[k1] not in v1:
-                            v1copy = v1
-                            v1copy[new[k1]] = {}
-                            new[k1] = v1copy
+                            v1[new[k1]] = {}
+                            new[k1] = v1
                     elif isinstance(new[k1], list):
                         newdict = {}
                         for v in new[k1]:
@@ -446,49 +479,45 @@ def extend(l1, l2, new, devel):
                             new[k2][v2] = {}
 
             elif isinstance(v1, dict) and isinstance(v2, list):
-                listmatches = 0
-                for v in v2:
-                    if v in v1:
-                        listmatches += 1
-                skipv2 = (listmatches == len(v2))
-
                 if k1 == k2:
                     if k1 not in new:
-                        if not skipv2:
-                            newdict = {}
-                            newdict[k1] = v2
-                            new[k1] = extend(v1, newdict, new[k1], devel)
-                        else:
-                            new[k1] = v1
+                        newdict = {}
+                        newdict[k1] = v2
+                        new[k1] = extend(v1, newdict, new[k1], devel)
+                        new[k1] = v1
                     else:
                         if isinstance(new[k1], str):
                             if devel:
                                 print('t.b.d. str/list/dict new[k1]', new[k1], k1, v1)
                         elif isinstance(new[k1], list):
-                            newlist = new[k1]
-                            if not skipv2:
-                                newlist += v2
-                                newlist = sanitizelist(newlist)
-                            newdict = {}
-                            newdict[k1] = newlist
-                            new[k1] = newdict
-                            new[k1] = extend(v1, newdict, new[k1], devel)
+                            newlist = new[k1] + v2
+                            newlist = sanitizelist(newlist)
+                            for k in v1.keys():
+                                if k in newlist:
+                                    newlist.remove(k)
+                            for v in newlist:
+                                if v not in v1:
+                                    v1[v] = {}
+                            new[k1] = v1
                         if isinstance(new[k1], dict):
-                            if not skipv2:
-                                newdict = {}
-                                newdict[k1] = v2
-                                new[k1] = extend(v1, newdict, new[k1], devel)
-                            else:
-                                new[k1] = v1
+                            for k in new[k1].keys():
+                                if k in v2:
+                                    v2.remove(k)
+                            for k in v1.keys():
+                                if k in v2:
+                                    v2.remove(k)
+                            for v in v2:
+                                if v not in v1:
+                                    v1[v] = {}
+                            new[k1] = extend(new[k1], v1, new[k1], devel)
                 else:
                     if k1 not in new:
                         new[k1] = v1
                     else:
                         if isinstance(new[k1], str):
                             if new[k1] not in v1:
-                                v1copy = v1
-                                v1copy[new[k1]] = {}
-                                new[k1] = v1copy
+                                v1[new[k1]] = {}
+                                new[k1] = v1
                         elif isinstance(new[k1], list):
                             newdict = {}
                             for v in new[k1]:
@@ -498,22 +527,20 @@ def extend(l1, l2, new, devel):
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
                                 new[k1] = extend(new[k1], v1, new[k1], devel)
-                    if not skipv2:
-                        if k2 not in new:
-                            new[k2] = v2
-                        else:
-                            if isinstance(new[k2], str):
-                                if new[k2] not in v2:
-                                    v2copy = v2
-                                    v2copy.append(new[k2])
-                                    new[k2] = v2copy
-                            elif isinstance(new[k2], list):
-                                new[k2] += v2
-                                new[k2] = sanitizelist(new[k2])
-                            elif isinstance(new[k2], dict):
-                                newdict = {}
-                                newdict[k2] = v2
-                                new[k2] = extend(new[k2], newdict, new[k2], devel)
+                    if k2 not in new:
+                        new[k2] = v2
+                    else:
+                        if isinstance(new[k2], str):
+                            if new[k2] not in v2:
+                                v2.append(new[k2])
+                                new[k2] = v2
+                        elif isinstance(new[k2], list):
+                            new[k2] += v2
+                            new[k2] = sanitizelist(new[k2])
+                        elif isinstance(new[k2], dict):
+                            newdict = {}
+                            newdict[k2] = v2
+                            new[k2] = extend(new[k2], newdict, new[k2], devel)
 
     return new
 
@@ -781,13 +808,14 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 optjson(new)
             if len(copyleft_licenses) > 0:
                 new['COPYLEFT LICENSES'] = copyleft_licenses
-            names = mergednames.split('|')
-            incompatible_licenses = []
-            for license in names:
-                if license in new['INCOMPATIBILITY']:
-                    incompatible_licenses.append(license)
-            if len(incompatible_licenses) > 0:
-                new['INCOMPATIBLE LICENSES'] = incompatible_licenses
+            if 'INCOMPATIBILITY' in new:
+                incompatible_licenses = []
+                names = mergednames.split('|')
+                for license in names:
+                    if license in new['INCOMPATIBILITY']:
+                        incompatible_licenses.append(license)
+                if len(incompatible_licenses) > 0:
+                    new['INCOMPATIBLE LICENSES'] = incompatible_licenses
             alljsondata[mergednames] = new
         else:
             alljsondata['OSADL OSLOC'] = jsondata
