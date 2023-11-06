@@ -174,36 +174,62 @@ def extend(l1, l2, new, devel):
                                     new[k2][v] = {}
 
             elif isinstance(v1, str) and isinstance(v2, dict):
-                if k1 not in new:
-                    new[k1] = v1
+                if k1 == k2:
+                    if k1 not in new:
+                        if v1 not in v2:
+                            v2[v1] = {}
+                        new[k1] = v2
+                    else:
+                        if isinstance(new[k1], str):
+                            if new[k1] not in v2:
+                                v2[new[k1]] = {}
+                            if v1 not in v2:
+                                v2[v1] = {}
+                            new[k1] = v2
+                        elif isinstance(new[k1], list):
+                            if v1 not in new[k1]:
+                                new[k1].append(v1)
+                            for k in v2.keys():
+                                if k in new[k1]:
+                                    new[k1].remove(k)
+                            for v in new[k1]:
+                                if v not in v2:
+                                    v2[v] = {}
+                        elif isinstance(new[k1], dict):
+                            if v1 not in v2:
+                                v2[v1] = {}
+                            new[k1] = extend(new[k1], v2, new[k1], devel)
                 else:
-                    if isinstance(new[k1], str):
-                        if new[k1] != v1:
-                            new[k1] = [new[k1], v1]
-                    elif isinstance(new[k1], list):
-                        if v1 not in new[k1]:
-                            new[k1].append(v1)
-                    elif isinstance(new[k1], dict):
-                        if v1 not in new[k1]:
-                            new[k1][v1] = {}
-                if k2 not in new:
-                    new[k2] = v2
-                else:
-                    if isinstance(new[k2], str):
-                        if new[k2] not in v2:
-                            v2[k2] = {}
-                            new[k2] = v2
-                    elif isinstance(new[k2], list):
-                        for k in v2.keys():
-                            if k in new[k2]:
-                                new[k2].remove(k)
-                        for v in new[k2]:
-                            if v not in v2:
-                                v2[v] = {}
+                    if k1 not in new:
+                        new[k1] = v1
+                    else:
+                        if isinstance(new[k1], str):
+                            if new[k1] != v1:
+                                new[k1] = [new[k1], v1]
+                        elif isinstance(new[k1], list):
+                            if v1 not in new[k1]:
+                                new[k1].append(v1)
+                        elif isinstance(new[k1], dict):
+                            if v1 not in new[k1]:
+                                new[k1][v1] = {}
+                    if k2 not in new:
                         new[k2] = v2
-                    elif isinstance(new[k2], dict):
-                        if v2 != new[k2]:
-                            new[k2] = extend(new[k2], v2, new[k2], devel)
+                    else:
+                        if isinstance(new[k2], str):
+                            if new[k2] not in v2:
+                                v2[k2] = {}
+                                new[k2] = v2
+                        elif isinstance(new[k2], list):
+                            for k in v2.keys():
+                                if k in new[k2]:
+                                    new[k2].remove(k)
+                            for v in new[k2]:
+                                if v not in v2:
+                                    v2[v] = {}
+                            new[k2] = v2
+                        elif isinstance(new[k2], dict):
+                            if v2 != new[k2]:
+                                new[k2] = extend(new[k2], v2, new[k2], devel)
 
             elif isinstance(v1, list) and isinstance(v2, list):
                 v1 = sanitizelist(v1)
