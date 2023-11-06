@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# This software is licensed under GPL-3.0
+# This software is licensed under GPL-3.0xsfor k
 # Copyright (c) 2023 Open Source Automation Development Lab (OSADL) eG <info@osadl.org>
 # Author Carsten Emde <C.Emde@osadl.org>
 
@@ -66,6 +66,15 @@ def getinstance(v):
         return 'list'
     elif isinstance(v, dict):
         return 'dict'
+
+def list2dict(l, d):
+    for k in d.keys():
+        if k in l:
+            l.remove(k)
+    for v in l:
+        if v not in d:
+            d[v] = {}
+    return d
 
 def extend(l1, l2, new, devel):
     for k1, v1 in l1.copy().items():
@@ -139,8 +148,14 @@ def extend(l1, l2, new, devel):
                             new[k1] += v2
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            if devel:
-                                print('t.b.d. str/list/dict new[k1]', new[k1], k1, v1, v2)
+                            if v1 not in v2:
+                                v2.append(v1)
+                            for k in new[k1].keys():
+                                if k in v2:
+                                    v2.remove(k)
+                            for v in v2:
+                                if v not in new[k1]:
+                                    new[k1][v] = {}
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -195,6 +210,7 @@ def extend(l1, l2, new, devel):
                             for v in new[k1]:
                                 if v not in v2:
                                     v2[v] = {}
+                            new[k1] = v2
                         elif isinstance(new[k1], dict):
                             if v1 not in v2:
                                 v2[v1] = {}
@@ -412,11 +428,13 @@ def extend(l1, l2, new, devel):
                                 v2[k2] = {}
                                 new[k2] = v2
                         elif isinstance(new[k2], list):
-                            newdict = {}
+                            for k in v2.keys():
+                                if k in new[k2]:
+                                    new[k2].remove(k)
                             for v in new[k2]:
-                                newdict[v] = {}
-                            new[k2] = newdict
-                            new[k2] = extend(newdict, v2, new[k2], devel)
+                                if v not in v2:
+                                    v2[v] = {}
+                            new[k2] = v2
                         elif isinstance(new[k2], dict):
                             if v2 != new[k2]:
                                 new[k2] = extend(new[k2], v2, new[k2], devel)
@@ -462,6 +480,7 @@ def extend(l1, l2, new, devel):
                         for v in new[k1]:
                             if v not in v1:
                                 v1[v] = {}
+                        new[k1] = v1
                     elif isinstance(new[k1], dict):
                         if v1 != new[k1]:
                             new[k1] = extend(new[k1], v1, new[k1], devel)
@@ -478,6 +497,7 @@ def extend(l1, l2, new, devel):
                         for v in new[k2]:
                             if v not in v2:
                                 v2[v] = {}
+                        new[k2] = v2
                     elif isinstance(new[k2], dict):
                         if v2 != new[k2]:
                             new[k2] = extend(new[k2], v2, new[k2], devel)
@@ -503,6 +523,7 @@ def extend(l1, l2, new, devel):
                             for v in new[k1]:
                                 if v not in v1:
                                     v1[v] = {}
+                            new[k1] = v1
                         elif isinstance(new[k1], dict):
                             if v2 not in v1:
                                 v1[v2] = {}
@@ -522,6 +543,7 @@ def extend(l1, l2, new, devel):
                             for v in new[k1]:
                                 if v not in v1:
                                     v1[v] = {}
+                            new[k1] = v1
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
                                 new[k1] = extend(new[k1], v1, new[k1], devel)
@@ -585,6 +607,7 @@ def extend(l1, l2, new, devel):
                             for v in new[k1]:
                                 if v not in v1:
                                     v1[v] = {}
+                            new[k1] = v1
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
                                 new[k1] = extend(new[k1], v1, new[k1], devel)
