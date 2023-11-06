@@ -36,7 +36,8 @@ def expandor(d, parent):
                     for k1 in k.split(' OR '):
                         d[k1] = v
                     d.pop(k)
-                expandor(v, k)
+                if len(v) > 0:
+                    expandor(v, k)
 
 def printdict(d):
     for k, v in d.items():
@@ -226,8 +227,9 @@ def extend(l1, l2, new, devel):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            if devel:
-                                print('t.b.d. dict/list new[k1]', new[k1], k1, v1)
+                            newdict = {}
+                            newdict[k1] = v1
+                            new[k1] = extend(new[k1], newdict, {}, devel)
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -265,8 +267,9 @@ def extend(l1, l2, new, devel):
                             if v2 not in new[k1]:
                                 new[k1].append(v2)
                         elif isinstance(new[k1], dict):
-                            if devel:
-                                print('t.b.d. str/list/dict new[k1]', new[k1], k1, v1, v2)
+                            newdict = {}
+                            newdict[k1] = v1
+                            new[k1] = extend(new[k1], newdict, new[k1], devel)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -280,8 +283,9 @@ def extend(l1, l2, new, devel):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            if devel:
-                                print('t.b.d. dict/str new[k1]', new[k1], k1, v1)
+                            newdict = {}
+                            newdict[k1] = v1
+                            new[k1] = extend(new[k1], newdict, {}, devel)
                     if k2 not in new:
                         new[k2] = v2
                     else:
