@@ -337,6 +337,35 @@ Without the option to expand OR-ed conditions the merged checklist would look li
 ```
 which would be rather meaningless.
 
+### Additional keys available when in merge mode
+In merge mode, two additional keys may be added, if appropriate
+
+#### Licenses with copyleft clause
+A list of names of licenses with copyleft clause, if any, will be added under
+the key 'COPYLEFT LICENSES' such as
+```json
+{
+    "COPYLEFT LICENSES": [
+        "AGPL-3.0-or-later",
+        "CDDL-1.1",
+        "CPL-1.0"
+    ]
+}
+```
+
+#### Incompatible licenses
+If licenses are found that are incompatible to any of the licenses of the current
+merge set, a list of them will be added under the key 'INCOMPATIBLE LICENSES' such as
+```json
+{
+    "INCOMPATIBLE LICENSES": [
+        "FTL",
+        "BSD-4-Clause",
+        "Apache-2.0"
+    ]
+}
+```
+
 ### Some more merging examples
 Based on the above example of merging the FTL with the MIT license, more
 licenses are stepwise added, and the context diffs to the previous checklist are
@@ -347,7 +376,7 @@ shown. The merging steps were
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause
 * FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause + Apache-2.0
 
-If not for demonstation purposes, it would, of course, sufficient to only
+If not for demonstation purposes, it would, of course, be sufficient to only
 execute the last merge operation.
 
 #### Added BSD-2-Clause license
