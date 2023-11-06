@@ -338,11 +338,11 @@ Without the option to expand OR-ed conditions the merged checklist would look li
 which would be rather meaningless.
 
 ### Additional keys available when in merge mode
-In merge mode, two additional keys may be added, if appropriate
+In merge mode, two additional keys may be added, if appropriate.
 
 #### Licenses with copyleft clause
 A list of names of licenses with copyleft clause, if any, will be added under
-the key 'COPYLEFT LICENSES' such as
+the key 'COPYLEFT LICENSES' such as:
 ```json
 {
     "COPYLEFT LICENSES": [
@@ -354,8 +354,9 @@ the key 'COPYLEFT LICENSES' such as
 ```
 
 #### Incompatible licenses
-If licenses are found that are incompatible to any of the licenses of the current
-merge set, a list of them will be added under the key 'INCOMPATIBLE LICENSES' such as
+If licenses are found that are incompatible to any of the licenses of the
+current merge set, a list of them will be added under the key 'INCOMPATIBLE
+LICENSES' such as:
 ```json
 {
     "INCOMPATIBLE LICENSES": [
