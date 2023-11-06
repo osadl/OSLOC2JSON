@@ -371,11 +371,11 @@ LICENSES' such as:
 Based on the above example of merging the FTL with the MIT license, more
 licenses are stepwise added, and the context diffs to the previous checklist are
 shown. The merging steps were
-* FTL + MIT
-* FTL + MIT + BSD-2-Clause
-* FTL + MIT + BSD-2-Clause + BSD-3-Clause
-* FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause
-* FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause + Apache-2.0
+* [FTL + MIT](https://github.com/osadl/OSLOC2JSON/blob/main/examples/FTL%2BMIT.json)
+* [FTL + MIT + BSD-2-Clause](https://github.com/osadl/OSLOC2JSON/blob/main/examples/FTL%2BMIT%2BBSD-2-Clause.json)
+* [FTL + MIT + BSD-2-Clause + BSD-3-Clause](https://github.com/osadl/OSLOC2JSON/blob/main/examples/FTL%2BMIT%2BBSD-2-Clause%2BBSD-3-Clause.json)
+* [FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause](https://github.com/osadl/OSLOC2JSON/blob/main/examples/FTL%2BMIT%2BBSD-2-Clause%2BBSD-3-Clause%2BBSD-4-Clause.json)
+* [FTL + MIT + BSD-2-Clause + BSD-3-Clause + BSD-4-Clause + Apache-2.0](https://github.com/osadl/OSLOC2JSON/blob/main/examples/FTL%2BMIT%2BBSD-2-Clause%2BBSD-3-Clause%2BBSD-4-Clause%2BApache-2.0.json)
 
 If not for demonstation purposes, it would, of course, be sufficient to only
 execute the last merge operation.
