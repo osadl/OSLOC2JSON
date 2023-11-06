@@ -757,15 +757,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
     if licenses > 1:
         alljsondata = {}
         if merge:
-            copylefts = 0
             new = {}
+            copyleft_licenses = []
             mergednames = ''
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
                 if 'COPYLEFT CLAUSE' not in licensedata:
                     licensedata['COPYLEFT CLAUSE'] = 'No'
                 else:
-                    copylefts += 1
+                    copyleft_licenses.append(licensename)
                 if 'PATENT HINTS' not in licensedata:
                     licensedata['PATENT HINTS'] = 'No'
                 if mergednames == '':
@@ -779,8 +779,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
             if optimize:
                 optjson(new)
-            if copylefts > 0:
-                new['COPYLEFT CLAUSE COUNT'] = copylefts
+            if len(copyleft_licenses) > 0:
+                new['COPYLEFT LICENSES'] = copyleft_licenses
+            names = mergednames.split('|')
+            incompatible_licenses = []
+            for license in names:
+                if license in new['INCOMPATIBILITY']:
+                    incompatible_licenses.append(license)
+            if len(incompatible_licenses) > 0:
+                new['INCOMPATIBLE LICENSES'] = incompatible_licenses
             alljsondata[mergednames] = new
         else:
             alljsondata['OSADL OSLOC'] = jsondata
