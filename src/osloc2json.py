@@ -797,7 +797,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
             elif line[0:13] == 'COMPATIBILITY':
                 tag = line[0:13]
             elif line[0:23] == 'DEPENDING COMPATIBILITY':
-                tag = line[0:24]
+                tag = line[0:23]
             elif line[0:15] == 'INCOMPATIBILITY':
                 tag = line[0:15]
             else:
