@@ -4,7 +4,7 @@
 * [Command line options](#command-line-options)
 * [Disclaimer](#disclaimer)
 * [Examples how to use the software](#examples-how-to-use-the-software)
-  * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to json-format)
+  * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to-json-format)
   * [Optimization](#optimization)
   * [Merging](#merging)
     * [Extending OR-linked conditions](#extending-or-linked-conditions)
