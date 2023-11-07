@@ -1,5 +1,25 @@
 # OSLOC2JSON
 
+* [Purpose](#purpose)
+* [Command line options](#command-line-options)
+* [Disclaimer](#disclaimer)
+* [Examples how to use the software](#examples-how-to-use-the-software)
+  * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to json-format)
+  * [Optimization](#optimization)
+  * [Merging](#merging)
+    * [Extending OR-linked conditions](#extending-or-linked-conditions)
+  * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
+    * [Licenses with copyleft clause](#licenses-with-copyleft-clause)
+    * [Incompatible licenses](#incompatible-licenses)
+  * [Some more merging examples](#some-more-merging-examples)
+    * [Added BSD-2-Clause license](#added-bsd-2-clause-license)
+    * [Added BSD-3-Clause license](#added-bsd-3-clause-license)
+    * [Added BSD-4-Clause license](#added-bsd-4-clause-license)
+    * [Added Apache-2.0 license](#added-apache-2.0-license)
+  * [Merging limitations](#merging-limitations)
+    * [Merging copyleft licenses](#merging-copyleft-licenses)
+    * [License compatibility](#license-compatibility)
+
 ## Purpose
 Convert Open Source License Obligations Checklist to JSON format
 
@@ -540,3 +560,95 @@ license.
                  },
                  "YOU MUST": [
 ```
+
+### Merging limitations
+#### Merging copyleft licenses
+The more licenses are similar, the better the merging works. This is usually the
+case with permissive licenses, as shown in the examples above, and with derived
+or otherwise similar copyleft licenses. For example, merging the two copyleft
+licenses GPL-3.0-only and AGPL-3.0-only results in a comprehensive combined
+checklist, and the context diff between the GPL-3.0-only and the merged
+checklist clearly shows that the additional obligation of AGPL-3.0-only is
+imposed when the use of the software is offered as a network service.
+```diff
+--- ../unreflicenses/GPL-3.0-only-opt.json  2023-11-07 10:06:26.756383342 +0100
++++ merged.json 2023-11-07 11:17:35.439227074 +0100
+@@ -1,6 +1,7 @@
+ {
+-    "GPL-3.0-only": {
++    "GPL-3.0-only|AGPL-3.0-only": {
+         "COMPATIBILITY": [
++            "AGPL-3.0-or-later",
+             "Apache-2.0",
+             "Artistic-2.0",
+             "blessing",
+@@ -40,10 +41,22 @@
+             "ZPL-2.0"
+         ],
+         "COPYLEFT CLAUSE": "Yes",
++        "COPYLEFT LICENSES": [
++            "GPL-3.0-only",
++            "AGPL-3.0-only"
++        ],
+         "DEPENDING COMPATIBILITY": [
+             "AGPL-3.0-only",
+             "AGPL-3.0-or-later",
++            "GPL-1.0-or-later",
++            "GPL-2.0-or-later",
++            "GPL-3.0-only",
++            "GPL-3.0-or-later",
++            "LGPL-2.1-only",
++            "LGPL-2.1-or-later",
++            "LGPL-3.0-only",
++            "LGPL-3.0-or-later"
+         ],
+         "INCOMPATIBILITY": [
+             "Apache-1.0",
+@@ -164,7 +177,10 @@
+                     }
+                 },
+                 "IF": {
+-                    "Combined work With AGPL-3.0-only OR AGPL-3.0-or-later": {
++                    "AGPL-3.0-or-later": {
++                        "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
++                    },
++                    "Combined work With AGPL-3.0-only": {
+                         "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
+                     },
+                     "Software modification": {
+@@ -237,9 +253,27 @@
+                     "Sublicense": {}
+                 }
+             },
++            "Network service": {
++                "IF": {
++                    "Software modification": {
++                        "YOU MUST": {
++                            "Provide Source code": {
++                                "ATTRIBUTE": [
++                                    "Customary method",
++                                    "No charges",
++                                    "Via Internet"
++                                ]
++                            }
++                        }
++                    }
++                }
++            },
+             "Source code delivery": {
+                 "IF": {
+-                    "Combined work With AGPL-3.0-only OR AGPL-3.0-or-later": {
++                    "AGPL-3.0-or-later": {
++                        "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
++                    },
++                    "Combined work With AGPL-3.0-only": {
+                         "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
+                     },
+                     "Software modification": {
+```
+#### License compatibility 
+While it makes sense to specify the cumulative incompatible licenses, the
+accumulation of compatible or conditionally compatible licenses does not provide
+a useful result, as at best the lack of compatibility of an added license would
+have to be assessed. It is planned to implement this in a future version of this
+software.
