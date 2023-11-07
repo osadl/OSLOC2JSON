@@ -12,7 +12,10 @@
     * [Merging limitations](#merging-limitations)
 
 ## Purpose
-Convert Open Source License Obligations Checklist to JSON format
+Convert the [OSADL Open Source License Obligations
+Checklists](https://www.osadl.org/OSLOC) into JSON format and provide functions
+for evaluating license obligations with each other, such as generating joint
+checklists of several licenses.
 
 ## Command line options
 ```bash
