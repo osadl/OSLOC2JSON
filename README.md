@@ -7,18 +7,9 @@
   * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to-json-format)
   * [Optimization](#optimization)
   * [Merging](#merging)
-    * [Extending OR-linked conditions](#extending-or-linked-conditions)
-  * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
-    * [Licenses with copyleft clause](#licenses-with-copyleft-clause)
-    * [Incompatible licenses](#incompatible-licenses)
-  * [Some more merging examples](#some-more-merging-examples)
-    * [Added BSD-2-Clause license](#added-bsd-2-clause-license)
-    * [Added BSD-3-Clause license](#added-bsd-3-clause-license)
-    * [Added BSD-4-Clause license](#added-bsd-4-clause-license)
-    * [Added Apache-2.0 license](#added-apache-2.0-license)
-  * [Merging limitations](#merging-limitations)
-    * [Merging copyleft licenses](#merging-copyleft-licenses)
-    * [License compatibility](#license-compatibility)
+    * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
+    * [Some more merging examples](#some-more-merging-examples)
+    * [Merging limitations](#merging-limitations)
 
 ## Purpose
 Convert Open Source License Obligations Checklist to JSON format
