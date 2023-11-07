@@ -272,8 +272,13 @@ checklist:
     }
 }
 ```
-This can be further illustrated in the context diff between the original FTL and
-the FTL/MIT merged checklist:
+The above checklist was generated with the command
+```bash
+osloc2json.py -emo FTL.txt MIT.txt
+```
+The effect of merging the MIT with the FTL license obligations checklist can be
+further illustrated in the context diff between the original FTL and the FTL/MIT
+merged checklist:
 ```diff
 --- ../OSLOC/unreflicenses/FTL-opt.json 2023-11-04 00:55:05.376730567 +0100
 +++ merged.json 2023-11-04 00:50:35.531616943 +0100
