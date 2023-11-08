@@ -76,11 +76,13 @@ def list2dict(l, d):
             d[v] = {}
     return d
 
-def extend(l1, l2, new, devel):
+def extend(l1, l2, new, devel, chain1, chain2):
     for k1, v1 in l1.copy().items():
+        chain1.append(k1)
         for k2, v2 in l2.copy().items():
+            chain2.append(k2)
             if isinstance(v1, str) and isinstance(v2, str):
-                if k1 == k2:
+                if chain1 == chain2:
                     if v1 == v2:
                         if k1 not in new:
                             new[k1] = v1
@@ -131,7 +133,7 @@ def extend(l1, l2, new, devel):
                                 new[k2][v2] = {}
 
             elif isinstance(v1, str) and isinstance(v2, list):
-                if k1 == k2:
+                if chain1 == chain2:
                     if k1 not in new:
                         v2.append(v1)
                         new[k1] = v2
@@ -169,7 +171,7 @@ def extend(l1, l2, new, devel):
                         elif isinstance(new[k1], dict):
                             newdict = {}
                             newdict[v1] = {}
-                            new[k1] = extend(new[k1], newdict, new[k1], devel)
+                            new[k1] = extend(new[k1], newdict, new[k1], devel, chain1, chain2)
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -189,7 +191,7 @@ def extend(l1, l2, new, devel):
                                     new[k2][v] = {}
 
             elif isinstance(v1, str) and isinstance(v2, dict):
-                if k1 == k2:
+                if chain1 == chain2:
                     if k1 not in new:
                         if v1 not in v2:
                             v2[v1] = {}
@@ -214,7 +216,7 @@ def extend(l1, l2, new, devel):
                         elif isinstance(new[k1], dict):
                             if v1 not in v2:
                                 v2[v1] = {}
-                            new[k1] = extend(new[k1], v2, new[k1], devel)
+                            new[k1] = extend(new[k1], v2, new[k1], devel, chain1, chain2)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -245,15 +247,30 @@ def extend(l1, l2, new, devel):
                             new[k2] = v2
                         elif isinstance(new[k2], dict):
                             if v2 != new[k2]:
-                                new[k2] = extend(new[k2], v2, new[k2], devel)
+                                new[k2] = extend(new[k2], v2, new[k2], devel, chain1, chain2)
 
             elif isinstance(v1, list) and isinstance(v2, list):
                 v1 = sanitizelist(v1)
                 v2 = sanitizelist(v2)
-                if k1 == k2:
+                if chain1 == chain2:
                     if v1 == v2:
                         if k1 not in new:
                             new[k1] = v1
+                        else:
+                            if isinstance(new[k1], str):
+                                if new[k1] not in v1:
+                                    v1.append(new[k1])
+                                    new[k1] = v1
+                            elif isinstance(new[k1], list):
+                                new[k1] += v1
+                                new[k1] = sanitizelist(new[k1])
+                            elif isinstance(new[k1], dict):
+                                for k in new[k1].keys():
+                                    if k in v1:
+                                        v1.remove(k)
+                                for v in v1:
+                                    if v not in new[k1]:
+                                        new[k1][v] = {}
                     else:
                         if k1 not in new:
                             new[k1] = v1 + v2
@@ -309,7 +326,7 @@ def extend(l1, l2, new, devel):
                                     new[k2][v] = {}
 
             elif isinstance(v1, list) and isinstance(v2, str):
-                if k1 == k2:
+                if chain1 == chain2:
                     if k1 not in new:
                         v1.append(v2)
                         new[k1] = v1
@@ -368,7 +385,7 @@ def extend(l1, l2, new, devel):
                                 new[k2][v2] = {}
 
             elif isinstance(v1, list) and isinstance(v2, dict):
-                if k1 == k2:
+                if chain1 == chain2:
                     if k1 not in new:
                         for k in v2.keys():
                             if k in v1:
@@ -401,7 +418,7 @@ def extend(l1, l2, new, devel):
                             for v in v1:
                                 if v not in v2:
                                     v2[v] = {}
-                            new[k1] = extend(new[k1], v2, new[k1], devel)
+                            new[k1] = extend(new[k1], v2, new[k1], devel, chain1, chain2)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -437,10 +454,10 @@ def extend(l1, l2, new, devel):
                             new[k2] = v2
                         elif isinstance(new[k2], dict):
                             if v2 != new[k2]:
-                                new[k2] = extend(new[k2], v2, new[k2], devel)
+                                new[k2] = extend(new[k2], v2, new[k2], devel, chain1, chain2)
 
             elif isinstance(v1, dict) and isinstance(v2, dict):
-                if k1 == k2:
+                if chain1 == chain2:
                     if v1 == v2:
                         if k1 not in new:
                             new[k1] = v1
@@ -452,11 +469,11 @@ def extend(l1, l2, new, devel):
                                 if devel:
                                     print('t.b.d. list/dict new[k1]', new[k1], k1, v1)
                             elif isinstance(new[k1], dict):
-                                new[k1] = extend(new[k1], v1, new[k1], devel)
+                                new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
                     else:
                         if k1 not in new:
                             new[k1] = {}
-                            new[k1] = extend(v1, v2, new[k1], devel)
+                            new[k1] = extend(v1, v2, new[k1], devel, chain1, chain2)
                         else:
                             if isinstance(new[k1], str):
                                 if devel:
@@ -465,7 +482,7 @@ def extend(l1, l2, new, devel):
                                 if devel:
                                     print('t.b.d. list/dict/dict new[k1]', new[k1], k1, v1, v2)
                             elif isinstance(new[k1], dict):
-                                 new[k1] = extend(v1, v2, new[k1], devel)
+                                 new[k1] = extend(v1, v2, new[k1], devel, chain1, chain2)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -482,8 +499,8 @@ def extend(l1, l2, new, devel):
                                 v1[v] = {}
                         new[k1] = v1
                     elif isinstance(new[k1], dict):
-                        if v1 != new[k1]:
-                            new[k1] = extend(new[k1], v1, new[k1], devel)
+                        if v1 != new[k1] and chain1 == chain2:
+                            new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
                     if k2 not in new:
                         new[k2] = v2
                     if isinstance(new[k2], str):
@@ -499,11 +516,11 @@ def extend(l1, l2, new, devel):
                                 v2[v] = {}
                         new[k2] = v2
                     elif isinstance(new[k2], dict):
-                        if v2 != new[k2]:
-                            new[k2] = extend(new[k2], v2, new[k2], devel)
+                        if v2 != new[k2] and chain1 == chain2:
+                            new[k2] = extend(new[k2], v2, new[k2], devel, chain1, chain2)
 
             elif isinstance(v1, dict) and isinstance(v2, str):
-                if k1 == k2:
+                if chain1 == chain2:
                     if k1 not in new:
                         v1[v2] = {}
                         new[k1] = v1
@@ -527,7 +544,7 @@ def extend(l1, l2, new, devel):
                         elif isinstance(new[k1], dict):
                             if v2 not in v1:
                                 v1[v2] = {}
-                            new[k1] = extend(new[k1], v1, new[k1], devel)
+                            new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -546,7 +563,7 @@ def extend(l1, l2, new, devel):
                             new[k1] = v1
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
-                                new[k1] = extend(new[k1], v1, new[k1], devel)
+                                new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -561,11 +578,11 @@ def extend(l1, l2, new, devel):
                                 new[k2][v2] = {}
 
             elif isinstance(v1, dict) and isinstance(v2, list):
-                if k1 == k2:
+                if chain1 == chain2:
                     if k1 not in new:
                         newdict = {}
                         newdict[k1] = v2
-                        new[k1] = extend(v1, newdict, new[k1], devel)
+                        new[k1] = extend(v1, newdict, new[k1], devel, chain1, chain2)
                         new[k1] = v1
                     else:
                         if isinstance(new[k1], str):
@@ -591,7 +608,7 @@ def extend(l1, l2, new, devel):
                             for v in v2:
                                 if v not in v1:
                                     v1[v] = {}
-                            new[k1] = extend(new[k1], v1, new[k1], devel)
+                            new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -610,7 +627,7 @@ def extend(l1, l2, new, devel):
                             new[k1] = v1
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
-                                new[k1] = extend(new[k1], v1, new[k1], devel)
+                                new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -629,6 +646,8 @@ def extend(l1, l2, new, devel):
                                 if v not in new[k2]:
                                     new[k2][v] = {}
 
+            chain2.pop()
+        chain1.pop()
     return new
 
 def optjson(l):
@@ -889,7 +908,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     mergednames = mergednames + '|' + licensename
                     if verbose:
                         print(mergednames)
-                    new = extend(mergeddata, licensedata, new, devel)
+                    new = extend(mergeddata, licensedata, new, devel, [], [])
 
             if optimize:
                 optjson(new)
