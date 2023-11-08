@@ -68,7 +68,7 @@ def getinstance(v):
         return 'dict'
 
 def list2dict(l, d):
-    for k in d.keys():
+    for k in d:
         if k in l:
             l.remove(k)
     for v in l:
@@ -152,12 +152,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                         elif isinstance(new[k1], dict):
                             if v1 not in v2:
                                 v2.append(v1)
-                            for k in new[k1].keys():
-                                if k in v2:
-                                    v2.remove(k)
-                            for v in v2:
-                                if v not in new[k1]:
-                                    new[k1][v] = {}
+                            new[k1] = list2dict(v2, new[k1])
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -183,12 +178,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
-                            for k in new[k2].keys():
-                                if k in v2:
-                                    v2.remove(k)
-                            for v in v2:
-                                if v not in new[k2]:
-                                    new[k2][v] = {}
+                            new[k2] = list2dict(v2, new[k2])
 
             elif isinstance(v1, str) and isinstance(v2, dict):
                 if chain1 == chain2:
@@ -206,13 +196,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                         elif isinstance(new[k1], list):
                             if v1 not in new[k1]:
                                 new[k1].append(v1)
-                            for k in v2.keys():
-                                if k in new[k1]:
-                                    new[k1].remove(k)
-                            for v in new[k1]:
-                                if v not in v2:
-                                    v2[v] = {}
-                            new[k1] = v2
+                            new[k1] = list2dict(new[k1], v2)
                         elif isinstance(new[k1], dict):
                             if v1 not in v2:
                                 v2[v1] = {}
@@ -285,12 +269,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             elif isinstance(new[k1], dict):
                                 newlist = v1 + v2
                                 newlist = sanitizelist(newlist)
-                                for k in new[k1].keys():
-                                    if k in newlist:
-                                        newlist.remove(k)
-                                for v in newlist:
-                                    if v not in new[k1]:
-                                        new[k1][v] = {}
+                                new[k1] = list2dict(newlist, new[k1])
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -302,12 +281,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            for k in new[k1].keys():
-                                if k in v1:
-                                    v1.remove(k)
-                            for v in v1:
-                                if v not in new[k1]:
-                                    new[k1][v] = {}
+                            new[k1] = list2dict(v1, new[k1])
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -318,12 +292,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
-                            for k in new[k2].keys():
-                                if k in v2:
-                                    v2.remove(k)
-                            for v in v2:
-                                if v not in new[k2]:
-                                    new[k2][v] = {}
+                            new[k2] = list2dict(v2, new[k2])
 
             elif isinstance(v1, list) and isinstance(v2, str):
                 if chain1 == chain2:
@@ -347,12 +316,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                                 new[k1].append(v2)
                         elif isinstance(new[k1], dict):
                             v1.append(v2)
-                            for k in new[k1].keys():
-                                if k in v1:
-                                    v1.remove(k)
-                            for v in v1:
-                                if v not in new[k1]:
-                                    new[k1][v] = {}
+                            new[k1] = list2dict(v1, new[k1])
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -365,12 +329,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            for k in new[k1].keys():
-                                if k in v1:
-                                    v1.remove(k)
-                            for v in v1:
-                                if v not in new[k1]:
-                                    new[k1][v] = {}
+                            new[k1] = list2dict(v1, new[k1])
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -431,12 +390,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
-                            for k in new[k1].keys():
-                                if k in v1:
-                                    v1.remove(k)
-                            for v in v1:
-                                if v not in new[k1]:
-                                    new[k1][v] = {}
+                            new[k1] = list2dict(v1, new[k1])
                     if k2 not in new:
                         new[k2] = v2
                     else:
@@ -445,13 +399,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                                 v2[k2] = {}
                                 new[k2] = v2
                         elif isinstance(new[k2], list):
-                            for k in v2.keys():
-                                if k in new[k2]:
-                                    new[k2].remove(k)
-                            for v in new[k2]:
-                                if v not in v2:
-                                    v2[v] = {}
-                            new[k2] = v2
+                            new[k2] = list2dict(v2, new[k2])
                         elif isinstance(new[k2], dict):
                             if v2 != new[k2]:
                                 new[k2] = extend(new[k2], v2, new[k2], devel, chain1, chain2)
@@ -488,16 +436,10 @@ def extend(l1, l2, new, devel, chain1, chain2):
                         new[k1] = v1
                     if isinstance(new[k1], str):
                         if new[k1] not in v1:
-                            v2[k1] = {}
-                            new[k1] = v2
+                            v1[new[k1]] = {}
+                            new[k1] = v1
                     elif isinstance(new[k1], list):
-                        for k in v1.keys():
-                            if k in new[k1]:
-                                new[k1].remove(k)
-                        for v in new[k1]:
-                            if v not in v1:
-                                v1[v] = {}
-                        new[k1] = v1
+                        new[k1] = list2dict(new[k1], v1)
                     elif isinstance(new[k1], dict):
                         if v1 != new[k1] and chain1 == chain2:
                             new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
@@ -508,13 +450,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             v2[k2] = {}
                             new[k2] = v2
                     elif isinstance(new[k2], list):
-                        for k in v2.keys():
-                            if k in new[k2]:
-                                new[k2].remove(k)
-                        for v in new[k2]:
-                            if v not in v2:
-                                v2[v] = {}
-                        new[k2] = v2
+                        new[k2] = list2dict(new[k2], v2)
                     elif isinstance(new[k2], dict):
                         if v2 != new[k2] and chain1 == chain2:
                             new[k2] = extend(new[k2], v2, new[k2], devel, chain1, chain2)
@@ -534,13 +470,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                         elif isinstance(new[k1], list):
                             if v2 not in new[k1]:
                                 new[k1].append(v2)
-                            for k in v1.keys():
-                                if k in new[k1]:
-                                    new[k1].remove(k)
-                            for v in new[k1]:
-                                if v not in v1:
-                                    v1[v] = {}
-                            new[k1] = v1
+                            new[k1] = list2dict(new[k1], v1)
                         elif isinstance(new[k1], dict):
                             if v2 not in v1:
                                 v1[v2] = {}
@@ -554,13 +484,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                                 v1[new[k1]] = {}
                                 new[k1] = v1
                         elif isinstance(new[k1], list):
-                            for k in v1.keys():
-                                if k in new[k1]:
-                                    new[k1].remove(k)
-                            for v in new[k1]:
-                                if v not in v1:
-                                    v1[v] = {}
-                            new[k1] = v1
+                            new[k1] = list2dict(new[k1], v1)
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
                                 new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
@@ -591,13 +515,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                         elif isinstance(new[k1], list):
                             newlist = new[k1] + v2
                             newlist = sanitizelist(newlist)
-                            for k in v1.keys():
-                                if k in newlist:
-                                    newlist.remove(k)
-                            for v in newlist:
-                                if v not in v1:
-                                    v1[v] = {}
-                            new[k1] = v1
+                            new[k1] = list2dict(newlist, v1)
                         if isinstance(new[k1], dict):
                             for k in new[k1].keys():
                                 if k in v2:
@@ -618,13 +536,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                                 v1[new[k1]] = {}
                                 new[k1] = v1
                         elif isinstance(new[k1], list):
-                            for k in v1.keys():
-                                if k in new[k1]:
-                                   new[k1].remove(k)
-                            for v in new[k1]:
-                                if v not in v1:
-                                    v1[v] = {}
-                            new[k1] = v1
+                            new[k1] = list2dict(new[k1], v1)
                         elif isinstance(new[k1], dict):
                             if v1 != new[k1]:
                                 new[k1] = extend(new[k1], v1, new[k1], devel, chain1, chain2)
@@ -639,12 +551,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
-                            for k in new[k2].keys():
-                                if k in v2:
-                                     v2.remove(k)
-                            for v in v2:
-                                if v not in new[k2]:
-                                    new[k2][v] = {}
+                            new[k2] = list2dict(v2, new[k2])
 
             chain2.pop()
         chain1.pop()
