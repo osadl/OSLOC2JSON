@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# This software is licensed under GPL-3.0xsfor k
+# This software is licensed under GPL-3.0
 # Copyright (c) 2023 Open Source Automation Development Lab (OSADL) eG <info@osadl.org>
 # Author Carsten Emde <C.Emde@osadl.org>
 
