@@ -42,6 +42,6 @@ then
   exit 1
 fi
 
-rm -f merge.json
+rm -f merged.json
 
 exit 0
