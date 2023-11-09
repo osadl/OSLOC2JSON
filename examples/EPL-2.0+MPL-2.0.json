@@ -1,0 +1,159 @@
+{
+    "EPL-2.0|MPL-2.0": {
+        "COMPATIBILITY": [
+            "Apache-2.0",
+            "blessing",
+            "BSD-2-Clause",
+            "BSD-2-Clause-Patent",
+            "BSD-3-Clause",
+            "BSL-1.0",
+            "bzip2-1.0.5",
+            "bzip2-1.0.6",
+            "CC0-1.0",
+            "CPL-1.0",
+            "curl",
+            "EFL-2.0",
+            "EPL-1.0",
+            "FSFAP",
+            "FSFULLR",
+            "IBM-pibs",
+            "ICU",
+            "ISC",
+            "Libpng",
+            "MIT",
+            "NTP",
+            "Unlicense",
+            "UPL-1.0",
+            "WTFPL",
+            "X11",
+            "Zlib",
+            "ZPL-2.0"
+        ],
+        "COPYLEFT CLAUSE": "Yes",
+        "COPYLEFT LICENSES": [
+            "EPL-2.0",
+            "MPL-2.0"
+        ],
+        "PATENT HINTS": "Yes",
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Delayed source code delivery": {},
+                                    "Provide Written offer": {
+                                        "ATTRIBUTE": "Reasonable",
+                                        "EITHER": {
+                                            "1": {
+                                                "ATTRIBUTE": "Customary medium",
+                                                "OR": {
+                                                    "1": {
+                                                        "ATTRIBUTE": "Via Internet"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": "Include Source code"
+                    }
+                },
+                "IF": {
+                    "Commercial distribution": {
+                        "YOU MUST": "Indemnify Other contributors"
+                    },
+                    "License change": {
+                        "YOU MUST": {
+                            "Use Identical License obligations": {},
+                            "Use Liability disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": "Effective"
+                            },
+                            "Use Warranty disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": "Effective"
+                            }
+                        },
+                        "YOU MUST NOT": [
+                            "Restrict Granted rights",
+                            "Restrict Granted rights For Source code"
+                        ]
+                    },
+                    "Service offerings": {
+                        "ATTRIBUTE": "NOT Transferable",
+                        "YOU MUST": "Indemnify Other contributors"
+                    }
+                },
+                "YOU MUST": {
+                    "Inform Recipients": {
+                        "ATTRIBUTE": {
+                            "Delayed source code delivery": {
+                                "ATTRIBUTE": [
+                                    "No profit",
+                                    "Reasonable",
+                                    "Timely"
+                                ]
+                            }
+                        }
+                    },
+                    "Notify License": {}
+                },
+                "YOU MUST NOT": [
+                    "Modify Attribution notices",
+                    "Modify Copyright notices",
+                    "Modify Liability disclaimers",
+                    "Modify Patent notices",
+                    "Modify Trademark notices",
+                    "Modify Warranty disclaimers"
+                ]
+            },
+            "Source code delivery": {
+                "IF": {
+                    "Commercial distribution": {
+                        "YOU MUST": "Indemnify Other contributors"
+                    },
+                    "License change": {
+                        "YOU MUST": {
+                            "Use Identical License obligations": {},
+                            "Use Liability disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": "Effective"
+                            },
+                            "Use Warranty disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": "Effective"
+                            }
+                        },
+                        "YOU MUST NOT": "Restrict Granted rights"
+                    },
+                    "Service offerings": {
+                        "ATTRIBUTE": "NOT Transferable",
+                        "YOU MUST": "Indemnify Other contributors"
+                    },
+                    "Software modification": {
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": "Original license"
+                            }
+                        }
+                    }
+                },
+                "YOU MUST": [
+                    "Provide License notice",
+                    "Provide License text",
+                    "Reference License text"
+                ],
+                "YOU MUST NOT": [
+                    "Modify Attribution notices",
+                    "Modify Copyright notices",
+                    "Modify Legal notices",
+                    "Modify Liability disclaimers",
+                    "Modify Patent notices",
+                    "Modify Trademark notices",
+                    "Modify Warranty disclaimers",
+                    "Restrict Granted rights"
+                ]
+            }
+        }
+    }
+}

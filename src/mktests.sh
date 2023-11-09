@@ -29,3 +29,19 @@ if ! cmp examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause+Apache-2.0.json
 then
   exit 1
 fi
+
+./src/osloc2json.py -demo examples/EPL-2.0.txt examples/MPL-2.0.txt
+if ! cmp examples/EPL-2.0+MPL-2.0.json merged.json
+then
+  exit 1
+fi
+
+./src/osloc2json.py -demo examples/GPL-3.0-only.txt examples/AGPL-3.0-only.txt
+if ! cmp examples/GPL-3.0-only+AGPL-3.0-only.json merged.json
+then
+  exit 1
+fi
+
+rm -f merge.json
+
+exit 0
