@@ -62,10 +62,11 @@ def nonecheck(d):
 def getinstance(v):
     if isinstance(v, str):
         return 'str'
-    elif isinstance(v, list):
+    if isinstance(v, list):
         return 'list'
-    elif isinstance(v, dict):
+    if isinstance(v, dict):
         return 'dict'
+    return 'other'
 
 def list2dict(l, d):
     for k in d:
@@ -117,7 +118,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             if v1 not in new[k1]:
                                 new[k1].append(v1)
                         elif isinstance(new[k1], dict):
-                           if v1 not in new[k1]:
+                            if v1 not in new[k1]:
                                 new[k1][v1] = {}
                     if k2 not in new:
                         new[k2] = v2
@@ -421,7 +422,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                                 if devel:
                                     print('t.b.d. list/dict/dict new[k1]', new[k1], k1, v1, v2)
                             elif isinstance(new[k1], dict):
-                                 new[k1] = extend(v1, v2, new[k1], devel, chain1, chain2)
+                                new[k1] = extend(v1, v2, new[k1], devel, chain1, chain2)
                 else:
                     if k1 not in new:
                         new[k1] = v1
@@ -572,7 +573,7 @@ def optjson(l):
                     for k in l[e]:
                         if len(k) != 0 and not re.search('[^0-9]', k):
                             if int(k) != dictno:
-                               break
+                                break
                             dictno = dictno + 1
                     if dictno == len(l[e]):
                         newlist = []
@@ -668,7 +669,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
         orlevels = {}
         eitheror = {}
         eitherextratabs = 0
-        eitheriflevels = {}
         oriflevels = {}
         eitherifor = {}
         eitherifextratabs = 0
