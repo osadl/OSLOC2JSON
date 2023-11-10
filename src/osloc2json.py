@@ -496,14 +496,12 @@ def extend(l1, l2, new, devel, chain1, chain2):
             elif isinstance(v1, dict) and isinstance(v2, list):
                 if chain1 == chain2:
                     if k1 not in new:
-                        newdict = {}
-                        newdict[k1] = v2
-                        new[k1] = extend(v1, newdict, new[k1], devel, chain1, chain2)
-                        new[k1] = v1
+                        new[k1] = list2dict(v2, v1)
                     else:
                         if isinstance(new[k1], str):
-                            if devel:
-                                print('t.b.d. str/list/dict new[k1]', new[k1], k1, v1)
+                            if new[k1] not in v2:
+                                v2.append(new[k1])
+                            new[k1] = list2dict(v2, v1)
                         elif isinstance(new[k1], list):
                             newlist = new[k1] + v2
                             newlist = sanitizelist(newlist)
