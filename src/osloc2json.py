@@ -391,7 +391,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                                 v2[k2] = {}
                                 new[k2] = v2
                         elif isinstance(new[k2], list):
-                            new[k2] = list2dict(v2, new[k2])
+                            new[k2] = list2dict(new[k2], v2)
                         elif isinstance(new[k2], dict):
                             if v2 != new[k2]:
                                 new[k2] = extend(new[k2], v2, new[k2], devel, chain1, chain2)
