@@ -906,6 +906,10 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
             args = parser.parse_args()
         filenames = args.licensefilenames
 
+    if '+' in filenames[0]:
+        filenames = filenames[0].split('+')
+        filenames = [s + '.txt' for s in filenames]
+
     osloc2json(filenames, args.filename, json, args)
 
 if __name__ == '__main__':
