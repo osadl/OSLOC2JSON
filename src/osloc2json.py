@@ -416,7 +416,7 @@ def extend(l1, l2, new, devel, chain1, chain2):
                             new[k1] = extend(v1, v2, new[k1], devel, chain1, chain2)
                         else:
                             if isinstance(new[k1], str):
-                                if new[k1] not v1 and new[k1] not in v2:
+                                if new[k1] not in v1 and new[k1] not in v2:
                                     v1[new[k1]] = {}
                                 new[k1] = extend(v1, v2, new[k1], devel, chain1, chain2)
                             elif isinstance(new[k1], list):
