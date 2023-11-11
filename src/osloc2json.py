@@ -805,6 +805,14 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     mergednames = mergednames + '|' + licensename
                     if verbose:
                         print(mergednames)
+                    if 'COMPATIBILITY' in mergeddata:
+                        for compatibility in mergeddata['COMPATIBILITY']:
+                            if 'COMPATIBILITY' in licensedata and compatibility not in licensedata['COMPATIBILITY']:
+                                mergeddata['COMPATIBILITY'].remove(compatibility)
+                    if 'DEPENDING COMPATIBILITY' in mergeddata:
+                        for compatibility in mergeddata['DEPENDING COMPATIBILITY']:
+                            if 'DEPENDING COMPATIBILITY' in licensedata and compatibility not in licensedata['DEPENDING COMPATIBILITY']:
+                                mergeddata['DEPENDING COMPATIBILITY'].remove(compatibility)
                     new = extend(mergeddata, licensedata, new, devel, [], [])
 
             if optimize:
