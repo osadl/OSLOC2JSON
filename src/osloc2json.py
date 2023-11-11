@@ -798,14 +798,14 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 licensedata = jsondata[licensename]
                 if 'COMPATIBILITY' in licensedata:
                     compatibilities_no += 1
-                    for compatibility in licensedata['COMPATIBILITY'] + [licensename]:
+                    for compatibility in sanitizelist(licensedata['COMPATIBILITY'] + [licensename]):
                         if compatibility not in compatibilities:
                             compatibilities[compatibility] = 1
                         else:
                             compatibilities[compatibility] += 1
                 if 'DEPENDING COMPATIBILITY' in licensedata:
                     depending_compatibilities_no += 1
-                    for compatibility in licensedata['DEPENDING COMPATIBILITY']:
+                    for compatibility in sanitizelist(licensedata['DEPENDING COMPATIBILITY'] + [licensename]):
                         if compatibility not in depending_compatibilities:
                             depending_compatibilities[compatibility] = 1
                         else:

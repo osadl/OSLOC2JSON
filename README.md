@@ -571,15 +571,15 @@ checklist clearly shows that the additional obligation of AGPL-3.0-only is
 imposed when the use of the software is offered as a network service.
 ```diff
 --- ../unreflicenses/GPL-3.0-only-opt.json  2023-11-11 03:47:13.565671728 +0100
-+++ merged.json 2023-11-11 04:22:35.398974557 +0100
++++ merged.json 2023-11-11 23:32:18.589124298 +0100
 @@ -1,5 +1,5 @@
  {
 -    "GPL-3.0-only": {
-+    "GPL-3.0-only|AGPL-3.0-only": {
++    "AGPL-3.0-only|GPL-3.0-only": {
          "COMPATIBILITY": [
              "Apache-2.0",
              "Artistic-2.0",
-@@ -15,35 +15,24 @@
+@@ -15,35 +15,28 @@
              "EFL-2.0",
              "FSFAP",
              "FSFULLR",
@@ -608,17 +608,19 @@ imposed when the use of the software is offered as a network service.
              "ZPL-2.0"
          ],
          "COPYLEFT CLAUSE": "Yes",
--        "DEPENDING COMPATIBILITY": [
--            "AGPL-3.0-only",
++        "COPYLEFT LICENSES": [
++            "AGPL-3.0-only",
++            "GPL-3.0-only"
++        ],
+         "DEPENDING COMPATIBILITY": [
+             "AGPL-3.0-only",
 -            "AGPL-3.0-or-later",
 -            "EPL-2.0"
-+        "COPYLEFT LICENSES": [
-+            "GPL-3.0-only",
-+            "AGPL-3.0-only"
++            "GPL-3.0-only"
          ],
          "INCOMPATIBILITY": [
              "Apache-1.0",
-@@ -164,7 +153,10 @@
+@@ -164,7 +157,10 @@
                      }
                  },
                  "IF": {
@@ -630,7 +632,7 @@ imposed when the use of the software is offered as a network service.
                          "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
                      },
                      "Software modification": {
-@@ -237,9 +229,27 @@
+@@ -237,9 +233,27 @@
                      "Sublicense": {}
                  }
              },
@@ -659,13 +661,17 @@ imposed when the use of the software is offered as a network service.
                          "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
                      },
                      "Software modification": {
-
 ```
 #### License compatibility
 While it makes sense to specify the cumulative incompatible licenses, the
 accumulation of compatible or conditionally compatible licenses does not provide
 a meaningful result. Instead, all previously compatible licenses must be removed
-from the list if a merged license does not feature this compatibility. This was
-already shown in the above example when the GPL-3.0-only license was merged with
-the AGPL-3.0-only license and all compatibilities that were not available in
-both of them were removed.
+from the list when a newly merged license does not feature a given
+compatibility. This was already shown in the above example when the GPL-3.0-only
+license was merged with the AGPL-3.0-only license and all compatibilities that
+were not available in both of them were removed. In addition, it should be noted
+that much more needs to be taken into account when considering the compatibility
+of licenses and especially copyleft licenses. In this respect, the information
+on compatibility resulting from the merging of the checklists is only a very
+first indication, so that individual legal advice must always be obtained, which
+of course also applies to all other information in the checklists.
