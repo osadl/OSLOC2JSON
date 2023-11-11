@@ -1,7 +1,6 @@
 {
     "GPL-3.0-only|AGPL-3.0-only": {
         "COMPATIBILITY": [
-            "AGPL-3.0-or-later",
             "Apache-2.0",
             "Artistic-2.0",
             "blessing",
@@ -16,19 +15,15 @@
             "EFL-2.0",
             "FSFAP",
             "FSFULLR",
-            "GPL-2.0-or-later",
             "IBM-pibs",
             "ICU",
             "ISC",
-            "LGPL-2.1-or-later",
-            "LGPL-3.0-or-later",
             "Libpng",
             "MIT",
             "MPL-2.0",
             "NTP",
             "Unlicense",
             "UPL-1.0",
-            "W3C-19980720",
             "WTFPL",
             "X11",
             "Zlib",
@@ -38,17 +33,6 @@
         "COPYLEFT LICENSES": [
             "GPL-3.0-only",
             "AGPL-3.0-only"
-        ],
-        "DEPENDING COMPATIBILITY": [
-            "AGPL-3.0-or-later",
-            "GPL-1.0-or-later",
-            "GPL-2.0-or-later",
-            "GPL-3.0-only",
-            "GPL-3.0-or-later",
-            "LGPL-2.1-only",
-            "LGPL-2.1-or-later",
-            "LGPL-3.0-only",
-            "LGPL-3.0-or-later"
         ],
         "INCOMPATIBILITY": [
             "Apache-1.0",
