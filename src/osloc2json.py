@@ -790,8 +790,26 @@ def osloc2json(licensefilenames, outfilename, json, args):
             new = {}
             copyleft_licenses = []
             mergednames = ''
+            compatibilities = {}
+            compatibilities_no = 0
+            depending_compatibilities = {}
+            depending_compatibilities_no = 0
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
+                if 'COMPATIBILITY' in licensedata:
+                    compatibilities_no += 1
+                    for compatibility in licensedata['COMPATIBILITY']:
+                        if compatibility not in compatibilities:
+                            compatibilities[compatibility] = 1
+                        else:
+                            compatibilities[compatibility] += 1
+                if 'DEPENDING COMPATIBILITY' in licensedata:
+                    depending_compatibilities_no += 1
+                    for compatibility in licensedata['DEPENDING COMPATIBILITY']:
+                        if compatibility not in depending_compatibilities:
+                            depending_compatibilities[compatibility] = 1
+                        else:
+                            depending_compatibilities[compatibility] += 1
                 if 'COPYLEFT CLAUSE' not in licensedata:
                     licensedata['COPYLEFT CLAUSE'] = 'No'
                 else:
@@ -805,29 +823,20 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     mergednames = mergednames + '|' + licensename
                     if verbose:
                         print(mergednames)
-                    if 'COMPATIBILITY' in mergeddata and 'COMPATIBILITY' in licensedata:
-                        all = sanitizelist(mergeddata['COMPATIBILITY'] + licensedata['COMPATIBILITY'])
-                        common = []
-                        for compatibility in all:
-                            if compatibility in mergeddata['COMPATIBILITY'] and compatibility in licensedata['COMPATIBILITY']:
-                                 common.append(compatibility)
-                        if len(common) > 0:
-                            mergeddata['COMPATIBILITY'] = licensedata['COMPATIBILITY'] = common
-                        else:
-                            mergeddata.pop('COMPATIBILITY')
-                            licenseddata.pop('COMPATIBILITY')
-                    if 'DEPENDING COMPATIBILITY' in mergeddata and 'DEPENDING COMPATIBILITY' in licensedata:
-                        all = sanitizelist(mergeddata['DEPENDING COMPATIBILITY'] + licensedata['DEPENDING COMPATIBILITY'])
-                        common = []
-                        for compatibility in all:
-                            if compatibility in mergeddata['DEPENDING COMPATIBILITY'] and compatibility in licensedata['DEPENDING COMPATIBILITY']:
-                                 common.append(compatibility)
-                        if len(common) > 0:
-                            mergeddata['DEPENDING COMPATIBILITY'] = licensedata['DEPENDING COMPATIBILITY'] = common
-                        else:
-                            mergeddata.pop('DEPENDING COMPATIBILITY')
-                            licensedata.pop('DEPENDING COMPATIBILITY')
                     new = extend(mergeddata, licensedata, new, devel, [], [])
+
+            new['COMPATIBILITY'] = []
+            for k, v in compatibilities.items():
+                if v == compatibilities_no:
+                    new['COMPATIBILITY'].append(k)
+            if len(new['COMPATIBILITY']) == 0:
+                new.pop('COMPATIBILITY')
+            new['DEPENDING COMPATIBILITY'] = []
+            for k, v in depending_compatibilities.items():
+                if v == depending_compatibilities_no:
+                    new['DEPENDING COMPATIBILITY'].append(k)
+            if len(new['DEPENDING COMPATIBILITY']) == 0:
+                new.pop('DEPENDING COMPATIBILITY')
 
             if optimize:
                 optjson(new)
