@@ -798,7 +798,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 licensedata = jsondata[licensename]
                 if 'COMPATIBILITY' in licensedata:
                     compatibilities_no += 1
-                    for compatibility in licensedata['COMPATIBILITY']:
+                    for compatibility in licensedata['COMPATIBILITY'] + [licensename]:
                         if compatibility not in compatibilities:
                             compatibilities[compatibility] = 1
                         else:
