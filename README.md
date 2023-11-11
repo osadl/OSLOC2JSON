@@ -648,6 +648,5 @@ imposed when the use of the software is offered as a network service.
 #### License compatibility 
 While it makes sense to specify the cumulative incompatible licenses, the
 accumulation of compatible or conditionally compatible licenses does not provide
-a useful result, as at best the lack of compatibility of an added license would
-have to be assessed. It is planned to implement this in a future version of this
-software.
+a meaningful result. Instead, all previously compatible licenses must be removed
+from the list if a merged license does not feature this compatibility.
