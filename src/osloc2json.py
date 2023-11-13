@@ -68,6 +68,11 @@ def getinstance(v):
         return 'dict'
     return 'other'
 
+def isemptyusecase(chain, v):
+    if len(chain) == 1 and chain[0] == 'USE CASE' and (isinstance(v, str) or isinstance(v, list)):
+        return True
+    return False
+
 def list2dict(l, d):
     for k in d:
         if k in l:
@@ -80,8 +85,14 @@ def list2dict(l, d):
 def extend(l1, l2, new, devel, chain1, chain2):
     for k1, v1 in l1.copy().items():
         chain1.append(k1)
+        if isemptyusecase(chain1, v1):
+            del l1[k1]
+            continue
         for k2, v2 in l2.copy().items():
             chain2.append(k2)
+            if isemptyusecase(chain2, v2):
+                del l2[k2]
+                continue
             if isinstance(v1, str) and isinstance(v2, str):
                 if chain1 == chain2:
                     if v1 == v2:
