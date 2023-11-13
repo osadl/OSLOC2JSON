@@ -69,8 +69,13 @@ def getinstance(v):
     return 'other'
 
 def isemptyusecase(chain, v):
-    if len(chain) == 1 and chain[0] == 'USE CASE' and (isinstance(v, str) or isinstance(v, list)):
-        return True
+    if len(chain) == 1 and chain[0] == 'USE CASE':
+        if isinstance(v, str) or isinstance(v, list):
+            return True
+        elif isinstance(v, dict):
+            for vx in v.values():
+                if vx == {}:
+                    return True
     return False
 
 def list2dict(l, d):
