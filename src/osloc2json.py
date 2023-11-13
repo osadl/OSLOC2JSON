@@ -812,6 +812,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
             depending_compatibilities_no = 0
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
+                if 'USE CASE' in licensedata:
+                    chain = ['USE CASE']
+                    if isemptyusecase(chain, licensedata['USE CASE']):
+                        licensedata = {}
                 if 'COMPATIBILITY' in licensedata:
                     compatibilities_no += 1
                     if isinstance(licensedata['COMPATIBILITY'], str):
