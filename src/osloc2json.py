@@ -90,14 +90,8 @@ def list2dict(l, d):
 def extend(l1, l2, new, devel, chain1, chain2):
     for k1, v1 in l1.copy().items():
         chain1.append(k1)
-        if isemptyusecase(chain1, v1):
-            del l1[k1]
-            continue
         for k2, v2 in l2.copy().items():
             chain2.append(k2)
-            if isemptyusecase(chain2, v2):
-                del l2[k2]
-                continue
             if isinstance(v1, str) and isinstance(v2, str):
                 if chain1 == chain2:
                     if v1 == v2:
@@ -815,7 +809,16 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 if 'USE CASE' in licensedata:
                     chain = ['USE CASE']
                     if isemptyusecase(chain, licensedata['USE CASE']):
-                        licensedata = {}
+                        if isinstance(licensedata['USE CASE'], list):
+                            oldlist = licensedata['USE CASE']
+                            licensedata['USE CASE'] = {}
+                            for usecase in oldlist:
+                                licensedata['USE CASE'][usecase] = {}
+                                licensedata['USE CASE'][usecase]['YOU MUST'] = "Not do anything"
+                        elif isinstance(licensedata['USE CASE'], dict):
+                            for usecase in licensedata['USE CASE']:
+                                if licensedata['USE CASE'][usecase] == {}:
+                                    licensedata['USE CASE'][usecase]['YOU MUST'] = "Not do anything"
                 if 'COMPATIBILITY' in licensedata:
                     compatibilities_no += 1
                     if isinstance(licensedata['COMPATIBILITY'], str):
