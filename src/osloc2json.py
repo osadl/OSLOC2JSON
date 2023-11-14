@@ -809,16 +809,17 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 if 'USE CASE' in licensedata:
                     chain = ['USE CASE']
                     if isemptyusecase(chain, licensedata['USE CASE']):
+                        Nonetext = "Not do anything for now"
                         if isinstance(licensedata['USE CASE'], list):
                             oldlist = licensedata['USE CASE']
                             licensedata['USE CASE'] = {}
                             for usecase in oldlist:
                                 licensedata['USE CASE'][usecase] = {}
-                                licensedata['USE CASE'][usecase]['YOU MUST'] = "Not do anything"
+                                licensedata['USE CASE'][usecase]['YOU MUST'] = Nonetext
                         elif isinstance(licensedata['USE CASE'], dict):
                             for usecase in licensedata['USE CASE']:
                                 if licensedata['USE CASE'][usecase] == {}:
-                                    licensedata['USE CASE'][usecase]['YOU MUST'] = "Not do anything"
+                                    licensedata['USE CASE'][usecase]['YOU MUST'] = Nonetext
                 if 'COMPATIBILITY' in licensedata:
                     compatibilities_no += 1
                     if isinstance(licensedata['COMPATIBILITY'], str):
