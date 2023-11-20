@@ -600,6 +600,30 @@ def back2osloc(l, indent, key):
     if type(l) is dict:
         count = 0
         for e in l:
+            if indent == 0 and e == 'COMPATIBILITY':
+                for v in l[e]:
+                   print()
+                   printnonl(e + ' ' + v)
+                continue
+            elif indent == 0 and e == 'INCOMPATIBILITY':
+                for v in l[e]:
+                   print()
+                   printnonl(e + ' ' + v)
+                continue
+            elif indent == 0 and e == 'PATENT HINTS':
+                print()
+                printnonl(e)
+                for v in l[e]:
+                    printnonl(' ' + v)
+                continue
+            elif indent == 0 and e == 'COPYLEFT CLAUSE':
+                print()
+                printnonl(e)
+                for v in l[e]:
+                    printnonl(' ' + v)
+                continue
+            elif indent == 0 and e == 'COPYLEFT LICENSES':
+                continue
             if not re.search('[a-z]', e):
                 print()
                 if indent == 0:
