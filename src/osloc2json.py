@@ -627,6 +627,15 @@ def back2osloc(l, indent, key):
                     print()
                     printnonl(e + ' ' + l[e])
                 continue
+            elif indent == 0 and e == 'INCOMPATIBLE LICENSES':
+                if type(l[e]) is list:
+                    for v in l[e]:
+                        print()
+                        printnonl(e + ' ' + v)
+                else:
+                    print()
+                    printnonl(e + ' ' + l[e])
+                continue
             elif indent == 0 and e == 'PATENT HINTS':
                 if type(l[e]) is list:
                     print()
