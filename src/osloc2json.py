@@ -605,6 +605,11 @@ def back2osloc(l, indent, key):
                    print()
                    printnonl(e + ' ' + v)
                 continue
+            if indent == 0 and e == 'DEPENDING COMPATIBILITY':
+                for v in l[e]:
+                   print()
+                   printnonl(e + ' ' + v)
+                continue
             elif indent == 0 and e == 'INCOMPATIBILITY':
                 for v in l[e]:
                    print()
