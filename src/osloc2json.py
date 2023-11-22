@@ -26,6 +26,9 @@ except ImportError:
 def sanitizelist(l):
     sane = list(dict.fromkeys(l))
     sane = sorted(sane, key = lambda s: s.lower())
+    for s in sane:
+        if not s.endswith('s') and s + 's' in sane:
+            sane.remove(s)
     return sane
 
 def expandor(d, parent):
