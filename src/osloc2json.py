@@ -622,10 +622,10 @@ def optjson(l):
                         l[e] = sorted(l[e], key = lambda s: s.lower())
 
 printnonl = sys.stdout.write
-def back2osloc(l, indent, key):
+def back2osloc(l, indent, key, eitherkey, parent):
     if type(l) is dict:
         count = 0
-        for e in l:
+        for e in l.copy():
             if indent == 0 and e == 'COMPATIBILITY':
                 if type(l[e]) is list:
                     for v in l[e]:
@@ -684,6 +684,17 @@ def back2osloc(l, indent, key):
                 continue
             elif indent == 0 and e == 'COPYLEFT LICENSES':
                 continue
+            if e == 'EITHER':
+                keystring = list(l[e].keys())[0]
+                if int(keystring) in range(0, 100):
+                    l[e] = l[e][keystring]
+                    eitherkey[indent] = keystring
+            if e == 'OR':
+                if indent-4 in eitherkey:
+                    indent -= 4
+                    keystring = list(parent[e].keys())[0]
+                    if int(keystring) in range(0, 100):
+                        parent[e] = parent[e][keystring]
             if not re.search('[a-z]', e):
                 print()
                 if indent == 0:
@@ -707,13 +718,13 @@ def back2osloc(l, indent, key):
                             else:
                                 printnonl(' '*(indent - 4) + key + ' ' + e)
                 increment = 0
-            back2osloc(l[e], indent + increment, e)
+            back2osloc(l[e], indent + increment, e, eitherkey, l[e])
             count = count + 1
     elif type(l) is list:
         count = 0
-        for e in l:
+        for e in l.copy():
             if type(e) is dict:
-                back2osloc(e, indent, key)
+                back2osloc(e, indent, key, eitherkey, l[e])
             else:
                 if count == 0:
                     print()
@@ -985,7 +996,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
         l = jsondata
         if len(jsondata.keys()) == 1:
             l = l[list(jsondata.keys())[0]]
-        back2osloc(l, 0, '')
+        back2osloc(l, 0, '', {}, {})
         print()
 
 def main():
