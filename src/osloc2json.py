@@ -963,6 +963,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 for license in names:
                     if license in new['INCOMPATIBILITY']:
                         incompatible_licenses.append(license)
+                for copyleft_license in copyleft_licenses:
+                    if 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']:
+                        incompatible_licenses.append(copyleft_license)
                 if len(incompatible_licenses) > 0:
                     new['INCOMPATIBLE LICENSES'] = incompatible_licenses
             alljsondata[mergednames] = new
