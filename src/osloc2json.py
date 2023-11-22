@@ -26,7 +26,7 @@ except ImportError:
 def sanitizelist(l):
     sane = list(dict.fromkeys(l))
     sane = sorted(sane, key = lambda s: s.lower())
-    for s in sane:
+    for s in sane.copy():
         if not s.endswith('s') and s + 's' in sane:
             sane.remove(s)
     return sane
@@ -82,6 +82,8 @@ def isemptyusecase(chain, v):
     return False
 
 def list2dict(l, d):
+    l = l.copy()
+    d = d.copy()
     for k in d:
         if k in l:
             l.remove(k)
@@ -91,10 +93,12 @@ def list2dict(l, d):
     return d
 
 def dictindict(sub, super):
+    if sub == super:
+        return True
     return all(item in super.items() for item in sub.items())
 
 def extend(l1, l2, devel, chain1, chain2):
-    new = {}
+    new = l1.copy()
     for k1, v1 in l1.copy().items():
         chain1.append(k1)
         for k2, v2 in l2.copy().items():
@@ -116,8 +120,10 @@ def extend(l1, l2, devel, chain1, chain2):
                                 elif new[k1] != v2:
                                     new[k1] = [new[k1], v2]
                             elif isinstance(new[k1], list):
-                                new[k1].append(v1)
-                                new[k1].append(v2)
+                                if v1 not in new[k1]:
+                                    new[k1].append(v1)
+                                if v2 not in new[k1]:
+                                    new[k1].append(v2)
                                 new[k1] = sanitizelist(new[k1])
                             elif isinstance(new[k1], dict):
                                 if v1 not in new[k1]:
@@ -166,8 +172,11 @@ def extend(l1, l2, devel, chain1, chain2):
                         elif isinstance(new[k1], list):
                             if v1 not in new[k1]:
                                 new[k1].append(v1)
-                            new[k1] += v2
+                            v2 = sanitizelist(v2)
                             new[k1] = sanitizelist(new[k1])
+                            if v2 != new[k1]:
+                                new[k1] += v2.copy()
+                                new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
                             if v1 not in v2:
                                 v2.append(v1)
@@ -247,7 +256,7 @@ def extend(l1, l2, devel, chain1, chain2):
                             for v in new[k2]:
                                 if v not in v2:
                                     v2[v] = {}
-                            new[k2] = v2
+                            new[k2] = v2.copy()
                         elif isinstance(new[k2], dict):
                             if not dictindict(v2, new[k2]):
                                 new[k2] = extend(new[k2], v2, devel, chain2.copy(), chain2)
@@ -265,8 +274,10 @@ def extend(l1, l2, devel, chain1, chain2):
                                     v1.append(new[k1])
                                     new[k1] = v1
                             elif isinstance(new[k1], list):
-                                new[k1] += v1
                                 new[k1] = sanitizelist(new[k1])
+                                if v1 != new[k1]:
+                                    new[k1] += v1.copy()
+                                    new[k1] = sanitizelist(new[k1])
                             elif isinstance(new[k1], dict):
                                 for k in new[k1].keys():
                                     if k in v1:
@@ -281,14 +292,14 @@ def extend(l1, l2, devel, chain1, chain2):
                         else:
                             if isinstance(new[k1], str):
                                 oldstr = new[k1]
-                                new[k1] = v1 + v2
+                                new[k1] = v1.copy() + v2.copy()
                                 new[k1].append(oldstr)
                                 new[k1] = sanitizelist(v1)
                             elif isinstance(new[k1], list):
-                                new[k1] += v1 + v2
+                                new[k1] += v1.copy() + v2.copy()
                                 new[k1] = sanitizelist(new[k1])
                             elif isinstance(new[k1], dict):
-                                newlist = v1 + v2
+                                newlist = v1.copy() + v2.copy()
                                 newlist = sanitizelist(newlist)
                                 new[k1] = list2dict(newlist, new[k1])
                 else:
@@ -301,8 +312,10 @@ def extend(l1, l2, devel, chain1, chain2):
                             new[k1].append(oldstr)
                             new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], list):
-                            new[k1] += v1
                             new[k1] = sanitizelist(new[k1])
+                            if v1 != new[k1]:
+                                new[k1] += v1.copy()
+                                new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
                             new[k1] = list2dict(v1, new[k1])
                     if k2 not in new:
@@ -314,8 +327,10 @@ def extend(l1, l2, devel, chain1, chain2):
                             new[k2].append(oldstr)
                             new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], list):
-                            new[k2] += v2
                             new[k2] = sanitizelist(new[k2])
+                            if v2 != new[k2]:
+                                new[k2] += v2.copy()
+                                new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
                             new[k2] = list2dict(v2, new[k2])
 
@@ -336,8 +351,11 @@ def extend(l1, l2, devel, chain1, chain2):
                                 elif isinstance(new[k1], list):
                                     new[k1].append(v2)
                         elif isinstance(new[k1], list):
-                            new[k1] += v1
+                            v1 = sanitizelist(v1)
                             new[k1] = sanitizelist(new[k1])
+                            if v1 != new[k1]:
+                                new[k1] += v1.copy()
+                                new[k1] = sanitizelist(new[k1])
                             if v2 not in new[k1]:
                                 new[k1].append(v2)
                         elif isinstance(new[k1], dict):
@@ -352,8 +370,11 @@ def extend(l1, l2, devel, chain1, chain2):
                                 v1.append(new[k1])
                                 new[k1] = v1
                         elif isinstance(new[k1], list):
-                            new[k1] += v1
+                            v1 = sanitizelist(v1)
                             new[k1] = sanitizelist(new[k1])
+                            if v1 != new[k1]:
+                                new[k1] += v1.copy()
+                                new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
                             new[k1] = list2dict(v1, new[k1])
                     if k2 not in new:
@@ -404,8 +425,11 @@ def extend(l1, l2, devel, chain1, chain2):
                                 v1.append(new[k1])
                                 new[k1] = v1
                         elif isinstance(new[k1], list):
-                            new[k1] += v1
+                            v1 = sanitizelist(v1)
                             new[k1] = sanitizelist(new[k1])
+                            if v1 != new[k1]:
+                                new[k1] += v1.copy()
+                                new[k1] = sanitizelist(new[k1])
                         elif isinstance(new[k1], dict):
                             new[k1] = list2dict(v1, new[k1])
                     if k2 not in new:
@@ -578,8 +602,11 @@ def extend(l1, l2, devel, chain1, chain2):
                                 v2.append(new[k2])
                                 new[k2] = v2
                         elif isinstance(new[k2], list):
-                            new[k2] += v2
+                            v2 = sanitizelist(v2)
                             new[k2] = sanitizelist(new[k2])
+                            if v2 != new[k2]:
+                                new[k2] += v2.copy()
+                                new[k2] = sanitizelist(new[k2])
                         elif isinstance(new[k2], dict):
                             new[k2] = list2dict(v2, new[k2])
 
