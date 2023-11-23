@@ -24,25 +24,30 @@ except ImportError:
     pass
 
 def sanitizelist(l):
+    """ Remove duplicates, sort case-unsensitive alphabetically, remove singular form, if plural of same term exists """
     sane = sortlist(list(dict.fromkeys(l)))
     return mkpluralonlylist(sane)
 
 def mkpluralonlylist(l):
+    """ Remove singular form of list element, if plural of same term exists """
     for e in l.copy():
         if not e.endswith('s') and e + 's' in l:
             l.remove(e)
     return l
 
 def sortlist(l):
+    """ Sort list case-unsensitive alphabetically """
     return mkpluralonlylist(sorted(l, key = lambda s: s.lower()))
 
 def mkpluralonlydict(d):
+    """ Remove singular form of dict key with identical value, if plural of this key exists """
     for k in d.copy():
         if not k.endswith('s') and k + 's' in d and d[k] == d[k + 's']:
             d.pop(k)
     return d
 
 def expandor(d, parent):
+    """ Split a dict item with two OR-ed conditions into two separate items with the same value """
     if isinstance(d, dict):
         for k, v in d.copy().items():
             if isinstance(v, dict):
@@ -54,6 +59,7 @@ def expandor(d, parent):
                     expandor(v, k)
 
 def printdict(d):
+    """ Recursively print all dicts of a dict (for debugging only) """
     for k, v in d.items():
         if isinstance(v, dict):
             printdict(v)
@@ -61,6 +67,7 @@ def printdict(d):
             print("{0} : {1}".format(k, v))
 
 def nonecheck(d):
+    """ Recursively check a dict for None values (for debugging only) """
     for k, v in d.items():
         if isinstance(v, dict):
             if nonecheck(v):
@@ -74,6 +81,7 @@ def nonecheck(d):
     return False
 
 def getinstance(v):
+    """ Print the instance of a value (for debugging only) """
     if isinstance(v, str):
         return 'str'
     if isinstance(v, list):
@@ -83,16 +91,18 @@ def getinstance(v):
     return 'other'
 
 def isemptyusecase(chain, v):
+    """ Check for empty USE CASEs """
     if len(chain) == 1 and chain[0] == 'USE CASE':
         if isinstance(v, str) or isinstance(v, list):
             return True
-        elif isinstance(v, dict):
+        if isinstance(v, dict):
             for vx in v.values():
                 if vx == {}:
                     return True
     return False
 
 def list2dict(l, d):
+    """ Convert a list to a dict """
     l = l.copy()
     d = d.copy()
     for k in d:
@@ -104,16 +114,19 @@ def list2dict(l, d):
     return d
 
 def listinlist(testlist, fulllist):
+    """ Check whether two lists are identical or one is a subset of the other """
     if testlist == fulllist:
         return True
     return set(testlist).issubset(fulllist)
 
 def dictindict(sub, super):
+    """ Check whether two dicts are identical or one is a subset of the other """
     if sub == super:
         return True
     return all(item in super.items() for item in sub.items())
 
 def dictlistindictlist(sub, super):
+    """ Check whether two dicts are identical or all list items of one are a subset of the list items of the other """
     if sub == super:
         return True
     for k in sub:
@@ -122,6 +135,7 @@ def dictlistindictlist(sub, super):
     return True
 
 def extend(l1, l2, devel, chain1, chain2):
+    """ Recursively add a dict to another dict while removing duplicates and extending items with the same key """
     if l1 == l2:
         return l1
     new = l1.copy()
@@ -190,9 +204,9 @@ def extend(l1, l2, devel, chain1, chain2):
             elif isinstance(v2, dict):
                 if chain1 == chain2:
                     if isinstance(new[k1], str):
-                            if new[k1] not in v2:
-                                v2[new[k1]] = {}
-                            new[k1] = v2.copy()
+                        if new[k1] not in v2:
+                            v2[new[k1]] = {}
+                        new[k1] = v2.copy()
                     elif isinstance(new[k1], list):
                         new[k1] = list2dict(new[k1], v2)
                     elif isinstance(new[k1], dict):
@@ -223,15 +237,15 @@ def extend(l1, l2, devel, chain1, chain2):
     return new
 
 def optjson(l):
-    """ 1. If a dict has only keys, but no values, convert it to a list of keys """
-    """ 2. If a dict has a list with a single element, propagate it to the parent dict """
-    """ 3. If a dict has a dict with a single element with an empty key, propagate the dict to the parent dict """
-    """ 4. If a dict has only dicts with consecutively numbered numeric keys, propagate the dicts into a list """
-    if type(l) is dict:
+    """ 1. If a dict has only keys, but no values, convert it to a list of keys
+        2. If a dict has a list with a single element, propagate it to the parent dict
+        3. If a dict has a dict with a single element with an empty key, propagate the dict to the parent dict
+        4. If a dict has only dicts with consecutively numbered numeric keys, propagate the dicts into a list """
+    if isinstance(l, dict):
         for e in l:
             if l[e]:
                 optjson(l[e])
-                if type(l[e]) is dict:
+                if isinstance(l[e], dict):
                     allvalues = 0
                     for v in l[e].values():
                         if v is not None:
@@ -253,7 +267,7 @@ def optjson(l):
                         for k in l[e]:
                             newlist.append(l[e][k])
                         l[e] = newlist
-                if type(l[e]) is list:
+                if isinstance(l[e], list):
                     if len(l[e]) == 1:
                         l[e] = l[e][0]
                     else:
@@ -261,11 +275,11 @@ def optjson(l):
 
 printnonl = sys.stdout.write
 def back2osloc(l, indent, key, eitherkey, parent):
-    if type(l) is dict:
+    if isinstance(l, dict):
         count = 0
         for e in l.copy():
             if indent == 0 and e == 'COMPATIBILITY':
-                if type(l[e]) is list:
+                if isinstance(l[e], list):
                     for v in l[e]:
                         print()
                         printnonl(e + ' ' + v)
@@ -274,7 +288,7 @@ def back2osloc(l, indent, key, eitherkey, parent):
                     printnonl(e + ' ' + l[e])
                 continue
             if indent == 0 and e == 'DEPENDING COMPATIBILITY':
-                if type(l[e]) is list:
+                if isinstance(l[e], list):
                     for v in l[e]:
                         print()
                         printnonl(e + ' ' + v)
@@ -282,8 +296,8 @@ def back2osloc(l, indent, key, eitherkey, parent):
                     print()
                     printnonl(e + ' ' + l[e])
                 continue
-            elif indent == 0 and e == 'INCOMPATIBILITY':
-                if type(l[e]) is list:
+            if indent == 0 and e == 'INCOMPATIBILITY':
+                if isinstance(l[e], list):
                     for v in l[e]:
                         print()
                         printnonl(e + ' ' + v)
@@ -291,8 +305,8 @@ def back2osloc(l, indent, key, eitherkey, parent):
                     print()
                     printnonl(e + ' ' + l[e])
                 continue
-            elif indent == 0 and e == 'INCOMPATIBLE LICENSES':
-                if type(l[e]) is list:
+            if indent == 0 and e == 'INCOMPATIBLE LICENSES':
+                if isinstance(l[e], list):
                     for v in l[e]:
                         print()
                         printnonl(e + ' ' + v)
@@ -300,8 +314,8 @@ def back2osloc(l, indent, key, eitherkey, parent):
                     print()
                     printnonl(e + ' ' + l[e])
                 continue
-            elif indent == 0 and e == 'PATENT HINTS':
-                if type(l[e]) is list:
+            if indent == 0 and e == 'PATENT HINTS':
+                if isinstance(l[e], list):
                     print()
                     printnonl(e)
                     for v in l[e]:
@@ -310,8 +324,8 @@ def back2osloc(l, indent, key, eitherkey, parent):
                     print()
                     printnonl(e + ' ' + l[e])
                 continue
-            elif indent == 0 and e == 'COPYLEFT CLAUSE':
-                if type(l[e]) is list:
+            if indent == 0 and e == 'COPYLEFT CLAUSE':
+                if isinstance(l[e], list):
                     print()
                     printnonl(e)
                     for v in l[e]:
@@ -320,7 +334,7 @@ def back2osloc(l, indent, key, eitherkey, parent):
                     print()
                     printnonl(e + ' ' + l[e])
                 continue
-            elif indent == 0 and e == 'COPYLEFT LICENSES':
+            if indent == 0 and e == 'COPYLEFT LICENSES':
                 continue
             if e == 'EITHER':
                 keystring = list(l[e].keys())[0]
@@ -358,10 +372,10 @@ def back2osloc(l, indent, key, eitherkey, parent):
                 increment = 0
             back2osloc(l[e], indent + increment, e, eitherkey, l[e])
             count = count + 1
-    elif type(l) is list:
+    elif isinstance(l, list):
         count = 0
         for e in l.copy():
-            if type(e) is dict:
+            if isinstance(e, dict):
                 back2osloc(e, indent, key, eitherkey, l[e])
             else:
                 if count == 0:
@@ -373,7 +387,7 @@ def back2osloc(l, indent, key, eitherkey, parent):
                 else:
                     printnonl(e)
                 count = count + 1
-    elif type(l) is str:
+    elif isinstance(l, str):
         printnonl(l)
 
 def osloc2json(licensefilenames, outfilename, json, args):
