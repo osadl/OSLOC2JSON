@@ -516,7 +516,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 if 'USE CASE' in licensedata:
                     chain = ['USE CASE']
                     if isemptyusecase(chain, licensedata['USE CASE']):
-                        Nonetext = "Not do anything for now"
+                        Nonetext = "Not do anything else"
                         if isinstance(licensedata['USE CASE'], list):
                             oldlist = licensedata['USE CASE']
                             licensedata['USE CASE'] = {}
