@@ -172,8 +172,10 @@ def extend(l1, l2, devel, chain1, chain2):
                             new[k2] = v2.copy()
                     elif isinstance(new[k2], list):
                         if not listinlist(v2, new[k2]):
-                            new[k2] += v2
-                            new[k2] = sanitizelist(new[k2])
+                            for v in v2:
+                                if v not in new[k2]:
+                                    new[k2].append(v)
+                            new[k2] = sortlist(new[k2])
                     elif isinstance(new[k2], dict):
                         new[k2] = list2dict(v2, new[k2])
 
