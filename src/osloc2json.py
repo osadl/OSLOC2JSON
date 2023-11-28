@@ -39,6 +39,14 @@ def sortlist(l):
     """ Sort list case-unsensitive alphabetically """
     return mkpluralonlylist(sorted(l, key = lambda s: s.lower()))
 
+def sortdict(d):
+    keylist = list(d.keys())
+    keylist.sort()
+    dsorted = {}
+    for key in keylist:
+        dsorted[key] = d[key]
+    return dsorted
+
 def mkpluralonlydict(d):
     """ Remove singular form of dict key with identical value, if plural of this key exists """
     for k in d.copy():
