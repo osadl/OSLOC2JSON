@@ -245,10 +245,14 @@ def optjson(l):
                         l[e] = sorted(l[e], key = lambda s: s.lower())
 
 printnonl = sys.stdout.write
-def back2osloc(l, indent, key, eitherkey, parent):
+def back2osloc(l, indent, key, eitherkey, parent, previous):
     if isinstance(l, dict):
         count = 0
-        for e in l.copy():
+        if previous == 'YOU MUST' or previous == 'YOU MUST NOT':
+            newdict = sortdict(l)
+        else:
+            newdict = l.copy()
+        for e in newdict:
             if indent == 0 and e == 'COMPATIBILITY':
                 if isinstance(l[e], list):
                     for v in l[e]:
@@ -341,13 +345,13 @@ def back2osloc(l, indent, key, eitherkey, parent):
                             else:
                                 printnonl(' '*(indent - 4) + key + ' ' + e)
                 increment = 0
-            back2osloc(l[e], indent + increment, e, eitherkey, l[e])
+            back2osloc(l[e], indent + increment, e, eitherkey, l[e], e)
             count = count + 1
     elif isinstance(l, list):
         count = 0
         for e in l.copy():
             if isinstance(e, dict):
-                back2osloc(e, indent, key, eitherkey, l[e])
+                back2osloc(e, indent, key, eitherkey, l[e], '')
             else:
                 if count == 0:
                     print()
@@ -619,7 +623,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
         l = jsondata
         if len(jsondata.keys()) == 1:
             l = l[list(jsondata.keys())[0]]
-        back2osloc(l, 0, '', {}, {})
+        back2osloc(l, 0, '', {}, {}, '')
         print()
 
 def main():
