@@ -142,6 +142,22 @@ def dictlistindictlist(sub, super):
             return False
     return True
 
+def addrefs(data, licensename):
+    """ Reference obligations by license name """
+    if isinstance(data, dict):
+        for k, v in data.copy().items():
+            if re.search('[a-z]', k):
+                data.pop(k)
+                if ' | ' in k:
+                    data[k + ',' + licensename] = v
+                else:
+                    data[k + ' | ' + licensename] = v
+        return {k: addrefs(v, licensename) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [addrefs(i, licensename) for i in data]
+    else:
+        return data + ',' + licensename if ' | ' in data else data + ' | ' + licensename
+
 def extend(l1, l2, devel, chain1, chain2):
     """ Recursively add a dict to another dict while removing duplicates and extending items with the same key """
     if l1 == l2:
