@@ -40,12 +40,14 @@ def sortlist(l):
     return mkpluralonlylist(sorted(l, key = lambda s: s.lower()))
 
 def sortdict(d):
-    keylist = list(d.keys())
-    keylist.sort()
-    dsorted = {}
-    for key in keylist:
-        dsorted[key] = d[key]
-    return dsorted
+    if isinstance(d, dict):
+        keylist = list(d.keys())
+        keylist.sort()
+        dsorted = {}
+        for key in keylist:
+            dsorted[key] = d[key]
+        return dsorted
+    return d
 
 def mkpluralonlydict(d):
     """ Remove singular form of dict key with identical value, if plural of this key exists """
@@ -264,7 +266,7 @@ printnonl = sys.stdout.write
 def back2osloc(l, indent, key, eitherkey, parent, previous):
     if isinstance(l, dict):
         count = 0
-        if previous == 'YOU MUST' or previous == 'YOU MUST NOT':
+        if previous in ['', 'ATTRIBUTE', 'IF', 'USE CASE', 'YOU MUST', 'YOU MUST NOT']:
             newdict = sortdict(l)
         else:
             newdict = l.copy()
