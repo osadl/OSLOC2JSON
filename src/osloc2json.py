@@ -383,6 +383,39 @@ def back2osloc(l, indent, key, eitherkey, parent, previous):
     elif isinstance(l, str):
         printnonl(l)
 
+def unifyobligations(d, tag, replacelist):
+    """ Unify obligations according to semantic rules """
+    for k, v in d.items():
+        if isinstance(v, dict) and k in ['YOU MUST', 'YOU MUST NOT']:
+            canunify = False
+            for obligation in v:
+                if obligation == tag:
+                    canunify = True
+                    break
+            if canunify:
+                for obligation, dummy in v.copy().items():
+                    for unifyable in replacelist:
+                        if obligation == unifyable and dummy == {}:
+                            d[k].pop(unifyable)
+        elif isinstance(v, list) and k in ['YOU MUST', 'YOU MUST NOT']:
+            canunify = False
+            for obligation in v:
+                if obligation == tag:
+                    canunify = True
+                    break
+            if canunify:
+                for obligation in v:
+                    for unifyable in replacelist:
+                        if obligation == unifyable:
+                            d[k].remove(unifyable)
+        elif isinstance(v, dict):
+            unifyobligations(v, tag, replacelist)
+
+def unifylicenses(licenses, rules):
+    """ Open OSLOC files, convert them to JSON objects and store them as specified """
+    for k, v in rules.items():
+        unifyobligations(licenses, k, v)
+
 def osloc2json(licensefilenames, outfilename, json, args):
     """ Open OSLOC files, convert them to JSON objects and store them as specified """
     devel = args.devel
@@ -391,6 +424,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
     optimize = args.optimize
     recreate = args.recreate
     show = args.show
+    unify = args.unify
     verbose = args.verbose
     licenses = len(licensefilenames)
 
@@ -609,6 +643,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
             if len(new['DEPENDING COMPATIBILITY']) == 0:
                 new.pop('DEPENDING COMPATIBILITY')
 
+            if unify:
+                rulesfile = open('unifyrules.json', 'r')
+                rules = json.load(rulesfile)
+                rulesfile.close()
+                unifylicenses(new, rules)
+
             if optimize:
                 optjson(new)
             if len(copyleft_licenses) > 0:
@@ -624,6 +664,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                         incompatible_licenses.append(copyleft_license)
                 if len(incompatible_licenses) > 0:
                     new['INCOMPATIBLE LICENSES'] = incompatible_licenses
+
             alljsondata[mergednames] = new
         else:
             alljsondata['OSADL OSLOC'] = jsondata
@@ -648,7 +689,7 @@ def main():
     filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
 # pragma pylint: disable=used-before-assignment
-        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-m] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]',
+        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-d] [-e] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]',
           description = 'positional arguments:   ' + filenamehelp)
         parser.add_argument = parser.add_option
         filenametype = 'string'
@@ -683,15 +724,19 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
     parser.add_argument('-o', '--optimize',
       action = 'store_true',
       default = False,
-      help = 'convert a dict with no values to a list of keys or string, if only one, add "-opt" to output file name')
+      help = 'convert a dict with no values to a list of keys or string, append "-opt" to output file name if only one dict')
     parser.add_argument('-r', '--recreate',
       action = 'store_true',
       default = False,
-      help = 'recreate original checklist from JSON (for debugging)')
+      help = 'recreate original checklist from JSON')
     parser.add_argument('-s', '--show',
       action = 'store_true',
       default = False,
       help = 'also list the output to screen')
+    parser.add_argument('-u', '--unify',
+      action = 'store_true',
+      default = False,
+      help = 'unify merged license obligations if they are semantically similar as defined in the semantic dict "unifyrules.json"')
     parser.add_argument('-v', '--verbose',
       action = 'store_true',
       default = False,

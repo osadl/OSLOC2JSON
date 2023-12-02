@@ -7,6 +7,7 @@
   * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to-json-format)
   * [Optimization](#optimization)
   * [Merging](#merging)
+    * [Additional command line option when in merge mode(#additional-command-line-option-when-in-merge-mode)
     * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
     * [Some more merging examples](#some-more-merging-examples)
     * [Merging limitations](#merging-limitations)
@@ -22,7 +23,7 @@ checklists of several licenses.
 osloc2json.py --help
 ```
 ```
-usage: osloc2json.py [-h] [-f [OUTPUT]] [-e] [-m] [-o] [-r] [-s] [-v] OSLOC [OSLOC ...]
+usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
 
 positional arguments:
   OSLOC                 file names of OSLOC files to process
@@ -31,11 +32,13 @@ options:
   -h, --help            show this help message and exit
   -f [OUTPUT], --filename [OUTPUT]
                         name of output file for multiple licenses, has no effect if single license, default "osloc.json"
+  -d, --devel           enable output of information that may be useful for development
   -e, --expand          replace keys connected by OR with the individual keys and assign the value of the key to all of them
   -m, --merge           merge all licenses into a single one, has no effect if single license, default file name "merged.json"
-  -o, --optimize        convert a dict with no values to a list of keys or string, if only one, add "-opt" to output file name
-  -r, --recreate        recreate original checklist from JSON (for debugging)
+  -o, --optimize        convert a dict with no values to a list of keys or string, append "-opt" to output file name if only one dict
+  -r, --recreate        recreate original checklist from JSON
   -s, --show            also list the output to screen
+  -u, --unify           unify license obligations if they are semantically similar as defined in the semantic dict "unifyrules.json"
   -v, --verbose         show names and texts the program is using
 
 Either a single OSLOC file is parsed, converted to JSON format and saved under the original name with the suffix ".json", or
@@ -148,8 +151,8 @@ the following optimized output is available in the file "FTL-opt.json":
 ```
 As can be seen in this diff
 ```diff
---- ../OSLOC/unreflicenses/FTL.json 2023-11-04 02:34:06.978179221 +0100
-+++ ../OSLOC/unreflicenses/FTL-opt.json 2023-11-04 02:34:15.882344590 +0100
+--- ../OSLOC/unreflicenses/FTL.json
++++ ../OSLOC/unreflicenses/FTL-opt.json
 @@ -2,31 +2,27 @@
      "FTL": {
          "USE CASE": {
@@ -280,8 +283,8 @@ The effect of merging the MIT with the FTL license obligations checklist can be
 further illustrated in the context diff between the original FTL and the FTL/MIT
 merged checklist:
 ```diff
---- ../OSLOC/unreflicenses/FTL-opt.json 2023-11-04 00:55:05.376730567 +0100
-+++ merged.json 2023-11-04 00:50:35.531616943 +0100
+--- ../OSLOC/unreflicenses/FTL-opt.json
++++ merged.json
 @@ -1,10 +1,15 @@
  {
 -    "FTL": {
@@ -356,6 +359,57 @@ Without the option to expand OR-ed conditions the merged checklist would look li
 ```
 which would be rather meaningless.
 
+### Additional command line option when in merge mode
+In merge mode, the -u (--unify) option may be specified which will remove
+semantically redundant obligations defined in the file "unifyrules.json". This
+file is expected to contain dicts with an associated list of obligations each of
+them will be replaced by the obligation specified in the key if both the key and
+the particular obligation are contained in license obligations of the same
+condition or use case.
+
+The rules file "unifyrules.json" currently contains the following settings:
+```json
+{
+  "Provide License text": ["Forward License text"],
+  "Provide Copyright notices": ["Forward Copyright notices"],
+  "Provide Warranty disclaimer": ["Forward Warranty disclaimer"],
+  "Provide License text In Documentation OR Distribution material": ["Provide License text In Documentation", "Provide License text"],
+  "Forward License text In Documentation OR Distribution material": ["Forward License text In Documentation", "Forward License text"],
+  "Provide Copyright notices In Documentation OR Distribution material": ["Provide Copyright notices In Documentation", "Provide Copyright notices"],
+  "Forward Copyright notices In Documentation OR Distribution material": ["Forward Copyright notices In Documentation", "Forward Copyright notices"],
+  "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"],
+  "Forward Warranty disclaimer In Documentation OR Distribution material": ["Forward Warranty disclaimer In Documentation", "Forward Warranty disclaimer"]
+}
+```
+
+For example, merging the licenses FTL, MIT, BSD-2-Clause, BSD-3-Clause,
+Apache-2.0 and GPL-3.0-only with and without unifying differ from each other as
+shown in the following context diff:
+```diff
+--- examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.json
++++ examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.unified.json
+@@ -261,9 +261,7 @@
+                         ]
+                     },
+                     "Provide Copyright notices In Documentation OR Distribution material": {},
+-                    "Provide License text": {},
+                     "Provide License text In Documentation OR Distribution material": {},
+-                    "Provide Warranty disclaimer": {},
+                     "Provide Warranty disclaimer In Documentation OR Distribution material": {}
+                 },
+                 "YOU MUST NOT": {
+@@ -344,9 +342,6 @@
+                 },
+                 "YOU MUST": {
+                     "Credit FreeType Team": {},
+-                    "Forward Copyright notices": {},
+-                    "Forward License text": {},
+-                    "Forward Warranty disclaimer": {},
+                     "Provide Copyright notices": {
+                         "ATTRIBUTE": [
+                             "Appropriately",
+```
+
 ### Additional keys available when in merge mode
 In merge mode, two additional keys may be added, if appropriate.
 
@@ -401,8 +455,8 @@ execute the last merge operation.
 
 #### Added BSD-2-Clause license
 ```diff
---- FTL+MIT.json  2023-11-05 11:54:33.259803561 +0100
-+++ FTL+MIT+BSD-2-Clause.json 2023-11-05 11:54:56.564226921 +0100
+--- FTL+MIT.json
++++ FTL+MIT+BSD-2-Clause.json
 @@ -1,5 +1,5 @@
  {
 -    "FTL|MIT": {
@@ -440,8 +494,8 @@ products derived from this software" (in checklist language: "YOU MUST NOT
 Promote") were already introduced in the combined input checklist by the FTL
 license.
 ```diff
---- FTL+MIT+BSD-2-Clause.json 2023-11-05 11:54:56.564226921 +0100
-+++ FTL+MIT+BSD-2-Clause+BSD-3-Clause.json  2023-11-05 11:55:14.225547767 +0100
+--- FTL+MIT+BSD-2-Clause.json
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause.json
 @@ -1,5 +1,5 @@
  {
 -    "FTL|MIT|BSD-2-Clause": {
@@ -452,8 +506,8 @@ license.
 ```
 #### Added BSD-4-Clause license
 ```diff
---- FTL+MIT+BSD-2-Clause+BSD-3-Clause.json  2023-11-05 11:55:14.225547767 +0100
-+++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json 2023-11-05 11:55:30.927851180 +0100
+--- FTL+MIT+BSD-2-Clause+BSD-3-Clause.json
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json
 @@ -1,9 +1,14 @@
  {
 -    "FTL|MIT|BSD-2-Clause|BSD-3-Clause": {
@@ -483,8 +537,8 @@ license.
 ```
 #### Added Apache-2.0 license
 ```diff
---- FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json	2023-11-05 11:55:30.927851180 +0100
-+++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause+Apache-2.0.json	2023-11-05 19:07:21.877218819 +0100
+--- FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause+Apache-2.0.json
 @@ -1,12 +1,35 @@
  {
 -    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause": {
@@ -570,8 +624,8 @@ checklist, and the context diff between the GPL-3.0-only and the merged
 checklist clearly shows that the additional obligation of AGPL-3.0-only is
 imposed when the use of the software is offered as a network service.
 ```diff
---- ../unreflicenses/GPL-3.0-only-opt.json  2023-11-11 03:47:13.565671728 +0100
-+++ merged.json 2023-11-11 23:32:18.589124298 +0100
+--- ../unreflicenses/GPL-3.0-only-opt.json
++++ merged.json
 @@ -1,5 +1,5 @@
  {
 -    "GPL-3.0-only": {
