@@ -644,10 +644,20 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 new.pop('DEPENDING COMPATIBILITY')
 
             if unify:
-                rulesfile = open('unifyrules.json', 'r')
-                rules = json.load(rulesfile)
-                rulesfile.close()
-                unifylicenses(new, rules)
+                rulesfilename = 'unifyrules.json'
+                try:
+                    rulesfile = open(rulesfilename, 'r')
+                except:
+                    try:
+                        rulesfile = open('../' + rulesfilename, 'r')
+                    except:
+                        printnonl('File "' + rulesfilename + '" not found or not accessible in current or in parent directory: ')
+                try:
+                    rules = json.load(rulesfile)
+                    rulesfile.close()
+                    unifylicenses(new, rules)
+                except:
+                    print('Cannot unify')
 
             if optimize:
                 optjson(new)
