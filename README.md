@@ -7,7 +7,7 @@
   * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to-json-format)
   * [Optimization](#optimization)
   * [Merging](#merging)
-    * [Additional command line option when in merge mode(#additional-command-line-option-when-in-merge-mode)
+    * [Additional command line option when in merge mode](#additional-command-line-option-when-in-merge-mode)
     * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
     * [Some more merging examples](#some-more-merging-examples)
     * [Merging limitations](#merging-limitations)
