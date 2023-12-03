@@ -409,6 +409,7 @@ shown in the following context diff:
                          "ATTRIBUTE": [
                              "Appropriately",
 ```
+Please note that unifying license obligations may lead to overfulfillment of obligations.
 
 ### Additional keys available when in merge mode
 In merge mode, two additional keys may be added, if appropriate.
