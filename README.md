@@ -373,12 +373,12 @@ The rules file "unifyrules.json" currently contains the following settings:
   "Provide License text": ["Forward License text"],
   "Provide Copyright notices": ["Forward Copyright notices"],
   "Provide Warranty disclaimer": ["Forward Warranty disclaimer"],
+  "Provide License text In Documentation": ["Provide License text"],
+  "Provide Copyright notices In Documentation": ["Provide Copyright notices"],
+  "Provide Warranty disclaimer In Documentation": ["Provide Warranty disclaimer"],
   "Provide License text In Documentation OR Distribution material": ["Provide License text In Documentation", "Provide License text"],
-  "Forward License text In Documentation OR Distribution material": ["Forward License text In Documentation", "Forward License text"],
   "Provide Copyright notices In Documentation OR Distribution material": ["Provide Copyright notices In Documentation", "Provide Copyright notices"],
-  "Forward Copyright notices In Documentation OR Distribution material": ["Forward Copyright notices In Documentation", "Forward Copyright notices"],
-  "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"],
-  "Forward Warranty disclaimer In Documentation OR Distribution material": ["Forward Warranty disclaimer In Documentation", "Forward Warranty disclaimer"]
+  "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"]
 }
 ```
 
