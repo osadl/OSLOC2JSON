@@ -266,7 +266,7 @@ printnonl = sys.stdout.write
 def back2osloc(l, indent, key, eitherkey, parent, previous):
     if isinstance(l, dict):
         count = 0
-        if previous in ['', 'ATTRIBUTE', 'IF', 'USE CASE', 'YOU MUST', 'YOU MUST NOT']:
+        if previous in ['', 'ATTRIBUTE', 'IF', 'YOU MUST', 'YOU MUST NOT']:
             newdict = sortdict(l)
         else:
             newdict = l.copy()
