@@ -635,19 +635,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     allrefs[licensename] = licensedata
                     new = extend(new, licensedata, devel, [], [])
 
-            licenserefs = {}
-            allflat = flatten(new.copy())
-            for license, refs in allrefs.items():
-                for ref in flatten(refs):
-                    if ref in allflat:
-                        if ref not in licenserefs:
-                            licenserefs[ref] = []
-                        licenserefs[ref].append(license)
-
-            newrefs = {}
-            deepcopy(newrefs, new)
-            addlrefs(newrefs, licenserefs)
-
             new['COMPATIBILITY'] = []
             for k, v in compatibilities.items():
                 if v == compatibilities_no:
@@ -660,6 +647,32 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     new['DEPENDING COMPATIBILITY'].append(k)
             if len(new['DEPENDING COMPATIBILITY']) == 0:
                 new.pop('DEPENDING COMPATIBILITY')
+
+            licenserefs = {}
+            allflat = flatten(new.copy())
+            for license, refs in allrefs.items():
+                for ref in flatten(refs):
+                    if ref in allflat:
+                        if ref not in licenserefs:
+                            licenserefs[ref] = []
+                        licenserefs[ref].append(license)
+
+            newrefs = {}
+            deepcopy(newrefs, new)
+            addlrefs(newrefs, licenserefs)
+            if 'INCOMPATIBILITY' in new:
+                incompatible_licenses = []
+                names = mergednames.split('|')
+                for license in names:
+                    if license in new['INCOMPATIBILITY']:
+                        for reflicense in newrefs['INCOMPATIBILITY']:
+                            if license == reflicense.split('|')[0].rstrip():
+                                incompatible_licenses.append(reflicense)
+                for copyleft_license in copyleft_licenses:
+                    if 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']:
+                        incompatible_licenses.append(copyleft_license)
+                if len(incompatible_licenses) > 0:
+                    newrefs['INCOMPATIBLE LICENSES'] = incompatible_licenses
 
             if unify:
                 rulesfilename = 'unifyrules.json'
