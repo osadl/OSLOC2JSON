@@ -19,7 +19,7 @@ except ImportError:
     from optparse import OptionParser
 
 try:
-    from inspect import currentframe, getframeinfo
+    import inspect
 except ImportError:
     pass
 
@@ -144,21 +144,70 @@ def dictlistindictlist(sub, super):
             return False
     return True
 
-def addrefs(data, licensename):
-    """ Reference obligations by license name """
-    if isinstance(data, dict):
-        for k, v in data.copy().items():
-            if re.search('[a-z]', k):
-                data.pop(k)
-                if ' | ' in k:
-                    data[k + ',' + licensename] = v
+def flatten(v, prefix=''):
+    result = []
+    if isinstance(v, dict):
+        for k, v2 in v.items():
+            p2 = "{}['{}']".format(prefix, k)
+            if v2 == {}:
+                result.append(p2)
+            else:
+                result.extend(flatten(v2, prefix = p2))
+    elif isinstance(v, list):
+        for i, v2 in enumerate(v):
+            result.extend(flatten(v2, prefix))
+    elif isinstance(v, str):
+        p2 = "{}['{}']".format(prefix, v)
+        result.append(p2)
+    return result
+
+def deepcopy(target, source, parent = {}, tag = ''):
+    if isinstance(source, dict):
+        for k, v in source.copy().items():
+            target[k] = {}
+            deepcopy(target[k], v, target, k)
+    elif isinstance(source, list):
+        parent[tag] = []
+        for i, v in enumerate(source.copy()):
+            parent[tag].append(v)
+    elif isinstance(source, str):
+        parent[tag] = source
+
+
+def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
+    result = []
+    if isinstance(v, dict):
+        for k, v2 in v.copy().items():
+            p2 = "{}['{}']".format(prefix, k)
+            if v2 == {}:
+                result.append(p2)
+                if p2 in lrefs:
+                    old = v[k]
+                    parent[tag].pop(k)
+                    newk = k + ' | '
+                    for l in lrefs[p2]:
+                         if newk.endswith(' | '):
+                             newk += l
+                         else:
+                             newk += ', ' + l
+                    parent[tag][newk] = old
+            else:
+                result.extend(addlrefs(v2, lrefs, v, k, prefix = p2))
+    elif isinstance(v, list):
+        for i, v2 in enumerate(v):
+            result.extend(addlrefs(v2, lrefs, v, i, prefix))
+    elif isinstance(v, str):
+        p2 = "{}['{}']".format(prefix, v)
+        if p2 in lrefs:
+            newv = parent[tag] + ' | '
+            for l in lrefs[p2]:
+                if newv.endswith(' | '):
+                    newv += l
                 else:
-                    data[k + ' | ' + licensename] = v
-        return {k: addrefs(v, licensename) for k, v in data.items()}
-    elif isinstance(data, list):
-        return [addrefs(i, licensename) for i in data]
-    else:
-        return data + ',' + licensename if ' | ' in data else data + ' | ' + licensename
+                    newv += ', ' + l
+            parent[tag] = newv
+        result.append(p2)
+    return result
 
 def extend(l1, l2, devel, chain1, chain2):
     """ Recursively add a dict to another dict while removing duplicates and extending items with the same key """
@@ -190,7 +239,7 @@ def extend(l1, l2, devel, chain1, chain2):
 
             elif isinstance(v2, list):
                 if k2 not in new:
-                     new[k2] = v2
+                    new[k2] = v2
                 else:
                     if isinstance(new[k2], str):
                         if new[k2] not in v2:
@@ -271,58 +320,11 @@ def back2osloc(l, indent, key, eitherkey, parent, previous):
         else:
             newdict = l.copy()
         for e in newdict:
-            if indent == 0 and e == 'COMPATIBILITY':
+            if indent == 0 and e in ['COMPATIBILITY', 'COPYLEFT CLAUSE', 'DEPENDING COMPATIBILITY', 'INCOMPATIBILITY', 'INCOMPATIBLE LICENSES', 'PATENT HINTS']:
                 if isinstance(l[e], list):
                     for v in l[e]:
                         print()
                         printnonl(e + ' ' + v)
-                else:
-                    print()
-                    printnonl(e + ' ' + l[e])
-                continue
-            if indent == 0 and e == 'DEPENDING COMPATIBILITY':
-                if isinstance(l[e], list):
-                    for v in l[e]:
-                        print()
-                        printnonl(e + ' ' + v)
-                else:
-                    print()
-                    printnonl(e + ' ' + l[e])
-                continue
-            if indent == 0 and e == 'INCOMPATIBILITY':
-                if isinstance(l[e], list):
-                    for v in l[e]:
-                        print()
-                        printnonl(e + ' ' + v)
-                else:
-                    print()
-                    printnonl(e + ' ' + l[e])
-                continue
-            if indent == 0 and e == 'INCOMPATIBLE LICENSES':
-                if isinstance(l[e], list):
-                    for v in l[e]:
-                        print()
-                        printnonl(e + ' ' + v)
-                else:
-                    print()
-                    printnonl(e + ' ' + l[e])
-                continue
-            if indent == 0 and e == 'PATENT HINTS':
-                if isinstance(l[e], list):
-                    print()
-                    printnonl(e)
-                    for v in l[e]:
-                        printnonl(' ' + v)
-                else:
-                    print()
-                    printnonl(e + ' ' + l[e])
-                continue
-            if indent == 0 and e == 'COPYLEFT CLAUSE':
-                if isinstance(l[e], list):
-                    print()
-                    printnonl(e)
-                    for v in l[e]:
-                        printnonl(' ' + v)
                 else:
                     print()
                     printnonl(e + ' ' + l[e])
@@ -571,6 +573,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
     if licenses > 1:
         alljsondata = {}
         if merge:
+            allrefs = {}
             copyleft_licenses = []
             mergednames = ''
             compatibilities = {}
@@ -624,11 +627,26 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 if mergednames == '':
                     mergednames = licensename
                     new = licensedata
+                    allrefs[licensename] = licensedata
                 else:
                     mergednames = mergednames + '|' + licensename
                     if verbose:
                         print(mergednames)
+                    allrefs[licensename] = licensedata
                     new = extend(new, licensedata, devel, [], [])
+
+            licenserefs = {}
+            allflat = flatten(new.copy())
+            for license, refs in allrefs.items():
+                for ref in flatten(refs):
+                    if ref in allflat:
+                        if ref not in licenserefs:
+                            licenserefs[ref] = []
+                        licenserefs[ref].append(license)
+
+            newrefs = {}
+            deepcopy(newrefs, new)
+            addlrefs(newrefs, licenserefs)
 
             new['COMPATIBILITY'] = []
             for k, v in compatibilities.items():
@@ -680,6 +698,16 @@ def osloc2json(licensefilenames, outfilename, json, args):
             alljsondata['OSADL OSLOC'] = jsondata
         jsondata = alljsondata
 
+    if recreate:
+        if merge:
+            l = newrefs
+        else:
+            l = jsondata
+            if len(jsondata.keys()) == 1:
+                l = l[list(jsondata.keys())[0]]
+        back2osloc(l, 0, '', {}, {}, '')
+        print()
+
     jsonfile = open(outfilename, 'w')
     json.dump(jsondata, jsonfile, indent = 4, sort_keys = True)
     jsonfile.close()
@@ -687,13 +715,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
     if show:
         json.dump(jsondata, sys.stdout, indent = 4, sort_keys = True)
         sys.stdout.write('\n')
-
-    if recreate:
-        l = jsondata
-        if len(jsondata.keys()) == 1:
-            l = l[list(jsondata.keys())[0]]
-        back2osloc(l, 0, '', {}, {}, '')
-        print()
 
 def main():
     filenamehelp = 'file names of OSLOC files to process'
