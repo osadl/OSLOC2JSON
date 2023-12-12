@@ -254,13 +254,12 @@
                 "YOU MUST": {
                     "Credit FreeType Team": {},
                     "Credit In Documentation FreeType Team": {},
-                    "Provide Copyright notices": {
+                    "Provide Copyright notices In Documentation OR Distribution material": {
                         "ATTRIBUTE": [
                             "Appropriately",
                             "Highlighted"
                         ]
                     },
-                    "Provide Copyright notices In Documentation OR Distribution material": {},
                     "Provide License text In Documentation OR Distribution material": {},
                     "Provide Warranty disclaimer In Documentation OR Distribution material": {}
                 },
@@ -342,6 +341,7 @@
                 },
                 "YOU MUST": {
                     "Credit FreeType Team": {},
+                    "Forward Copyright notices": {},
                     "Provide Copyright notices": {
                         "ATTRIBUTE": [
                             "Appropriately",

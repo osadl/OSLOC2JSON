@@ -155,6 +155,8 @@ def flatten(v, prefix=''):
                 result.extend(flatten(v2, prefix = p2))
     elif isinstance(v, list):
         for i, v2 in enumerate(v):
+            #p2 = "{}['{}']".format(prefix, i)
+            #result.extend(flatten(v2, prefix = p2))
             result.extend(flatten(v2, prefix))
     elif isinstance(v, str):
         p2 = "{}['{}']".format(prefix, v)
@@ -179,22 +181,24 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
     if isinstance(v, dict):
         for k, v2 in v.copy().items():
             p2 = "{}['{}']".format(prefix, k)
+            if p2 in lrefs:
+                old = v[k]
+                parent[tag].pop(k)
+                newk = k + ' | '
+                for l in lrefs[p2]:
+                     if newk.endswith(' | '):
+                         newk += l
+                     else:
+                         newk += ', ' + l
+                parent[tag][newk] = old
             if v2 == {}:
                 result.append(p2)
-                if p2 in lrefs:
-                    old = v[k]
-                    parent[tag].pop(k)
-                    newk = k + ' | '
-                    for l in lrefs[p2]:
-                         if newk.endswith(' | '):
-                             newk += l
-                         else:
-                             newk += ', ' + l
-                    parent[tag][newk] = old
             else:
                 result.extend(addlrefs(v2, lrefs, v, k, prefix = p2))
     elif isinstance(v, list):
         for i, v2 in enumerate(v):
+            #p2 = "{}['{}']".format(prefix, i)
+            #result.extend(addlrefs(v2, lrefs, v, i, prefix = p2))
             result.extend(addlrefs(v2, lrefs, v, i, prefix))
     elif isinstance(v, str):
         p2 = "{}['{}']".format(prefix, v)
@@ -266,7 +270,10 @@ def extend(l1, l2, devel, chain1, chain2):
                         new[k2] = list2dict(new[k2], v2)
                     elif isinstance(new[k2], dict):
                         if not dictlistindictlist(v2, new[k2]):
-                            new[k2] = extend(new[k2], v2, devel, chain2.copy(), chain2)
+                            if new[k2] == {} and v2 != {}:
+                                new[k2] = v2
+                            else:
+                                new[k2] = extend(new[k2], v2, devel, chain2.copy(), chain2)
 
             chain2.pop()
         chain1.pop()
@@ -388,28 +395,48 @@ def back2osloc(l, indent, key, eitherkey, parent, previous):
 def unifyobligations(d, tag, replacelist):
     """ Unify obligations according to semantic rules """
     for k, v in d.items():
-        if isinstance(v, dict) and k in ['YOU MUST', 'YOU MUST NOT']:
-            canunify = False
-            for obligation in v:
-                if obligation == tag:
-                    canunify = True
+        tagrefs = ''
+        if isinstance(v, dict) and k in ['YOU MUST', 'YOU MUST NOT', 'ATTRIBUTE']:
+            tagrefs = ''
+            for obligation, v1 in v.items():
+                if obligation.split(' | ')[0] == tag and v1 == {}:
+                    tagrefs = obligation
                     break
-            if canunify:
-                for obligation, dummy in v.copy().items():
+            if tagrefs != '':
+                for obligation, v1 in v.copy().items():
                     for unifyable in replacelist:
-                        if obligation == unifyable and dummy == {}:
-                            d[k].pop(unifyable)
-        elif isinstance(v, list) and k in ['YOU MUST', 'YOU MUST NOT']:
-            canunify = False
+                        if obligation.split(' | ')[0] == unifyable:
+                            d[k].pop(obligation)
+                            d[k].pop(tagrefs)
+                            if '|' in obligation:
+                                if '|' in tagrefs:
+                                    d[k][tagrefs + ', (' + unifyable + '): ' + obligation.split(' | ')[1]] = v1
+                                else:
+                                    d[k][tagrefs + ' | (' + unifyable + '): ' + obligation.split(' | ')[1]] = v1
+                            else:
+                                d[k][tagrefs] = v1
+            else:
+                unifyobligations(v, tag, replacelist)
+        elif isinstance(v, list) and k in ['YOU MUST', 'YOU MUST NOT', 'ATTRIBUTE']:
+            tagrefs = ''
             for obligation in v:
-                if obligation == tag:
-                    canunify = True
+                if obligation.split(' | ')[0] == tag:
+                    tagrefs = obligation
                     break
-            if canunify:
+            if tagrefs != '':
                 for obligation in v:
                     for unifyable in replacelist:
-                        if obligation == unifyable:
-                            d[k].remove(unifyable)
+                        if obligation.split(' | ')[0] == unifyable:
+                            d[k].remove(obligation)
+                            d[k].remove(tagrefs)
+                            if '|' in obligation:
+                                if '|' in tagrefs:
+                                    d[k].append(tagrefs + ', (' + unifyable + '): ' + obligation.split(' | ')[1])
+                                else:
+                                    d[k].append(tagrefs + ' | (' + unifyable + '): ' + obligation.split(' | ')[1])
+                                d[k] = sorted(d[k], key = lambda s: s.lower())
+                            else:
+                                d[k].append(tagrefs)
         elif isinstance(v, dict):
             unifyobligations(v, tag, replacelist)
 
@@ -652,10 +679,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
             allflat = flatten(new.copy())
             for license, refs in allrefs.items():
                 for ref in flatten(refs):
-                    if ref in allflat:
-                        if ref not in licenserefs:
-                            licenserefs[ref] = []
-                        licenserefs[ref].append(license)
+                    for allref in allflat:
+                        if allref.startswith(ref):
+                            if ref not in licenserefs:
+                                licenserefs[ref] = []
+                            if license not in licenserefs[ref]:
+                                licenserefs[ref].append(license)
 
             newrefs = {}
             deepcopy(newrefs, new)
@@ -686,9 +715,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 try:
                     rules = json.load(rulesfile)
                     rulesfile.close()
-                    unifylicenses(new, rules)
                 except:
                     print('Cannot unify')
+                unifylicenses(newrefs, rules)
+                unifylicenses(new, rules)
 
             if optimize:
                 optjson(new)
