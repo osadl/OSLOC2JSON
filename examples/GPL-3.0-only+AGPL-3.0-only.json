@@ -51,8 +51,8 @@
             "zlib-acknowledgement"
         ],
         "INCOMPATIBLE LICENSES": [
-            "GPL-3.0-only",
-            "AGPL-3.0-only"
+            "AGPL-3.0-only",
+            "GPL-3.0-only"
         ],
         "PATENT HINTS": "Yes",
         "USE CASE": {

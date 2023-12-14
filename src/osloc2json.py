@@ -695,12 +695,25 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 for license in names:
                     if license in new['INCOMPATIBILITY']:
                         for reflicense in newrefs['INCOMPATIBILITY']:
-                            if license == reflicense.split('|')[0].rstrip():
+                            if license == reflicense.split(' | ')[0]:
                                 incompatible_licenses.append(reflicense)
                 for copyleft_license in copyleft_licenses:
-                    if 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']:
-                        incompatible_licenses.append(copyleft_license)
+                    if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
+                        already = False
+                        for incompatible_license in incompatible_licenses:
+                            if copyleft_license == incompatible_license.split(' | ')[0]:
+                                already = True
+                                break
+                        if not already:
+                            incompatible_copyleft_licenses_str = ''
+                            for copyleft_license2 in copyleft_licenses:
+                                if copyleft_license2 != copyleft_license and copyleft_license not in new['COMPATIBILITY']:
+                                    if incompatible_copyleft_licenses_str != '':
+                                        incompatible_copyleft_licenses_str += ', '
+                                    incompatible_copyleft_licenses_str += copyleft_license2
+                            incompatible_licenses.append(copyleft_license + ' | Copyleft effect of ' + incompatible_copyleft_licenses_str)
                 if len(incompatible_licenses) > 0:
+                    incompatible_licenses = sorted(incompatible_licenses, key = lambda s: s.lower())
                     newrefs['INCOMPATIBLE LICENSES'] = incompatible_licenses
 
             if unify:
@@ -715,10 +728,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 try:
                     rules = json.load(rulesfile)
                     rulesfile.close()
+                    unifylicenses(newrefs, rules)
+                    unifylicenses(new, rules)
                 except:
                     print('Cannot unify')
-                unifylicenses(newrefs, rules)
-                unifylicenses(new, rules)
 
             if optimize:
                 optjson(new)
@@ -731,9 +744,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     if license in new['INCOMPATIBILITY']:
                         incompatible_licenses.append(license)
                 for copyleft_license in copyleft_licenses:
-                    if 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']:
+                    if 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY'] and copyleft_license not in incompatible_licenses:
                         incompatible_licenses.append(copyleft_license)
                 if len(incompatible_licenses) > 0:
+                    incompatible_licenses = sorted(incompatible_licenses, key = lambda s: s.lower())
                     new['INCOMPATIBLE LICENSES'] = incompatible_licenses
 
             alljsondata[mergednames] = new
