@@ -689,14 +689,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
             newrefs = {}
             deepcopy(newrefs, new)
             addlrefs(newrefs, licenserefs)
-            if 'INCOMPATIBILITY' in new:
+            if 'INCOMPATIBILITY' in new or len(copyleft_licenses) > 0:
                 incompatible_licenses = []
                 names = mergednames.split('|')
-                for license in names:
-                    if license in new['INCOMPATIBILITY']:
-                        for reflicense in newrefs['INCOMPATIBILITY']:
-                            if license == reflicense.split(' | ')[0]:
-                                incompatible_licenses.append(reflicense)
+                if 'INCOMPATIBILITY' in new:
+                    for license in names:
+                        if license in new['INCOMPATIBILITY']:
+                            for reflicense in newrefs['INCOMPATIBILITY']:
+                                if license == reflicense.split(' | ')[0]:
+                                    incompatible_licenses.append(reflicense)
                 for copyleft_license in copyleft_licenses:
                     if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
                         already = False
