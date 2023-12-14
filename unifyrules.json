@@ -1,6 +1,6 @@
 {
-  "Provide License text": ["Forward License text"],
-  "Provide Copyright notices": ["Forward Copyright notices"],
+  "Provide License text": ["Provide License notice", "Reference License text", "Forward License text"],
+  "Provide Copyright notices": ["Provide Copyright notice", "Forward Copyright notices"],
   "Provide Warranty disclaimer": ["Forward Warranty disclaimer"],
   "Provide License text In Documentation": ["Provide License text"],
   "Provide Copyright notices In Documentation": ["Provide Copyright notices"],

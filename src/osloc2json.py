@@ -213,7 +213,7 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
         result.append(p2)
     return result
 
-def extend(l1, l2, devel, chain1, chain2):
+def extend(l1, l2, devel, chain1, chain2, unify):
     """ Recursively add a dict to another dict while removing duplicates and extending items with the same key """
     if l1 == l2:
         return l1
@@ -273,12 +273,13 @@ def extend(l1, l2, devel, chain1, chain2):
                             if new[k2] == {} and v2 != {}:
                                 new[k2] = v2
                             else:
-                                new[k2] = extend(new[k2], v2, devel, chain2.copy(), chain2)
+                                new[k2] = extend(new[k2], v2, devel, chain2.copy(), chain2, unify)
 
             chain2.pop()
         chain1.pop()
     if isinstance(new, dict):
-        new = mkpluralonlydict(new)
+        if not unify:
+            new = mkpluralonlydict(new)
     return new
 
 def optjson(l):
@@ -410,9 +411,11 @@ def unifyobligations(d, tag, replacelist):
                             d[k].pop(tagrefs)
                             if '|' in obligation:
                                 if '|' in tagrefs:
-                                    d[k][tagrefs + ', (' + unifyable + '): ' + obligation.split(' | ')[1]] = v1
+                                    tagrefs += ', (' + unifyable + '): ' + obligation.split(' | ')[1]
+                                    d[k][tagrefs] = v1
                                 else:
-                                    d[k][tagrefs + ' | (' + unifyable + '): ' + obligation.split(' | ')[1]] = v1
+                                    tagrefs += ' | (' + unifyable + '): ' + obligation.split(' | ')[1]
+                                    d[k][tagrefs] = v1
                             else:
                                 d[k][tagrefs] = v1
             else:
@@ -660,7 +663,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     if verbose:
                         print(mergednames)
                     allrefs[licensename] = licensedata
-                    new = extend(new, licensedata, devel, [], [])
+                    new = extend(new, licensedata, devel, [], [], unify)
 
             new['COMPATIBILITY'] = []
             for k, v in compatibilities.items():
@@ -729,10 +732,11 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 try:
                     rules = json.load(rulesfile)
                     rulesfile.close()
-                    unifylicenses(newrefs, rules)
-                    unifylicenses(new, rules)
                 except:
                     print('Cannot unify')
+
+                unifylicenses(newrefs, rules)
+                unifylicenses(new, rules)
 
             if optimize:
                 optjson(new)
