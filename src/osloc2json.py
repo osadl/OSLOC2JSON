@@ -609,9 +609,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
             copyleft_licenses = []
             mergednames = ''
             compatibilities = {}
-            compatibilities_no = 0
             depending_compatibilities = {}
-            depending_compatibilities_no = 0
             for licensename in jsondata:
                 licensedata = jsondata[licensename]
                 if 'USE CASE' in licensedata:
@@ -629,7 +627,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                 if licensedata['USE CASE'][usecase] == {}:
                                     licensedata['USE CASE'][usecase]['YOU MUST'] = Nonetext
                 if 'COMPATIBILITY' in licensedata:
-                    compatibilities_no += 1
                     if isinstance(licensedata['COMPATIBILITY'], str):
                         all = [licensedata['COMPATIBILITY'], licensename]
                     elif isinstance(licensedata['COMPATIBILITY'], list):
@@ -640,7 +637,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
                         else:
                             compatibilities[compatibility] += 1
                 if 'DEPENDING COMPATIBILITY' in licensedata:
-                    depending_compatibilities_no += 1
                     if isinstance(licensedata['DEPENDING COMPATIBILITY'], str):
                         all = [licensedata['DEPENDING COMPATIBILITY'], licensename]
                     elif isinstance(licensedata['DEPENDING COMPATIBILITY'], list):
@@ -669,13 +665,13 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
             new['COMPATIBILITY'] = []
             for k, v in compatibilities.items():
-                if v == compatibilities_no:
+                if v == len(copyleft_licenses):
                     new['COMPATIBILITY'].append(k)
             if len(new['COMPATIBILITY']) == 0:
                 new.pop('COMPATIBILITY')
             new['DEPENDING COMPATIBILITY'] = []
             for k, v in depending_compatibilities.items():
-                if v == depending_compatibilities_no:
+                if v == len(copyleft_licenses):
                     new['DEPENDING COMPATIBILITY'].append(k)
             if len(new['DEPENDING COMPATIBILITY']) == 0:
                 new.pop('DEPENDING COMPATIBILITY')

@@ -8,5 +8,6 @@
   "Provide License text In Documentation OR Distribution material": ["Provide License text In Documentation", "Provide License text"],
   "Provide Copyright notices In Documentation OR Distribution material": ["Provide Copyright notices In Documentation", "Provide Copyright notices"],
   "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"],
-  "Provide Modification report": ["Provide Modification notice"]
+  "Provide Modification report": ["Provide Modification notice"],
+  "Modify Warranty disclaimers": ["Modify Warranty disclaimer"]
 }
