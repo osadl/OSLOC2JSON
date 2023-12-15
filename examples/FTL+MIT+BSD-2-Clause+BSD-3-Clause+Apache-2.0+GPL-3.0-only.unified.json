@@ -332,10 +332,9 @@
                                 "ATTRIBUTE": "Highlighted"
                             },
                             "Provide Modification date": {},
-                            "Provide Modification notice": {
+                            "Provide Modification report": {
                                 "ATTRIBUTE": "Highlighted"
-                            },
-                            "Provide Modification report": {}
+                            }
                         }
                     }
                 },
