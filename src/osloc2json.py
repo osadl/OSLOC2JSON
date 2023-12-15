@@ -434,9 +434,11 @@ def unifyobligations(d, tag, replacelist):
                             d[k].remove(tagrefs)
                             if '|' in obligation:
                                 if '|' in tagrefs:
-                                    d[k].append(tagrefs + ', (' + unifyable + '): ' + obligation.split(' | ')[1])
+                                    tagrefs += ', (' + unifyable + '): ' + obligation.split(' | ')[1]
+                                    d[k].append(tagrefs)
                                 else:
-                                    d[k].append(tagrefs + ' | (' + unifyable + '): ' + obligation.split(' | ')[1])
+                                    tagrefs += ' | (' + unifyable + '): ' + obligation.split(' | ')[1]
+                                    d[k].append(tagrefs)
                                 d[k] = sorted(d[k], key = lambda s: s.lower())
                             else:
                                 d[k].append(tagrefs)
