@@ -709,7 +709,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
                         if not already:
                             incompatible_copyleft_licenses_str = ''
                             for copyleft_license2 in copyleft_licenses:
-                                if copyleft_license2 != copyleft_license and 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']:
+                                if 'COMPATIBILITY' in new and copyleft_license in new['COMPATIBILITY']:
+                                    continue
+                                if copyleft_license2 != copyleft_license:
                                     if incompatible_copyleft_licenses_str != '':
                                         incompatible_copyleft_licenses_str += ', '
                                     incompatible_copyleft_licenses_str += copyleft_license2
