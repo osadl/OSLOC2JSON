@@ -324,10 +324,8 @@ def back2osloc(l, indent, key, eitherkey, parent, previous):
     if isinstance(l, dict):
         count = 0
         if previous in ['', 'ATTRIBUTE', 'IF', 'YOU MUST', 'YOU MUST NOT']:
-            newdict = sortdict(l)
-        else:
-            newdict = l.copy()
-        for e in newdict:
+            l = sortdict(l)
+        for e in l:
             if indent == 0 and e in ['COMPATIBILITY', 'COPYLEFT CLAUSE', 'DEPENDING COMPATIBILITY', 'INCOMPATIBILITY', 'INCOMPATIBLE LICENSES', 'PATENT HINTS']:
                 if isinstance(l[e], list):
                     for v in l[e]:
@@ -374,6 +372,8 @@ def back2osloc(l, indent, key, eitherkey, parent, previous):
                                 printnonl(' '*(indent - 4) + key + ' ' + e)
                 increment = 0
             back2osloc(l[e], indent + increment, e, eitherkey, l[e], e)
+            if e == 'OR':
+                indent += 4
             count = count + 1
     elif isinstance(l, list):
         count = 0
