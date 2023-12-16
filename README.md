@@ -370,15 +370,17 @@ condition or use case.
 The rules file "unifyrules.json" currently contains the following settings:
 ```json
 {
-  "Provide License text": ["Forward License text"],
-  "Provide Copyright notices": ["Forward Copyright notices"],
+  "Provide License text": ["Provide License notice", "Reference License text", "Forward License text"],
+  "Provide Copyright notices": ["Provide Copyright notice", "Forward Copyright notices"],
   "Provide Warranty disclaimer": ["Forward Warranty disclaimer"],
   "Provide License text In Documentation": ["Provide License text"],
   "Provide Copyright notices In Documentation": ["Provide Copyright notices"],
   "Provide Warranty disclaimer In Documentation": ["Provide Warranty disclaimer"],
   "Provide License text In Documentation OR Distribution material": ["Provide License text In Documentation", "Provide License text"],
   "Provide Copyright notices In Documentation OR Distribution material": ["Provide Copyright notices In Documentation", "Provide Copyright notices"],
-  "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"]
+  "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"],
+  "Provide Modification report": ["Provide Modification notice"],
+  "Modify Warranty disclaimers": ["Modify Warranty disclaimer"]
 }
 ```
 
