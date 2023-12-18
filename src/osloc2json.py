@@ -129,6 +129,13 @@ def listinlist(testlist, fulllist):
         return True
     return set(testlist).issubset(fulllist)
 
+def commonlistitem(a, b):
+    aset = set(a)
+    bset = set(b)
+    if len(aset.intersection(bset)) > 0:
+        return True
+    return False
+
 def dictindict(sub, super):
     """ Check whether two dicts are identical or one is a subset of the other """
     if sub == super:
@@ -399,9 +406,11 @@ def unifyobligations(d, tag, replacelist):
         tagrefs = ''
         if isinstance(v, dict) and k in ['YOU MUST', 'YOU MUST NOT', 'ATTRIBUTE']:
             tagrefs = ''
+            attribute = {}
             for obligation, v1 in v.items():
-                if obligation.split(' | ')[0] == tag and v1 == {}:
+                if obligation.split(' | ')[0] == tag:
                     tagrefs = obligation
+                    attribute = v1
                     break
             if tagrefs != '':
                 for obligation, v1 in v.copy().items():
@@ -412,12 +421,16 @@ def unifyobligations(d, tag, replacelist):
                             if '|' in obligation:
                                 if '|' in tagrefs:
                                     tagrefs += ', (' + unifyable + '): ' + obligation.split(' | ')[1]
-                                    d[k][tagrefs] = v1
                                 else:
                                     tagrefs += ' | (' + unifyable + '): ' + obligation.split(' | ')[1]
-                                    d[k][tagrefs] = v1
-                            else:
+                            if attribute == {} and v1 == {}:
+                                d[k][tagrefs] = {}
+                            elif attribute == {} and v1 != {}:
                                 d[k][tagrefs] = v1
+                            elif attribute != {} and v1 == {}:
+                                d[k][tagrefs] = attribute
+                            else:
+                                d[k][tagrefs] = extend(v1, attribute, False, [], [], True)
             else:
                 unifyobligations(v, tag, replacelist)
         elif isinstance(v, list) and k in ['YOU MUST', 'YOU MUST NOT', 'ATTRIBUTE']:
@@ -435,13 +448,10 @@ def unifyobligations(d, tag, replacelist):
                             if '|' in obligation:
                                 if '|' in tagrefs:
                                     tagrefs += ', (' + unifyable + '): ' + obligation.split(' | ')[1]
-                                    d[k].append(tagrefs)
                                 else:
                                     tagrefs += ' | (' + unifyable + '): ' + obligation.split(' | ')[1]
-                                    d[k].append(tagrefs)
-                                d[k] = sorted(d[k], key = lambda s: s.lower())
-                            else:
-                                d[k].append(tagrefs)
+                            d[k].append(tagrefs)
+                            d[k] = sorted(d[k], key = lambda s: s.lower())
         elif isinstance(v, dict):
             unifyobligations(v, tag, replacelist)
 
@@ -611,7 +621,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
             compatibilities = {}
             depending_compatibilities = {}
             for licensename in jsondata:
-                licensedata = jsondata[licensename]
+                licensedata = {}
+                deepcopy(licensedata, jsondata[licensename])
                 if 'USE CASE' in licensedata:
                     chain = ['USE CASE']
                     if isemptyusecase(chain, licensedata['USE CASE']):
@@ -628,9 +639,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                     licensedata['USE CASE'][usecase]['YOU MUST'] = Nonetext
                 if 'COMPATIBILITY' in licensedata:
                     if isinstance(licensedata['COMPATIBILITY'], str):
-                        all = [licensedata['COMPATIBILITY'], licensename]
+                        all = [licensedata['COMPATIBILITY']]
                     elif isinstance(licensedata['COMPATIBILITY'], list):
-                        all = sanitizelist(licensedata['COMPATIBILITY'] + [licensename])
+                        all = licensedata['COMPATIBILITY']
                     for compatibility in all:
                         if compatibility not in compatibilities:
                             compatibilities[compatibility] = 1
@@ -638,9 +649,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             compatibilities[compatibility] += 1
                 if 'DEPENDING COMPATIBILITY' in licensedata:
                     if isinstance(licensedata['DEPENDING COMPATIBILITY'], str):
-                        all = [licensedata['DEPENDING COMPATIBILITY'], licensename]
+                        all = [licensedata['DEPENDING COMPATIBILITY']]
                     elif isinstance(licensedata['DEPENDING COMPATIBILITY'], list):
-                        all = sanitizelist(licensedata['DEPENDING COMPATIBILITY'] + [licensename])
+                        all = licensedata['DEPENDING COMPATIBILITY']
                     for compatibility in all:
                         if compatibility not in depending_compatibilities:
                             depending_compatibilities[compatibility] = 1
@@ -662,6 +673,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
                         print(mergednames)
                     allrefs[licensename] = licensedata
                     new = extend(new, licensedata, devel, [], [], unify)
+
+            copyleft_licenses = sorted(copyleft_licenses, key = lambda s: s.lower())
 
             new['COMPATIBILITY'] = []
             for k, v in compatibilities.items():
@@ -690,35 +703,59 @@ def osloc2json(licensefilenames, outfilename, json, args):
             newrefs = {}
             deepcopy(newrefs, new)
             addlrefs(newrefs, licenserefs)
+
+            """ Populate newrefs['INCOMPATIBLE LICENSES'] """
             if 'INCOMPATIBILITY' in new or len(copyleft_licenses) > 0:
+                incompatible_licensesrefs = []
                 incompatible_licenses = []
+
+                """ Are any of the merged licenses explicitly marked as incompatible? """
                 names = mergednames.split('|')
                 if 'INCOMPATIBILITY' in new:
                     for license in names:
                         if license in new['INCOMPATIBILITY']:
                             for reflicense in newrefs['INCOMPATIBILITY']:
                                 if license == reflicense.split(' | ')[0]:
-                                    incompatible_licenses.append(reflicense)
-                for copyleft_license in copyleft_licenses:
+                                    incompatible_licensesrefs.append(reflicense)
+                                    incompatible_licenses.append(license)
+
+                """ Are any of the copyleft licenses among the merged licenses not explicitly compatible with all other copyleft licenses? """
+                for copyleft_license in copyleft_licenses.copy():
                     if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
-                        already = False
-                        for incompatible_license in incompatible_licenses:
-                            if copyleft_license == incompatible_license.split(' | ')[0]:
-                                already = True
-                                break
-                        if not already:
-                            incompatible_copyleft_licenses_str = ''
-                            for copyleft_license2 in copyleft_licenses:
-                                if 'COMPATIBILITY' in new and copyleft_license in new['COMPATIBILITY']:
-                                    continue
-                                if copyleft_license2 != copyleft_license:
-                                    if incompatible_copyleft_licenses_str != '':
-                                        incompatible_copyleft_licenses_str += ', '
-                                    incompatible_copyleft_licenses_str += copyleft_license2
-                            incompatible_licenses.append(copyleft_license + ' | Copyleft effect of ' + incompatible_copyleft_licenses_str)
+                        incompatible_copyleft_licenses_str = ''
+                        for copyleft_license2 in copyleft_licenses.copy():
+                            if copyleft_license2 == copyleft_license:
+                                continue
+                            if 'COMPATIBILITY' in jsondata[copyleft_license] and copyleft_license2 in jsondata[copyleft_license]['COMPATIBILITY']:
+                                continue
+                            if incompatible_copyleft_licenses_str != '':
+                                incompatible_copyleft_licenses_str += ', '
+                            incompatible_copyleft_licenses_str += copyleft_license2
+                        if incompatible_copyleft_licenses_str != '':
+                            incompatible_licensesrefs.append(copyleft_license + ' | If licensed under ' + incompatible_copyleft_licenses_str)
+                            if copyleft_license2 not in incompatible_licenses:
+                                incompatible_licenses.append(copyleft_license)
                 if len(incompatible_licenses) > 0:
                     incompatible_licenses = sorted(incompatible_licenses, key = lambda s: s.lower())
-                    newrefs['INCOMPATIBLE LICENSES'] = incompatible_licenses
+                    new['INCOMPATIBLE LICENSES'] = incompatible_licenses
+                    newrefs['INCOMPATIBLE LICENSES'] = incompatible_licensesrefs
+
+            """ If no incompatible copyleft licenses were found, mark all merged copyleft licenses explicitly as compatible """
+            if 'INCOMPATIBLE LICENSES' not in new or ('INCOMPATIBLE LICENSES' in new and not commonlistitem(copyleft_licenses, new['INCOMPATIBLE LICENSES'])):
+                for copyleft_license in copyleft_licenses:
+                    if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
+                        ref = ' | ' + copyleft_license + ' (only copyleft license)'
+                        if 'COMPATIBILITY' not in new:
+                            new['COMPATIBILITY'] = [copyleft_license]
+                            newrefs['COMPATIBILITY'] = [copyleft_license + ref]
+                        elif isinstance(new['COMPATIBILITY'], str):
+                            new['COMPATIBILITY'] = [new['COMPATIBILITY'], copyleft_license]
+                            newrefs['COMPATIBILITY'] = [newrefs['COMPATIBILITY'], copyleft_license + ref]
+                        else:
+                            new['COMPATIBILITY'].append(copyleft_license)
+                            newrefs['COMPATIBILITY'].append(copyleft_license + ref)
+                        new['COMPATIBILITY'] = sorted(new['COMPATIBILITY'], key = lambda s: s.lower())
+                        newrefs['COMPATIBILITY'] = sorted(newrefs['COMPATIBILITY'], key = lambda s: s.lower())
 
             if unify:
                 rulesfilename = 'unifyrules.json'
@@ -742,18 +779,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 optjson(new)
             if len(copyleft_licenses) > 0:
                 new['COPYLEFT LICENSES'] = copyleft_licenses
-            if 'INCOMPATIBILITY' in new:
-                incompatible_licenses = []
-                names = mergednames.split('|')
-                for license in names:
-                    if license in new['INCOMPATIBILITY']:
-                        incompatible_licenses.append(license)
-                for copyleft_license in copyleft_licenses:
-                    if 'COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY'] and copyleft_license not in incompatible_licenses:
-                        incompatible_licenses.append(copyleft_license)
-                if len(incompatible_licenses) > 0:
-                    incompatible_licenses = sorted(incompatible_licenses, key = lambda s: s.lower())
-                    new['INCOMPATIBLE LICENSES'] = incompatible_licenses
 
             alljsondata[mergednames] = new
         else:

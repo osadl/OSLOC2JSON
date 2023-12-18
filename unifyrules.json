@@ -1,5 +1,7 @@
 {
   "Modify Warranty disclaimers": ["Modify Warranty disclaimer"],
+  "Provide Source code": ["Include Source code"],
+  "Provide Written offer": ["Provide Delayed source code delivery"],
   "Provide License text": ["Provide License notice", "Reference License text", "Forward License text"],
   "Provide Copyright notices": ["Provide Copyright notice", "Forward Copyright notices"],
   "Provide Warranty disclaimer": ["Forward Warranty disclaimer"],

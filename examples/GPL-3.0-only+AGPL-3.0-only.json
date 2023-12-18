@@ -31,10 +31,6 @@
         ],
         "COPYLEFT CLAUSE": "Yes",
         "COPYLEFT LICENSES": [
-            "GPL-3.0-only",
-            "AGPL-3.0-only"
-        ],
-        "DEPENDING COMPATIBILITY": [
             "AGPL-3.0-only",
             "GPL-3.0-only"
         ],
