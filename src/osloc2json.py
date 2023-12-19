@@ -719,14 +719,14 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                     incompatible_licensesrefs.append(reflicense)
                                     incompatible_licenses.append(license)
 
-                """ Are any of the copyleft licenses among the merged licenses not explicitly compatible with all other copyleft licenses? """
+                """ Are any of the copyleft licenses among the merged licenses not marked compatible with all other copyleft licenses? Then check"""
                 for copyleft_license in copyleft_licenses.copy():
                     if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
                         incompatible_copyleft_licenses_str = ''
                         for copyleft_license2 in copyleft_licenses.copy():
                             if copyleft_license2 == copyleft_license:
                                 continue
-                            if 'COMPATIBILITY' in jsondata[copyleft_license] and copyleft_license2 in jsondata[copyleft_license]['COMPATIBILITY']:
+                            if 'COMPATIBILITY' in jsondata[copyleft_license2] and copyleft_license in jsondata[copyleft_license2]['COMPATIBILITY']:
                                 continue
                             if incompatible_copyleft_licenses_str != '':
                                 incompatible_copyleft_licenses_str += ', '
