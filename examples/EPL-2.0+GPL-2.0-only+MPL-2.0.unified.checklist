@@ -1,0 +1,150 @@
+
+COMPATIBILITY blessing | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY BSD-2-Clause | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY BSD-2-Clause-Patent | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY BSD-3-Clause | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY BSL-1.0 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY bzip2-1.0.5 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY bzip2-1.0.6 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY CC0-1.0 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY curl | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY EFL-2.0 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY FSFAP | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY FSFULLR | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY IBM-pibs | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY ICU | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY ISC | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY Libpng | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY MIT | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY NTP | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY Unlicense | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY UPL-1.0 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY WTFPL | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY X11 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY Zlib | EPL-2.0, GPL-2.0-only, MPL-2.0
+COMPATIBILITY ZPL-2.0 | EPL-2.0, GPL-2.0-only, MPL-2.0
+COPYLEFT CLAUSE Yes | EPL-2.0, GPL-2.0-only, MPL-2.0
+INCOMPATIBILITY Apache-1.0 | GPL-2.0-only
+INCOMPATIBILITY Apache-1.1 | GPL-2.0-only
+INCOMPATIBILITY Apache-2.0 | GPL-2.0-only
+INCOMPATIBILITY BSD-4-Clause | GPL-2.0-only
+INCOMPATIBILITY BSD-4-Clause-UC | GPL-2.0-only
+INCOMPATIBILITY FTL | GPL-2.0-only
+INCOMPATIBILITY IJG | GPL-2.0-only
+INCOMPATIBILITY OpenSSL | GPL-2.0-only
+INCOMPATIBILITY Python-2.0 | GPL-2.0-only
+INCOMPATIBILITY zlib-acknowledgement | GPL-2.0-only
+INCOMPATIBILITY XFree86-1.1 | GPL-2.0-only
+INCOMPATIBLE LICENSES EPL-2.0 | If licensed under GPL-2.0-only, MPL-2.0
+INCOMPATIBLE LICENSES GPL-2.0-only | If licensed under EPL-2.0, MPL-2.0
+INCOMPATIBLE LICENSES MPL-2.0 | If licensed under EPL-2.0
+PATENT HINTS Yes | EPL-2.0, GPL-2.0-only, MPL-2.0
+USE CASE Source code delivery
+    YOU MUST Provide Copyright notices
+        ATTRIBUTE Appropriately | GPL-2.0-only
+        ATTRIBUTE Highlighted | GPL-2.0-only
+    YOU MUST Provide License text | EPL-2.0, GPL-2.0-only, (Provide License notice): MPL-2.0, (Reference License text): MPL-2.0
+    YOU MUST Provide Warranty disclaimer
+        ATTRIBUTE Appropriately | GPL-2.0-only
+        ATTRIBUTE Highlighted | GPL-2.0-only
+    YOU MUST NOT Modify Attribution notices | EPL-2.0
+    YOU MUST NOT Modify Copyright notices | EPL-2.0
+    YOU MUST NOT Modify Legal notices | MPL-2.0
+    YOU MUST NOT Modify Liability disclaimers | EPL-2.0
+    YOU MUST NOT Modify License notices | GPL-2.0-only
+    YOU MUST NOT Modify Patent notices | EPL-2.0
+    YOU MUST NOT Modify Trademark notices | EPL-2.0
+    YOU MUST NOT Modify Warranty disclaimers | EPL-2.0, (Modify Warranty disclaimer): GPL-2.0-only
+    YOU MUST NOT Restrict Granted rights | GPL-2.0-only, MPL-2.0
+    IF Commercial distribution
+        YOU MUST Indemnify Other contributors | EPL-2.0
+    IF License change
+        YOU MUST Use Identical License obligations | EPL-2.0
+        YOU MUST Use Liability disclaimer On behalf of Other contributors
+            ATTRIBUTE Effective | EPL-2.0
+        YOU MUST Use Warranty disclaimer On behalf of Other contributors
+            ATTRIBUTE Effective | EPL-2.0
+        YOU MUST NOT Restrict Granted rights | EPL-2.0
+    IF Service offerings
+        ATTRIBUTE NOT Transferable | MPL-2.0
+        YOU MUST Indemnify Other contributors | MPL-2.0
+    IF Software modification
+        YOU MUST Grant License
+            ATTRIBUTE Original license | EPL-2.0, GPL-2.0-only, MPL-2.0
+        YOU MUST Provide Modification date | GPL-2.0-only
+        YOU MUST Provide Modification notice | GPL-2.0-only
+        IF Interactive AND Displaying License announcement
+            YOU MUST Display Copyright notices | GPL-2.0-only
+            YOU MUST Display License announcement | GPL-2.0-only
+            YOU MUST Display Warranty disclaimer | GPL-2.0-only
+            YOU MUST Reference License text | GPL-2.0-only
+USE CASE Binary delivery
+    YOU MUST Inform Recipients
+        ATTRIBUTE Delayed source code delivery
+            ATTRIBUTE No profit | MPL-2.0
+            ATTRIBUTE Reasonable | MPL-2.0
+            ATTRIBUTE Timely | MPL-2.0
+    YOU MUST Notify License | EPL-2.0
+    YOU MUST Provide Copyright notices
+        ATTRIBUTE Appropriately | GPL-2.0-only
+        ATTRIBUTE Highlighted | GPL-2.0-only
+    YOU MUST Provide License text | GPL-2.0-only
+    YOU MUST Provide Warranty disclaimer
+        ATTRIBUTE Appropriately | GPL-2.0-only
+        ATTRIBUTE Highlighted | GPL-2.0-only
+    EITHER 
+        YOU MUST Provide Source code | (Include Source code): EPL-2.0
+            ATTRIBUTE Customary medium | GPL-2.0-only
+            ATTRIBUTE Including Installation scripts | GPL-2.0-only
+            ATTRIBUTE Including Tool chain information | GPL-2.0-only
+            ATTRIBUTE Machine-readable | GPL-2.0-only
+            IF Binary delivery Via Internet
+                ATTRIBUTE Source code delivery Via Internet
+                    ATTRIBUTE Equivalent | GPL-2.0-only
+                    ATTRIBUTE On same server | GPL-2.0-only
+    OR 
+        YOU MUST Provide Written offer | (Provide Delayed source code delivery): EPL-2.0
+            ATTRIBUTE Delayed source code delivery
+                ATTRIBUTE Customary medium | GPL-2.0-only
+                ATTRIBUTE Including Installation scripts | GPL-2.0-only
+                ATTRIBUTE Including Tool chain information | GPL-2.0-only
+                ATTRIBUTE Machine-readable | GPL-2.0-only
+            ATTRIBUTE Duration 3 years | GPL-2.0-only
+            ATTRIBUTE No profit | GPL-2.0-only
+            ATTRIBUTE Reasonable | EPL-2.0
+            ATTRIBUTE To Any third party | GPL-2.0-only
+            EITHER 
+                ATTRIBUTE Customary medium | EPL-2.0
+            OR 
+                ATTRIBUTE Via Internet | EPL-2.0
+    YOU MUST NOT Modify Attribution notices | EPL-2.0
+    YOU MUST NOT Modify Copyright notices | EPL-2.0
+    YOU MUST NOT Modify Liability disclaimers | EPL-2.0
+    YOU MUST NOT Modify License notices | GPL-2.0-only
+    YOU MUST NOT Modify Patent notices | EPL-2.0
+    YOU MUST NOT Modify Trademark notices | EPL-2.0
+    YOU MUST NOT Modify Warranty disclaimers | EPL-2.0, (Modify Warranty disclaimer): GPL-2.0-only
+    YOU MUST NOT Restrict Granted rights | GPL-2.0-only
+    IF Commercial distribution
+        YOU MUST Indemnify Other contributors | EPL-2.0
+    IF License change
+        YOU MUST Use Identical License obligations | EPL-2.0
+        YOU MUST Use Liability disclaimer On behalf of Other contributors
+            ATTRIBUTE Effective | EPL-2.0
+        YOU MUST Use Warranty disclaimer On behalf of Other contributors
+            ATTRIBUTE Effective | EPL-2.0
+        YOU MUST NOT Restrict Granted rights For Source code | MPL-2.0
+        YOU MUST NOT Restrict Granted rights | EPL-2.0
+    IF Service offerings
+        ATTRIBUTE NOT Transferable | MPL-2.0
+        YOU MUST Indemnify Other contributors | MPL-2.0
+    IF Software modification
+        YOU MUST Grant License
+            ATTRIBUTE Original license | GPL-2.0-only
+        YOU MUST Provide Modification date | GPL-2.0-only
+        YOU MUST Provide Modification notice | GPL-2.0-only
+        IF Interactive AND Displaying License announcement
+            YOU MUST Display Copyright notices | GPL-2.0-only
+            YOU MUST Display License announcement | GPL-2.0-only
+            YOU MUST Display Warranty disclaimer | GPL-2.0-only
+            YOU MUST Reference License text | GPL-2.0-only

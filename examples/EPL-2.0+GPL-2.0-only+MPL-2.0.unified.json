@@ -1,0 +1,295 @@
+{
+    "EPL-2.0|GPL-2.0-only|MPL-2.0": {
+        "COMPATIBILITY": [
+            "blessing",
+            "BSD-2-Clause",
+            "BSD-2-Clause-Patent",
+            "BSD-3-Clause",
+            "BSL-1.0",
+            "bzip2-1.0.5",
+            "bzip2-1.0.6",
+            "CC0-1.0",
+            "curl",
+            "EFL-2.0",
+            "FSFAP",
+            "FSFULLR",
+            "IBM-pibs",
+            "ICU",
+            "ISC",
+            "Libpng",
+            "MIT",
+            "NTP",
+            "Unlicense",
+            "UPL-1.0",
+            "WTFPL",
+            "X11",
+            "Zlib",
+            "ZPL-2.0"
+        ],
+        "COPYLEFT CLAUSE": "Yes",
+        "COPYLEFT LICENSES": [
+            "EPL-2.0",
+            "GPL-2.0-only",
+            "MPL-2.0"
+        ],
+        "INCOMPATIBILITY": [
+            "Apache-1.0",
+            "Apache-1.1",
+            "Apache-2.0",
+            "BSD-4-Clause",
+            "BSD-4-Clause-UC",
+            "FTL",
+            "IJG",
+            "OpenSSL",
+            "Python-2.0",
+            "zlib-acknowledgement",
+            "XFree86-1.1"
+        ],
+        "INCOMPATIBLE LICENSES": [
+            "EPL-2.0",
+            "GPL-2.0-only",
+            "MPL-2.0"
+        ],
+        "PATENT HINTS": "Yes",
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Written offer": {
+                                        "ATTRIBUTE": {
+                                            "Delayed source code delivery": {
+                                                "ATTRIBUTE": {
+                                                    "Customary medium": {},
+                                                    "Including Installation scripts": {},
+                                                    "Including Tool chain information": {},
+                                                    "Machine-readable": {}
+                                                }
+                                            },
+                                            "Duration 3 years": {},
+                                            "No profit": {},
+                                            "Reasonable": {},
+                                            "To Any third party": {}
+                                        },
+                                        "EITHER": {
+                                            "1": {
+                                                "ATTRIBUTE": {
+                                                    "Customary medium": {}
+                                                },
+                                                "OR": {
+                                                    "1": {
+                                                        "ATTRIBUTE": {
+                                                            "Via Internet": {}
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Provide Source code": {
+                                "ATTRIBUTE": {
+                                    "Customary medium": {},
+                                    "Including Installation scripts": {},
+                                    "Including Tool chain information": {},
+                                    "Machine-readable": {}
+                                },
+                                "IF": {
+                                    "Binary delivery Via Internet": {
+                                        "ATTRIBUTE": {
+                                            "Source code delivery Via Internet": {
+                                                "ATTRIBUTE": {
+                                                    "Equivalent": {},
+                                                    "On same server": {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "IF": {
+                    "Commercial distribution": {
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "License change": {
+                        "YOU MUST": {
+                            "Use Identical License obligations": {},
+                            "Use Liability disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            },
+                            "Use Warranty disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            }
+                        },
+                        "YOU MUST NOT": {
+                            "Restrict Granted rights": {},
+                            "Restrict Granted rights For Source code": {}
+                        }
+                    },
+                    "Service offerings": {
+                        "ATTRIBUTE": {
+                            "NOT Transferable": {}
+                        },
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "Software modification": {
+                        "IF": {
+                            "Interactive AND Displaying License announcement": {
+                                "YOU MUST": {
+                                    "Display Copyright notices": {},
+                                    "Display License announcement": {},
+                                    "Display Warranty disclaimer": {},
+                                    "Reference License text": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": {
+                                    "Original license": {}
+                                }
+                            },
+                            "Provide Modification date": {},
+                            "Provide Modification notice": {}
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Inform Recipients": {
+                        "ATTRIBUTE": {
+                            "Delayed source code delivery": {
+                                "ATTRIBUTE": {
+                                    "No profit": {},
+                                    "Reasonable": {},
+                                    "Timely": {}
+                                }
+                            }
+                        }
+                    },
+                    "Notify License": {},
+                    "Provide Copyright notices": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    },
+                    "Provide License text": {},
+                    "Provide Warranty disclaimer": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    }
+                },
+                "YOU MUST NOT": {
+                    "Modify Attribution notices": {},
+                    "Modify Copyright notices": {},
+                    "Modify Liability disclaimers": {},
+                    "Modify License notices": {},
+                    "Modify Patent notices": {},
+                    "Modify Trademark notices": {},
+                    "Modify Warranty disclaimers": {},
+                    "Restrict Granted rights": {}
+                }
+            },
+            "Source code delivery": {
+                "IF": {
+                    "Commercial distribution": {
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "License change": {
+                        "YOU MUST": {
+                            "Use Identical License obligations": {},
+                            "Use Liability disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            },
+                            "Use Warranty disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            }
+                        },
+                        "YOU MUST NOT": {
+                            "Restrict Granted rights": {}
+                        }
+                    },
+                    "Service offerings": {
+                        "ATTRIBUTE": {
+                            "NOT Transferable": {}
+                        },
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "Software modification": {
+                        "IF": {
+                            "Interactive AND Displaying License announcement": {
+                                "YOU MUST": {
+                                    "Display Copyright notices": {},
+                                    "Display License announcement": {},
+                                    "Display Warranty disclaimer": {},
+                                    "Reference License text": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": {
+                                    "Original license": {}
+                                }
+                            },
+                            "Provide Modification date": {},
+                            "Provide Modification notice": {}
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Provide Copyright notices": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    },
+                    "Provide License text": {},
+                    "Provide Warranty disclaimer": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    }
+                },
+                "YOU MUST NOT": {
+                    "Modify Attribution notices": {},
+                    "Modify Copyright notices": {},
+                    "Modify Legal notices": {},
+                    "Modify Liability disclaimers": {},
+                    "Modify License notices": {},
+                    "Modify Patent notices": {},
+                    "Modify Trademark notices": {},
+                    "Modify Warranty disclaimers": {},
+                    "Restrict Granted rights": {}
+                }
+            }
+        }
+    }
+}
