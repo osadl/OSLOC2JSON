@@ -213,6 +213,8 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
                                 if lic not in found:
                                     found.append(lic)
             newk = k + ' | '
+            if found != []:
+                found = sorted(found, key = lambda s: s.lower())
             for l in found:
                 old = v[k]
                 parent[tag].pop(k)
