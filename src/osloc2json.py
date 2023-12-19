@@ -182,22 +182,46 @@ def deepcopy(target, source, parent = {}, tag = ''):
     elif isinstance(source, str):
         parent[tag] = source
 
-
+formlang = []
 def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
+    global formlang
+
+    if formlang == []:
+        lang = ['USE CASE', 'YOU MUST', 'YOU MUST NOT', 'ATTRIBUTE', 'IF', 'ELSE', 'EITHER', 'OR', 'EXCEPT IF', 'EITHER IF', 'OR IF']
+        for l in lang:
+            formlang.append("['{}']".format(l))
+
     result = []
     if isinstance(v, dict):
         for k, v2 in v.copy().items():
             p2 = "{}['{}']".format(prefix, k)
+            found = []
             if p2 in lrefs:
+                for lic in lrefs[p2]:
+                    if lic not in found:
+                        found.append(lic)
+            islang = False
+            for l in formlang:
+                if p2.endswith(l):
+                    islang = True
+                    break
+            if not islang:
+                if tag != '' and not re.search("\['[0-9]*'\]$", p2):
+                    for lref,license in lrefs.items():
+                        if lref.startswith(p2):
+                            for lic in license:
+                                if lic not in found:
+                                    found.append(lic)
+            newk = k + ' | '
+            for l in found:
                 old = v[k]
                 parent[tag].pop(k)
-                newk = k + ' | '
-                for l in lrefs[p2]:
-                     if newk.endswith(' | '):
-                         newk += l
-                     else:
-                         newk += ', ' + l
+                if newk.endswith(' | '):
+                    newk += l
+                else:
+                    newk += ', ' + l
                 parent[tag][newk] = old
+                k = newk
             if v2 == {}:
                 result.append(p2)
             else:
