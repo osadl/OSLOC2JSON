@@ -105,54 +105,6 @@
                                     }
                                 }
                             }
-                        },
-                        "OR IF": {
-                            "Binary delivery Via Internet": {
-                                "YOU MUST": {
-                                    "Provide Source code": {
-                                        "ATTRIBUTE": [
-                                            "Documented format",
-                                            "Duration As long as needed",
-                                            "Including Installation scripts",
-                                            "Including Tool chain information",
-                                            "Machine-readable",
-                                            "Via Internet"
-                                        ],
-                                        "EITHER IF": {
-                                            "Source code On same server": {
-                                                "ATTRIBUTE": [
-                                                    "Equivalent",
-                                                    "No charge"
-                                                ],
-                                                "OR IF": {
-                                                    "Source code On other server": {
-                                                        "ATTRIBUTE": [
-                                                            "Equivalent",
-                                                            "No charge"
-                                                        ],
-                                                        "YOU MUST": "Reference Source code"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "Binary delivery Via peer-to-peer transmission": {
-                                "YOU MUST": {
-                                    "Reference Source code": {
-                                        "ATTRIBUTE": [
-                                            "Documented format",
-                                            "Duration As long as needed",
-                                            "Including Installation scripts",
-                                            "Including Tool chain information",
-                                            "Machine-readable",
-                                            "No charge",
-                                            "Via Internet"
-                                        ]
-                                    }
-                                }
-                            }
                         }
                     }
                 },
@@ -210,6 +162,54 @@
                         "YOU MUST": {
                             "Provide Installation information": {
                                 "EXCEPT IF": "Installation Is NOT Feasible"
+                            }
+                        }
+                    }
+                },
+                "OR IF": {
+                    "Binary delivery Via Internet": {
+                        "YOU MUST": {
+                            "Provide Source code": {
+                                "ATTRIBUTE": [
+                                    "Documented format",
+                                    "Duration As long as needed",
+                                    "Including Installation scripts",
+                                    "Including Tool chain information",
+                                    "Machine-readable",
+                                    "Via Internet"
+                                ],
+                                "EITHER IF": {
+                                    "Source code On same server": {
+                                        "ATTRIBUTE": [
+                                            "Equivalent",
+                                            "No charge"
+                                        ]
+                                    }
+                                },
+                                "OR IF": {
+                                    "Source code On other server": {
+                                        "ATTRIBUTE": [
+                                            "Equivalent",
+                                            "No charge"
+                                        ],
+                                        "YOU MUST": "Reference Source code"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Binary delivery Via peer-to-peer transmission": {
+                        "YOU MUST": {
+                            "Reference Source code": {
+                                "ATTRIBUTE": [
+                                    "Documented format",
+                                    "Duration As long as needed",
+                                    "Including Installation scripts",
+                                    "Including Tool chain information",
+                                    "Machine-readable",
+                                    "No charge",
+                                    "Via Internet"
+                                ]
                             }
                         }
                     }

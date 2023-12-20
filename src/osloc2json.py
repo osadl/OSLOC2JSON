@@ -522,9 +522,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
         orlevels = {}
         eitheror = {}
         eitherextratabs = 0
-        oriflevels = {}
-        eitherifor = {}
-        eitherifextratabs = 0
         parents = {}
         while True:
             endlinepos = osloc.find('\n')
@@ -595,7 +592,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                     orlevels[i] = 0
                                 if tabs < i:
                                     eitherlevels[i] = 0
-                                    orlevels[i] = 0
                     if tag == 'EITHER':
                         if tabs in eitherlevels:
                             eitherlevels[tabs] += 1
@@ -609,25 +605,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
                         if orlevels[tabs] <= 1:
                             eitheror[tabs] = 1
                             eitherextratabs += 1
-                    if len(eitherifor) > 0:
-                        for i in eitherifor:
-                            if eitherifor[i]:
-                                if tabs <= i:
-                                    eitherifor[i] = 0
-                                    eitherifextratabs -= 1
-                                    oriflevels[i] = 0
-                                if tabs < i:
-                                    oriflevels[i] = 0
-                    if tag == 'EITHER IF':
-                        oriflevels[tabs] = 0
-                    elif tag == 'OR IF':
-                        oriflevels[tabs] += 1
-                        if oriflevels[tabs] <= 1:
-                            eitherifor[tabs] = 1
-                            eitherifextratabs += 1
-                    if tag not in parents[tabs + eitherextratabs + eitherifextratabs]:
-                        parents[tabs + eitherextratabs + eitherifextratabs][tag] = {}
-                    parents[tabs + eitherextratabs + eitherifextratabs + 1] = parents[tabs + eitherextratabs + eitherifextratabs][tag][text] = {}
+                    if tag not in parents[tabs + eitherextratabs]:
+                        parents[tabs + eitherextratabs][tag] = {}
+                    parents[tabs + eitherextratabs + 1] = parents[tabs + eitherextratabs][tag][text] = {}
             osloc = osloc[endlinepos + 1:]
             if len(osloc) == 0:
                 break

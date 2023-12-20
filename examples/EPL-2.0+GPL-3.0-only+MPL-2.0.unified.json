@@ -1,0 +1,459 @@
+{
+    "EPL-2.0|GPL-3.0-only|MPL-2.0": {
+        "COMPATIBILITY": [
+            "Apache-2.0",
+            "blessing",
+            "BSD-2-Clause",
+            "BSD-2-Clause-Patent",
+            "BSD-3-Clause",
+            "BSL-1.0",
+            "bzip2-1.0.5",
+            "bzip2-1.0.6",
+            "CC0-1.0",
+            "curl",
+            "EFL-2.0",
+            "FSFAP",
+            "FSFULLR",
+            "IBM-pibs",
+            "ICU",
+            "ISC",
+            "Libpng",
+            "MIT",
+            "NTP",
+            "Unlicense",
+            "UPL-1.0",
+            "WTFPL",
+            "X11",
+            "Zlib",
+            "ZPL-2.0"
+        ],
+        "COPYLEFT CLAUSE": "Yes",
+        "COPYLEFT LICENSES": [
+            "EPL-2.0",
+            "GPL-3.0-only",
+            "MPL-2.0"
+        ],
+        "INCOMPATIBILITY": [
+            "Apache-1.0",
+            "Apache-1.1",
+            "BSD-4-Clause",
+            "BSD-4-Clause-UC",
+            "FTL",
+            "IJG",
+            "OpenSSL",
+            "Python-2.0",
+            "zlib-acknowledgement",
+            "XFree86-1.1"
+        ],
+        "INCOMPATIBLE LICENSES": [
+            "EPL-2.0",
+            "GPL-3.0-only",
+            "MPL-2.0"
+        ],
+        "PATENT HINTS": "Yes",
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Written offer": {
+                                        "ATTRIBUTE": {
+                                            "Reasonable": {}
+                                        },
+                                        "EITHER": {
+                                            "1": {
+                                                "ATTRIBUTE": {
+                                                    "Customary medium": {}
+                                                },
+                                                "OR": {
+                                                    "1": {
+                                                        "ATTRIBUTE": {
+                                                            "Via Internet": {}
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Include Source code": {}
+                        }
+                    }
+                },
+                "EITHER IF": {
+                    "Binary delivery On Customary medium OR Installed": {
+                        "EITHER": {
+                            "1": {
+                                "OR": {
+                                    "1": {
+                                        "YOU MUST": {
+                                            "Provide Written offer": {
+                                                "ATTRIBUTE": {
+                                                    "Delayed source code delivery": {
+                                                        "ATTRIBUTE": {
+                                                            "Documented format": {},
+                                                            "Including Installation scripts": {},
+                                                            "Including Tool chain information": {},
+                                                            "Machine-readable": {}
+                                                        },
+                                                        "EITHER": {
+                                                            "1": {
+                                                                "ATTRIBUTE": {
+                                                                    "Customary medium": {},
+                                                                    "No profit": {}
+                                                                },
+                                                                "OR": {
+                                                                    "1": {
+                                                                        "ATTRIBUTE": {
+                                                                            "No charge": {},
+                                                                            "Via Internet": {}
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "Duration As long as product is supported": {},
+                                                    "Duration At least 3 years": {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "YOU MUST": {
+                                    "Provide Source code": {
+                                        "ATTRIBUTE": {
+                                            "Customary medium": {},
+                                            "Documented format": {},
+                                            "Including Installation scripts": {},
+                                            "Including Tool chain information": {},
+                                            "Machine-readable": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "IF": {
+                    "AGPL-3.0-or-later": {
+                        "YOU MUST": {
+                            "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later": {}
+                        }
+                    },
+                    "Combined work With AGPL-3.0-only": {
+                        "YOU MUST": {
+                            "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later": {}
+                        }
+                    },
+                    "Commercial distribution": {
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "License change": {
+                        "YOU MUST": {
+                            "Use Identical License obligations": {},
+                            "Use Liability disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            },
+                            "Use Warranty disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            }
+                        },
+                        "YOU MUST NOT": {
+                            "Restrict Granted rights": {},
+                            "Restrict Granted rights For Source code": {}
+                        }
+                    },
+                    "Service offerings": {
+                        "ATTRIBUTE": {
+                            "NOT Transferable": {}
+                        },
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "Software modification": {
+                        "IF": {
+                            "Interactive AND Displaying Appropriate legal notices": {
+                                "YOU MUST": {
+                                    "Display Appropriate legal notices": {
+                                        "ATTRIBUTE": {
+                                            "Highlighted": {}
+                                        }
+                                    }
+                                }
+                            },
+                            "Non-permissive additional terms Added": {
+                                "EITHER": {
+                                    "1": {
+                                        "OR": {
+                                            "1": {
+                                                "YOU MUST": {
+                                                    "Reference Non-permissive additional terms In Source code": {
+                                                        "ATTRIBUTE": {
+                                                            "With Source code delivery": {}
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "YOU MUST": {
+                                            "Include Non-permissive additional terms In Source code": {
+                                                "ATTRIBUTE": {
+                                                    "With Source code delivery": {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": {
+                                    "Original license": {}
+                                }
+                            },
+                            "Provide Legal notices": {
+                                "ATTRIBUTE": {
+                                    "Highlighted": {}
+                                }
+                            },
+                            "Provide Modification date": {},
+                            "Provide Modification notice": {
+                                "ATTRIBUTE": {
+                                    "Highlighted": {}
+                                }
+                            }
+                        }
+                    },
+                    "User product": {
+                        "YOU MUST": {
+                            "Provide Installation information": {
+                                "EXCEPT IF": {
+                                    "Installation Is NOT Feasible": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "OR IF": {
+                    "Binary delivery Via Internet": {
+                        "YOU MUST": {
+                            "Provide Source code": {
+                                "ATTRIBUTE": {
+                                    "Documented format": {},
+                                    "Duration As long as needed": {},
+                                    "Including Installation scripts": {},
+                                    "Including Tool chain information": {},
+                                    "Machine-readable": {},
+                                    "Via Internet": {}
+                                },
+                                "EITHER IF": {
+                                    "Source code On same server": {
+                                        "ATTRIBUTE": {
+                                            "Equivalent": {},
+                                            "No charge": {}
+                                        }
+                                    }
+                                },
+                                "OR IF": {
+                                    "Source code On other server": {
+                                        "ATTRIBUTE": {
+                                            "Equivalent": {},
+                                            "No charge": {}
+                                        },
+                                        "YOU MUST": {
+                                            "Reference Source code": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "Binary delivery Via peer-to-peer transmission": {
+                        "YOU MUST": {
+                            "Reference Source code": {
+                                "ATTRIBUTE": {
+                                    "Documented format": {},
+                                    "Duration As long as needed": {},
+                                    "Including Installation scripts": {},
+                                    "Including Tool chain information": {},
+                                    "Machine-readable": {},
+                                    "No charge": {},
+                                    "Via Internet": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Inform Recipients": {
+                        "ATTRIBUTE": {
+                            "Delayed source code delivery": {
+                                "ATTRIBUTE": {
+                                    "No profit": {},
+                                    "Reasonable": {},
+                                    "Timely": {}
+                                }
+                            }
+                        }
+                    },
+                    "Notify License": {},
+                    "Provide Copyright notices": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    },
+                    "Provide License text": {}
+                },
+                "YOU MUST NOT": {
+                    "Litigate Circumvention Of Technological measures": {},
+                    "Modify Attribution notices": {},
+                    "Modify Copyright notices": {},
+                    "Modify Liability disclaimers": {},
+                    "Modify License notices": {},
+                    "Modify Patent notices": {},
+                    "Modify Trademark notices": {},
+                    "Modify Warranty disclaimers": {},
+                    "Restrict Granted rights": {
+                        "EXCEPT IF": {
+                            "Permitted Non-permissive additional terms": {}
+                        }
+                    },
+                    "Sublicense": {}
+                }
+            },
+            "Source code delivery": {
+                "IF": {
+                    "AGPL-3.0-or-later": {
+                        "YOU MUST": {
+                            "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later": {}
+                        }
+                    },
+                    "Combined work With AGPL-3.0-only": {
+                        "YOU MUST": {
+                            "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later": {}
+                        }
+                    },
+                    "Commercial distribution": {
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "License change": {
+                        "YOU MUST": {
+                            "Use Identical License obligations": {},
+                            "Use Liability disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            },
+                            "Use Warranty disclaimer On behalf of Other contributors": {
+                                "ATTRIBUTE": {
+                                    "Effective": {}
+                                }
+                            }
+                        },
+                        "YOU MUST NOT": {
+                            "Restrict Granted rights": {}
+                        }
+                    },
+                    "Service offerings": {
+                        "ATTRIBUTE": {
+                            "NOT Transferable": {}
+                        },
+                        "YOU MUST": {
+                            "Indemnify Other contributors": {}
+                        }
+                    },
+                    "Software modification": {
+                        "IF": {
+                            "Interactive AND Displaying Appropriate legal notices": {
+                                "YOU MUST": {
+                                    "Display Appropriate legal notices": {
+                                        "ATTRIBUTE": {
+                                            "Highlighted": {}
+                                        }
+                                    }
+                                }
+                            },
+                            "Non-permissive additional terms Added": {
+                                "EITHER": {
+                                    "1": {
+                                        "OR": {
+                                            "1": {
+                                                "YOU MUST": {
+                                                    "Reference Non-permissive additional terms In Source code": {}
+                                                }
+                                            }
+                                        },
+                                        "YOU MUST": {
+                                            "Include Non-permissive additional terms In Source code": {}
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": {
+                                    "Original license": {}
+                                }
+                            },
+                            "Provide Legal notices": {
+                                "ATTRIBUTE": {
+                                    "Highlighted": {}
+                                }
+                            },
+                            "Provide Modification date": {},
+                            "Provide Modification notice": {
+                                "ATTRIBUTE": {
+                                    "Highlighted": {}
+                                }
+                            }
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Provide Copyright notices": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    },
+                    "Provide License text": {}
+                },
+                "YOU MUST NOT": {
+                    "Litigate Circumvention Of Technological measures": {},
+                    "Modify Attribution notices": {},
+                    "Modify Copyright notices": {},
+                    "Modify Legal notices": {},
+                    "Modify Liability disclaimers": {},
+                    "Modify License notices": {},
+                    "Modify Patent notices": {},
+                    "Modify Trademark notices": {},
+                    "Modify Warranty disclaimers": {},
+                    "Restrict Granted rights": {
+                        "EXCEPT IF": {
+                            "Permitted Non-permissive additional terms": {}
+                        }
+                    },
+                    "Sublicense": {}
+                }
+            }
+        }
+    }
+}
