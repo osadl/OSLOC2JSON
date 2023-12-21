@@ -1,0 +1,211 @@
+{
+    "GPL-2.0-only|Unlicense": {
+        "COMPATIBILITY": [
+            "Artistic-2.0",
+            "blessing",
+            "BSD-2-Clause",
+            "BSD-2-Clause-Patent",
+            "BSD-3-Clause",
+            "BSL-1.0",
+            "bzip2-1.0.5",
+            "bzip2-1.0.6",
+            "CC0-1.0",
+            "curl",
+            "EFL-2.0",
+            "EUPL-1.1",
+            "FSFAP",
+            "FSFULLR",
+            "GPL-1.0-or-later",
+            "GPL-2.0-only",
+            "GPL-2.0-only WITH Classpath-exception-2.0",
+            "GPL-2.0-or-later",
+            "IBM-pibs",
+            "ICU",
+            "ISC",
+            "LGPL-2.1-only",
+            "LGPL-2.1-or-later",
+            "Libpng",
+            "MIT",
+            "MPL-2.0",
+            "NTP",
+            "Sleepycat",
+            "Unlicense",
+            "UPL-1.0",
+            "W3C",
+            "W3C-19980720",
+            "W3C-20150513",
+            "WTFPL",
+            "X11",
+            "Zlib",
+            "ZPL-2.0"
+        ],
+        "COPYLEFT CLAUSE": [
+            "Yes",
+            "No"
+        ],
+        "COPYLEFT LICENSES": [
+            "GPL-2.0-only"
+        ],
+        "DEPENDING COMPATIBILITY": [
+            "EPL-2.0"
+        ],
+        "INCOMPATIBILITY": [
+            "Apache-1.0",
+            "Apache-1.1",
+            "Apache-2.0",
+            "BSD-4-Clause",
+            "BSD-4-Clause-UC",
+            "FTL",
+            "IJG",
+            "OpenSSL",
+            "Python-2.0",
+            "zlib-acknowledgement",
+            "XFree86-1.1"
+        ],
+        "PATENT HINTS": [
+            "Yes",
+            "No"
+        ],
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Written offer": {
+                                        "ATTRIBUTE": {
+                                            "Delayed source code delivery": {
+                                                "ATTRIBUTE": {
+                                                    "Customary medium": {},
+                                                    "Including Installation scripts": {},
+                                                    "Including Tool chain information": {},
+                                                    "Machine-readable": {}
+                                                }
+                                            },
+                                            "Duration 3 years": {},
+                                            "No profit": {},
+                                            "To Any third party": {}
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Provide Source code": {
+                                "ATTRIBUTE": {
+                                    "Customary medium": {},
+                                    "Including Installation scripts": {},
+                                    "Including Tool chain information": {},
+                                    "Machine-readable": {}
+                                },
+                                "IF": {
+                                    "Binary delivery Via Internet": {
+                                        "ATTRIBUTE": {
+                                            "Source code delivery Via Internet": {
+                                                "ATTRIBUTE": {
+                                                    "Equivalent": {},
+                                                    "On same server": {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "IF": {
+                    "Software modification": {
+                        "IF": {
+                            "Interactive AND Displaying License announcement": {
+                                "YOU MUST": {
+                                    "Display Copyright notices": {},
+                                    "Display License announcement": {},
+                                    "Display Warranty disclaimer": {},
+                                    "Reference License text": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": {
+                                    "Original license": {}
+                                }
+                            },
+                            "Provide Modification date": {},
+                            "Provide Modification notice": {}
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Not do anything else": {},
+                    "Provide Copyright notices": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    },
+                    "Provide License text": {},
+                    "Provide Warranty disclaimer": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    }
+                },
+                "YOU MUST NOT": {
+                    "Modify License notices": {},
+                    "Modify Warranty disclaimer": {},
+                    "Restrict Granted rights": {}
+                }
+            },
+            "Source code delivery": {
+                "IF": {
+                    "Software modification": {
+                        "IF": {
+                            "Interactive AND Displaying License announcement": {
+                                "YOU MUST": {
+                                    "Display Copyright notices": {},
+                                    "Display License announcement": {},
+                                    "Display Warranty disclaimer": {},
+                                    "Reference License text": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Grant License": {
+                                "ATTRIBUTE": {
+                                    "Original license": {}
+                                }
+                            },
+                            "Provide Modification date": {},
+                            "Provide Modification notice": {}
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Not do anything else": {},
+                    "Provide Copyright notices": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    },
+                    "Provide License text": {},
+                    "Provide Warranty disclaimer": {
+                        "ATTRIBUTE": {
+                            "Appropriately": {},
+                            "Highlighted": {}
+                        }
+                    }
+                },
+                "YOU MUST NOT": {
+                    "Modify License notices": {},
+                    "Modify Warranty disclaimer": {},
+                    "Restrict Granted rights": {}
+                }
+            }
+        }
+    }
+}
