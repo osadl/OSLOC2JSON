@@ -250,7 +250,8 @@ def extend(l1, l2, devel, chain1, chain2, unify):
     """ Recursively add a dict to another dict while removing duplicates and extending items with the same key """
     if l1 == l2:
         return l1
-    new = l1.copy()
+    new = {}
+    deepcopy(new, l1)
 
     for k1, v1 in l1.items():
         chain1.append(k1)
