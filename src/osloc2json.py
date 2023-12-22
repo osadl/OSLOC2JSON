@@ -252,6 +252,9 @@ def extend(l1, l2, devel, chain1, chain2, unify):
         return l1
     new = {}
     deepcopy(new, l1)
+    newl2 = {}
+    deepcopy(newl2, l2)
+    l2 = newl2
 
     for k1, v1 in l1.items():
         chain1.append(k1)

@@ -1,15 +1,16 @@
 {
+  "Forward Copyright notices": ["Forward Copyright notice"],
   "Modify Warranty disclaimers": ["Modify Warranty disclaimer"],
   "Provide Source code": ["Include Source code"],
   "Provide Written offer": ["Provide Delayed source code delivery"],
   "Provide License text": ["Provide License notice", "Reference License text", "Forward License text"],
-  "Provide Copyright notices": ["Provide Copyright notice", "Forward Copyright notices"],
+  "Provide Copyright notices": ["Provide Copyright notice", "Forward Copyright notices", "Forward Copyright notice"],
   "Provide Warranty disclaimer": ["Forward Warranty disclaimer"],
   "Provide License text In Documentation": ["Provide License text"],
-  "Provide Copyright notices In Documentation": ["Provide Copyright notices"],
+  "Provide Copyright notices In Documentation": ["Provide Copyright notices", "Provide Copyright notice", "Forward Copyright notices", "Forward Copyright notice"],
   "Provide Warranty disclaimer In Documentation": ["Provide Warranty disclaimer"],
   "Provide License text In Documentation OR Distribution material": ["Provide License text In Documentation", "Provide License text"],
-  "Provide Copyright notices In Documentation OR Distribution material": ["Provide Copyright notices In Documentation", "Provide Copyright notices"],
+  "Provide Copyright notices In Documentation OR Distribution material": ["Provide Copyright notices In Documentation", "Provide Copyright notices", "Provide Copyright notice", "Forward Copyright notices", "Forward Copyright notice"],
   "Provide Warranty disclaimer In Documentation OR Distribution material": ["Provide Warranty disclaimer In Documentation", "Provide Warranty disclaimer"],
   "Provide Modification report": ["Provide Modification notice"]
 }
