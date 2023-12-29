@@ -796,10 +796,11 @@ def osloc2json(licensefilenames, outfilename, json, args):
         jsondata = alljsondata
 
     if recreate:
+        l = {}
         if merge:
-            l = newrefs
+            deepcopy(l, newrefs)
         else:
-            l = jsondata
+            deepcopy(l, jsondata)
             if len(jsondata.keys()) == 1:
                 l = l[list(jsondata.keys())[0]]
         back2osloc(l, 0, '', {}, {}, '')
