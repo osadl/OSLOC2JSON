@@ -377,16 +377,20 @@ def back2osloc(l, indent, key, ineitheror, previous):
             for k in ineitheror:
                 if k > indent:
                     ineitheror[k] = ''
-            if e == 'OR':
+            if e == 'EITHER':
+                ineitheror[indent] = e
+                keystring = list(l[e].keys())[0]
+                if keystring.isdigit():
+                    l[e] = l[e][keystring]
+            elif e == 'OR':
+                ineitheror[indent] = e
                 indent -= 4
-            if len(ineitheror) > 0 and not e.isdigit() and indent > 0:
-                if indent in ineitheror and ineitheror[indent] != '':
-                    if previous != '1':
-                        print()
-                        printnonl(' '*(indent - 4) + ineitheror[indent])
+            elif not e.isdigit() and indent > 0 and indent - 4 in ineitheror and ineitheror[indent - 4] == 'EITHER' and indent in ineitheror and ineitheror[indent] == 'OR':
+                if previous != '1':
+                    print()
+                    printnonl(' '*(indent - 4) + ineitheror[indent])
             if e.isdigit():
                 increment = 0
-                ineitheror[indent] = previous
             else:
                 if not re.search('[a-z]', e):
                     print()
@@ -496,39 +500,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
     expand = args.expand
     merge = args.merge
     optimize = args.optimize
-    licenseupgrade = args.licenseupgrade
     recreate = args.recreate
     show = args.show
     unify = args.unify
     verbose = args.verbose
-
-    addobligations = []
-
-    if licenseupgrade:
-        rulesfilename = 'licenseupgraderules.json'
-        try:
-            rulesfile = open(rulesfilename, 'r')
-        except:
-            try:
-                rulesfile = open('../' + rulesfilename, 'r')
-            except:
-                printnonl('File "' + rulesfilename + '" not found or not accessible in current or in parent directory: ')
-        rules = {}
-        try:
-            rules = json.load(rulesfile)
-            rulesfile.close()
-        except:
-            print('Skipped attempt to upgrade licenses')
-        if len(rules) > 0:
-            for license in licensefilenames:
-                for oldlicense, value in rules.items():
-                     if license.find(oldlicense) != -1:
-                         newlicense = license.replace(oldlicense, value[0])
-                         licensefilenames.remove(license)
-                         licensefilenames.append(newlicense)
-                         addobligations.append(value[1])
-            licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
-
     licenses = len(licensefilenames)
 
     if licenses == 1:
@@ -875,10 +850,6 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
       action = 'store_true',
       default = False,
       help = 'replace keys connected by OR with the individual keys and assign the value of the key to all of them')
-    parser.add_argument('-l', '--licenseupgrade',
-      action = 'store_true',
-      default = False,
-      help = 'attempt to avoid license incompatibility by upgrading licenses according to rules in "licenseupgraderules.json"')
     parser.add_argument('-m', '--merge',
       action = 'store_true',
       default = False,

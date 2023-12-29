@@ -72,8 +72,14 @@ then
   exit 1
 fi
 
-./src/osloc2json.py -demur examples/EPL-2.0.txt examples/GPL-3.0-only.txt examples/MPL-2.0.txt >merged.checklist
-if ! cmp examples/EPL-2.0+GPL-3.0-only+MPL-2.0.unified.json merged.json || ! cmp examples/EPL-2.0+GPL-3.0-only+MPL-2.0.unified.checklist merged.checklist
+./src/osloc2json.py -demur examples/Apache-2.0.txt examples/EPL-2.0.txt examples/GPL-3.0-only.txt examples/MPL-2.0.txt >merged.checklist
+if ! cmp examples/Apache-2.0+EPL-2.0+GPL-3.0-only+MPL-2.0.unified.json merged.json || ! cmp examples/Apache-2.0+EPL-2.0+GPL-3.0-only+MPL-2.0.unified.checklist merged.checklist
+then
+  exit 1
+fi
+
+./src/osloc2json.py -delmur examples/Apache-2.0.txt examples/GPL-2.0-or-later.txt >merged.checklist
+if ! cmp examples/Apache-2.0+GPL-3.0-or-later.unified.json merged.json || ! cmp examples/Apache-2.0+GPL-3.0-or-later.unified.checklist merged.checklist
 then
   exit 1
 fi

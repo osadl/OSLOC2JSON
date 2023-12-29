@@ -6,6 +6,7 @@
 * [Examples how to use the software](#examples-how-to-use-the-software)
   * [Convert an OSLOC file to JSON format](#convert-an-osloc-file-to-json-format)
   * [Optimization](#optimization)
+  * [License upgrade](#license-upgrade)
   * [Merging](#merging)
     * [Additional command line option when in merge mode](#additional-command-line-option-when-in-merge-mode)
     * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
@@ -23,7 +24,7 @@ checklists of several licenses.
 osloc2json.py --help
 ```
 ```
-usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
+usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-l] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
 
 positional arguments:
   OSLOC                 file names of OSLOC files to process
@@ -34,6 +35,7 @@ options:
                         name of output file for multiple licenses, has no effect if single license, default "osloc.json"
   -d, --devel           enable output of information that may be useful for development
   -e, --expand          replace keys connected by OR with the individual keys and assign the value of the key to all of them
+  -l, --licenseupgrade  attempt to avoid license incompatibility by upgrading licenses according to rules in "licenseupgraderules.json"
   -m, --merge           merge all licenses into a single one, has no effect if single license, default file name "merged.json"
   -o, --optimize        convert a dict with no values to a list of keys or string, append "-opt" to output file name if only one dict
   -r, --recreate        recreate original checklist from JSON
@@ -202,6 +204,16 @@ As can be seen in this diff
      }
 ```
 all keys in dicts without values have been converted to simple list elements.
+
+### License upgrade
+Newer versions of licenses may be available that may offer more options with
+respect to license compatibility. Related upgrade rules may be defined in a file
+named "licenseupgraderules.json" with an associative array of two-element lists
+where the key denotes the licenses to be upgraded, the first list element the
+license to upgrade to and the optional second list element a license obligation
+to add such as, for example, "YOU MUST Indicate License change". To enable
+automatic license upgrade, the "-l" or "--licenseupgrade" command line option
+must be specified.
 
 ### Merging
 Two or more OSLOC files may be merged in such a way that additional license
@@ -540,9 +552,9 @@ license.
 ```
 #### Added Apache-2.0 license
 ```diff
---- FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json
-+++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause+Apache-2.0.json
-@@ -1,12 +1,35 @@
+--- FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause.json 2023-11-08 21:01:38.094295227 +0100
++++ FTL+MIT+BSD-2-Clause+BSD-3-Clause+BSD-4-Clause+Apache-2.0.json  2023-12-29 11:27:43.614566330 +0100
+@@ -1,12 +1,41 @@
  {
 -    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause": {
 +    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|BSD-4-Clause|Apache-2.0": {
@@ -568,6 +580,12 @@ license.
 +                                    "1": {
 +                                        "OR": {
 +                                            "1": {
++                                                "YOU MUST": "Provide File \"NOTICE\" In Source code"
++                                            },
++                                            "2": {
++                                                "YOU MUST": "Provide File \"NOTICE\" In Documentation"
++                                            },
++                                            "3": {
 +                                                "YOU MUST": "Display File \"NOTICE\""
 +                                            }
 +                                        },
@@ -580,7 +598,7 @@ license.
                      }
                  },
                  "YOU MUST": [
-@@ -26,8 +49,33 @@
+@@ -26,8 +55,39 @@
                      "Advertisement": {
                          "YOU MUST": "Credit In Advertisement Verbatim \"This product includes software developed by [the organization].\""
                      },
@@ -595,6 +613,12 @@ license.
 +                                    "1": {
 +                                        "OR": {
 +                                            "1": {
++                                                "YOU MUST": "Provide File \"NOTICE\" In Source code"
++                                            },
++                                            "2": {
++                                                "YOU MUST": "Provide File \"NOTICE\" In Documentation"
++                                            },
++                                            "3": {
 +                                                "YOU MUST": "Display File \"NOTICE\""
 +                                            }
 +                                        },

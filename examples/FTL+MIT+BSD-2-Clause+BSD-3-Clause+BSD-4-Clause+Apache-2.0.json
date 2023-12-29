@@ -21,6 +21,12 @@
                                     "1": {
                                         "OR": {
                                             "1": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Source code"
+                                            },
+                                            "2": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Documentation"
+                                            },
+                                            "3": {
                                                 "YOU MUST": "Display File \"NOTICE\""
                                             }
                                         },
@@ -59,6 +65,12 @@
                                     "1": {
                                         "OR": {
                                             "1": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Source code"
+                                            },
+                                            "2": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Documentation"
+                                            },
+                                            "3": {
                                                 "YOU MUST": "Display File \"NOTICE\""
                                             }
                                         },
