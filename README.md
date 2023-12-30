@@ -217,7 +217,7 @@ must be specified. An upgrade rule file may look like the following example:
 ```json
 {
   "MPL-1.1": ["MPL-2.0", "YOU MUST Indicate License change"],
-  "GPL-2.0-or-later": ["GPL-3.0-or-later", "YOU MUST Use GPL-3.0 License"]
+  "GPL-2.0-or-later": ["GPL-3.0-or-later", "YOU MUST Use GPL-3.0-or-later License"]
 }
 ```
 
