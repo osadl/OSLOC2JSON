@@ -502,7 +502,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
     unify = args.unify
     verbose = args.verbose
 
-    addobligations = []
+    addobligations = {}
 
     if licenseupgrade:
         rulesfilename = 'licenseupgraderules.json'
@@ -526,7 +526,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                          newlicense = license.replace(oldlicense, value[0])
                          licensefilenames.remove(license)
                          licensefilenames.append(newlicense)
-                         addobligations.append(value[1])
+                         addobligations[value[0]] = value[1]
             licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
 
     licenses = len(licensefilenames)
@@ -646,10 +646,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 break
 
         if licenseupgrade and len(addobligations) > 0:
-            for usecase in data['USE CASE']:
-                for obligation in addobligations:
-                    if obligation.find('YOU MUST ') == -1:
-                        continue
+            for newlicense, obligation in addobligations.items():
+                if newlicense != licensename or obligation.find('YOU MUST ') == -1:
+                    continue
+                for usecase in data['USE CASE']:
                     obligation = obligation.replace('YOU MUST ', '')
                     if 'YOU MUST' not in data['USE CASE'][usecase]:
                         data['USE CASE'][usecase]['YOU MUST'] = {}
