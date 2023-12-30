@@ -645,6 +645,17 @@ def osloc2json(licensefilenames, outfilename, json, args):
             if len(osloc) == 0:
                 break
 
+        if licenseupgrade and len(addobligations) > 0:
+            for usecase in data['USE CASE']:
+                for obligation in addobligations:
+                    if obligation.find('YOU MUST ') == -1:
+                        continue
+                    obligation = obligation.replace('YOU MUST ', '')
+                    if 'YOU MUST' not in data['USE CASE'][usecase]:
+                        data['USE CASE'][usecase]['YOU MUST'] = {}
+                    if obligation not in data['USE CASE'][usecase]['YOU MUST']:
+                        data['USE CASE'][usecase]['YOU MUST'][obligation] = {}
+
     if expand:
         expandor(jsondata, licensename)
 

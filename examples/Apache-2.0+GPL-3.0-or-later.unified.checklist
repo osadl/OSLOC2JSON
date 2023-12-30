@@ -56,6 +56,7 @@ USE CASE Source code delivery | Apache-2.0, GPL-3.0-or-later
         ATTRIBUTE Appropriately | GPL-3.0-or-later
         ATTRIBUTE Highlighted | GPL-3.0-or-later
     YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
+    YOU MUST Use GPL-3.0 License | Apache-2.0, GPL-3.0-or-later
     IF AGPL-3.0-or-later | GPL-3.0-or-later
         YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
     IF Combined work With AGPL-3.0-only | GPL-3.0-or-later
@@ -103,6 +104,7 @@ USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
         ATTRIBUTE Appropriately | GPL-3.0-or-later
         ATTRIBUTE Highlighted | GPL-3.0-or-later
     YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
+    YOU MUST Use GPL-3.0 License | Apache-2.0, GPL-3.0-or-later
     IF AGPL-3.0-or-later | GPL-3.0-or-later
         YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
     IF Combined work With AGPL-3.0-only | GPL-3.0-or-later

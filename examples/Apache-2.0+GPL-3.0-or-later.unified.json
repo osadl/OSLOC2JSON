@@ -287,7 +287,8 @@
                             "Highlighted": {}
                         }
                     },
-                    "Provide License text": {}
+                    "Provide License text": {},
+                    "Use GPL-3.0 License": {}
                 },
                 "YOU MUST NOT": {
                     "Litigate Circumvention Of Technological measures": {},
@@ -406,7 +407,8 @@
                             "Highlighted": {}
                         }
                     },
-                    "Provide License text": {}
+                    "Provide License text": {},
+                    "Use GPL-3.0 License": {}
                 },
                 "YOU MUST NOT": {
                     "Litigate Circumvention Of Technological measures": {},
