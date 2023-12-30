@@ -858,7 +858,7 @@ def main():
     filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
 # pragma pylint: disable=used-before-assignment
-        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-d] [-e] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]',
+        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-d] [-e] [-l] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]',
           description = 'positional arguments:   ' + filenamehelp)
         parser.add_argument = parser.add_option
         filenametype = 'string'
