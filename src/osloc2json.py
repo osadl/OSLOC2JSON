@@ -520,7 +520,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
         except:
             print('Skipped attempt to upgrade licenses')
         if len(rules) > 0:
-            for license in licensefilenames:
+            for license in licensefilenames.copy():
                 for oldlicense, value in rules.items():
                      if license.find(oldlicense) != -1:
                          newlicense = license.replace(oldlicense, value[0])
