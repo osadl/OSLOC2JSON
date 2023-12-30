@@ -213,7 +213,13 @@ where the key denotes the licenses to be upgraded, the first list element the
 license to upgrade to and the optional second list element a license obligation
 to add such as, for example, "YOU MUST Indicate License change". To enable
 automatic license upgrade, the "-l" or "--licenseupgrade" command line option
-must be specified.
+must be specified. An upgrade rule file may look like the following example:
+```json
+{
+  "MPL-1.1": ["MPL-2.0", "YOU MUST Indicate License change"],
+  "GPL-2.0-or-later": ["GPL-3.0-or-later", "YOU MUST Use GPL-3.0 License"]
+}
+```
 
 ### Merging
 Two or more OSLOC files may be merged in such a way that additional license
