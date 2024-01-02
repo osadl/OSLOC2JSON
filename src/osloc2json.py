@@ -525,7 +525,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
                      if license.find(oldlicense) != -1:
                          newlicense = license.replace(oldlicense, value[0])
                          licensefilenames.remove(license)
-                         licensefilenames.append(newlicense)
+                         if newlicense not in licensefilenames:
+                             licensefilenames.append(newlicense)
                          addobligations[value[0]] = value[1]
             licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
 
