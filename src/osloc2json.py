@@ -556,9 +556,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
         orlevels = {}
         eitherextratabs = 0
         parents = {}
+        lineno = 0
         while True:
             endlinepos = osloc.find('\n')
             line = osloc[0:endlinepos]
+            lineno += 1
+            if line.startswith(' '):
+                print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                lineno = -1
+                break
             line = re.sub(r' \(.*\)', '', line)
             if verbose:
                 print(line)
@@ -646,6 +652,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
             if len(osloc) == 0:
                 break
 
+        if lineno == -1:
+            break
         if licenseupgrade and len(addobligations) > 0:
             for newlicense, obligation in addobligations.items():
                 if newlicense != licensename or obligation.find('YOU MUST ') == -1:
@@ -899,6 +907,10 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
       action = 'store_true',
       default = False,
       help = 'convert a dict with no values to a list of keys or string, append "-opt" to output file name if only one dict')
+    parser.add_argument('-p', '--profiling',
+      action = 'store_true',
+      default = False,
+      help = 'enable snapshot profiling')
     parser.add_argument('-r', '--recreate',
       action = 'store_true',
       default = False,
@@ -933,7 +945,13 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
         filenames = filenames[0].split('+')
         filenames = [s + '.txt' for s in filenames]
 
-    osloc2json(filenames, args.filename, json, args)
+    if args.profiling:
+        from pyinstrument import Profiler
+        with Profiler(interval=0.0001) as profiler:
+            osloc2json(filenames, args.filename, json, args)
+        profiler.print()
+    else:
+        osloc2json(filenames, args.filename, json, args)
 
 if __name__ == '__main__':
     main()
