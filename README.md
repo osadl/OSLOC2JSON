@@ -57,17 +57,17 @@ This is a software tool, no legal advice.
 Original OSLOC file of the Freetype Project License (FTL):
 ```
 USE CASE Source code delivery
-  YOU MUST Forward License text
-  YOU MUST NOT Modify License text
-  IF Software modification
-    YOU MUST Provide Modification report
-  YOU MUST Forward Copyright notices
-  YOU MUST NOT Promote
-  YOU MUST Credit FreeType Team
+	YOU MUST Forward License text
+	YOU MUST NOT Modify License text
+	IF Software modification
+		YOU MUST Provide Modification report
+	YOU MUST Forward Copyright notices
+	YOU MUST NOT Promote
+	YOU MUST Credit FreeType Team
 USE CASE Binary delivery
-  YOU MUST Credit In Documentation FreeType Team
-  YOU MUST NOT Promote
-  YOU MUST Credit FreeType Team
+	YOU MUST Credit In Documentation FreeType Team
+	YOU MUST NOT Promote
+	YOU MUST Credit FreeType Team
 ```
 
 After running
