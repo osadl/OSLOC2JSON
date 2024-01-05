@@ -40,6 +40,7 @@ def sortlist(l):
     return mkpluralonlylist(sorted(l, key = lambda s: s.lower()))
 
 def sortdict(d):
+    """ Sort dict alphabetically by key """
     if isinstance(d, dict):
         keylist = list(d.keys())
         keylist.sort()
@@ -206,7 +207,7 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
                     islang = True
                     break
             if not islang:
-                if tag != '' and not re.search("\['[0-9]*'\]$", p2):
+                if tag != '' and not re.search(r"\['[0-9]*'\]$", p2):
                     for lref,license in lrefs.items():
                         if lref.startswith(p2):
                             for lic in license:
@@ -522,12 +523,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
         if len(rules) > 0:
             for license in licensefilenames.copy():
                 for oldlicense, value in rules.items():
-                     if license.find(oldlicense) != -1:
-                         newlicense = license.replace(oldlicense, value[0])
-                         licensefilenames.remove(license)
-                         if newlicense not in licensefilenames:
-                             licensefilenames.append(newlicense)
-                         addobligations[value[0]] = value[1]
+                    if license.find(oldlicense) != -1:
+                        newlicense = license.replace(oldlicense, value[0])
+                        licensefilenames.remove(license)
+                        if newlicense not in licensefilenames:
+                            licensefilenames.append(newlicense)
+                        addobligations[value[0]] = value[1]
             licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
 
     licenses = len(licensefilenames)
@@ -763,12 +764,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
             deepcopy(newrefs, new)
             addlrefs(newrefs, licenserefs)
 
-            """ Populate newrefs['INCOMPATIBLE LICENSES'] """
             if 'INCOMPATIBILITY' in new or len(copyleft_licenses) > 0:
                 incompatible_licensesrefs = []
                 incompatible_licenses = []
 
-                """ Are any of the merged licenses explicitly marked as incompatible? """
                 names = mergednames.split('|')
                 if 'INCOMPATIBILITY' in new:
                     for license in names:
@@ -778,7 +777,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                     incompatible_licensesrefs.append(reflicense)
                                     incompatible_licenses.append(license)
 
-                """ Are any of the copyleft licenses among the merged licenses not marked compatible with all other copyleft licenses? Then check"""
                 for copyleft_license in copyleft_licenses.copy():
                     if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
                         incompatible_copyleft_licenses_str = ''
@@ -792,14 +790,13 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             incompatible_copyleft_licenses_str += copyleft_license2
                         if incompatible_copyleft_licenses_str != '':
                             incompatible_licensesrefs.append(copyleft_license + ' | If licensed under ' + incompatible_copyleft_licenses_str)
-                            if copyleft_license2 not in incompatible_licenses:
+                            if copyleft_license not in incompatible_licenses:
                                 incompatible_licenses.append(copyleft_license)
                 if len(incompatible_licenses) > 0:
                     incompatible_licenses = sorted(incompatible_licenses, key = lambda s: s.lower())
                     new['INCOMPATIBLE LICENSES'] = incompatible_licenses
                     newrefs['INCOMPATIBLE LICENSES'] = incompatible_licensesrefs
 
-            """ If no incompatible copyleft licenses were found, mark all merged copyleft licenses explicitly as compatible """
             if 'INCOMPATIBLE LICENSES' not in new or ('INCOMPATIBLE LICENSES' in new and not commonlistitem(copyleft_licenses, new['INCOMPATIBLE LICENSES'])):
                 for copyleft_license in copyleft_licenses:
                     if 'COMPATIBILITY' not in new or ('COMPATIBILITY' in new and copyleft_license not in new['COMPATIBILITY']):
