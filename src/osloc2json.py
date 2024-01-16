@@ -7,8 +7,9 @@
 # Maintain Python 2.x compatibility
 # pylint: disable=consider-using-with,unspecified-encoding
 
-import sys
+import os
 import re
+import sys
 
 try:
     import argparse
@@ -379,23 +380,27 @@ def back2osloc(l, indent, key, ineitheror, previous):
                 if k > indent:
                     ineitheror[k] = ''
             if e == 'OR':
-                indent -= 4
+                indent -= 1
             if len(ineitheror) > 0 and not e.isdigit() and indent > 0:
                 if indent in ineitheror and ineitheror[indent] != '':
                     if previous != '1':
                         print()
-                        printnonl(' '*(indent - 4) + ineitheror[indent])
+                        printnonl('\t'*(indent) + ineitheror[indent])
             if e.isdigit():
                 increment = 0
                 ineitheror[indent] = previous
             else:
                 if not re.search('[a-z]', e):
                     print()
-                    if indent == 0:
-                        printnonl(e + ' ')
+                    if e not in ['EITHER', 'OR']:
+                        appendchar = ' '
                     else:
-                        printnonl(' '*indent + e + ' ')
-                    increment = 4
+                        appendchar = ''
+                    if indent == 0:
+                        printnonl(e + appendchar)
+                    else:
+                        printnonl('\t'*indent + e + appendchar)
+                    increment = 1
                 else:
                     if count == 0:
                         printnonl(e)
@@ -404,17 +409,17 @@ def back2osloc(l, indent, key, ineitheror, previous):
                             printnonl(key + ' ' + e)
                         else:
                             if count == 0:
-                                printnonl(' '*indent + key + ' ' + e)
+                                printnonl('\t'*indent + key + ' ' + e)
                             else:
                                 print()
-                                if indent - 4 == 0:
+                                if indent - 1 == 0:
                                     printnonl(key + ' ' + e)
                                 else:
-                                    printnonl(' '*(indent - 4) + key + ' ' + e)
+                                    printnonl('\t'*(indent - 1) + key + ' ' + e)
                     increment = 0
             back2osloc(l[e], indent + increment, e, ineitheror, e)
             if e == 'OR':
-                indent += 4
+                indent += 1
             count = count + 1
     elif isinstance(l, list):
         count = 0
@@ -426,7 +431,7 @@ def back2osloc(l, indent, key, ineitheror, previous):
                     printnonl(e)
                 else:
                     print()
-                    printnonl(' '*indent + key + ' ' + e)
+                    printnonl('\t'*indent + key + ' ' + e)
                 count += 1
     elif isinstance(l, str):
         printnonl(l)
@@ -534,135 +539,148 @@ def osloc2json(licensefilenames, outfilename, json, args):
     licenses = len(licensefilenames)
 
     if licenses == 1:
+        suffix = os.path.splitext(licensefilenames[0])[1]
         if optimize:
             optsuffix = '-opt'
         else:
             optsuffix = ''
-        outfilename = licensefilenames[0].replace('.txt', '') + optsuffix + '.json'
+        outfilename = licensefilenames[0].replace(suffix, '') + optsuffix + '.json'
 
     jsondata = {}
 
     for licensefilename in licensefilenames:
         licensefilenameparts = licensefilename.split('/')
         basename = licensefilenameparts[len(licensefilenameparts) - 1]
-        licensename = basename.replace('.txt', '')
-        oslocfile = open(licensefilename, 'r')
-        osloc = oslocfile.read()
-        oslocfile.close()
+        suffix = os.path.splitext(licensefilename)[1]
+        licensename = basename.replace(suffix, '')
         if verbose:
             print(licensename + ':')
-        jsondata[licensename] = {}
-        data = jsondata[licensename]
-        eitherlevels = {}
-        orlevels = {}
-        eitherextratabs = 0
-        parents = {}
-        lineno = 0
-        while True:
-            endlinepos = osloc.find('\n')
-            line = osloc[0:endlinepos]
-            if line == '':
-                osloc = osloc[endlinepos + 1:]
-                continue
-            lineno += 1
-            if line.startswith(' '):
-                print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+        oslocfile = open(licensefilename, 'r')
+        if suffix == '.json':
+            try:
+                data = json.load(oslocfile)[licensename]
+            except:
+                print('File', licensefilename, 'has no valid JSON format')
                 lineno = -1
                 break
-            line = re.sub(r' \(.*\)', '', line)
-            if verbose:
-                print(line)
-            tabs = line.count('\t')
-            tag = ''
-            text = ''
-            if line[0:8] == 'USE CASE':
-                tag = line[0:8]
-                text = line[9:]
-                if tag not in data:
-                    data[tag] = {}
-                parents[tabs + 1] = data[tag][text] = {}
-                tag = ''
-                eitherextratabs = 0
-            elif re.match('\t*YOU MUST NOT', line):
-                tag = 'YOU MUST NOT'
-            elif re.match('\t*YOU MUST', line):
-                tag = 'YOU MUST'
-            elif re.match('\t*ATTRIBUTE', line):
-                tag = 'ATTRIBUTE'
-            elif re.match('\t*IF', line):
-                tag = 'IF'
-            elif re.match('\t*EXCEPT IF', line):
-                tag = 'EXCEPT IF'
-            elif re.match('\t*EITHER IF', line):
-                tag = 'EITHER IF'
-            elif re.match('\t*OR IF', line):
-                tag = 'OR IF'
-            elif re.match('\t*EITHER', line):
-                tag = 'EITHER'
-            elif re.match('\t*OR', line):
-                tag = 'OR'
-            elif line[0:12] == 'PATENT HINTS':
-                tag = line[0:12]
-            elif line[0:15] == 'COPYLEFT CLAUSE':
-                tag = line[0:15]
-            elif line[0:13] == 'COMPATIBILITY':
-                tag = line[0:13]
-            elif line[0:23] == 'DEPENDING COMPATIBILITY':
-                tag = line[0:23]
-            elif line[0:15] == 'INCOMPATIBILITY':
-                tag = line[0:15]
-            else:
-                print('Unidentified or erroneously positioned language element in license', licensename, 'at line', lineno)
-                if not verbose:
+            jsondata[licensename] = data
+            oslocfile.close()
+            lineno = 0
+        else:
+            osloc = oslocfile.read()
+            oslocfile.close()
+            jsondata[licensename] = {}
+            data = jsondata[licensename]
+            eitherlevels = {}
+            orlevels = {}
+            eitherextratabs = 0
+            parents = {}
+            lineno = 0
+            while True:
+                endlinepos = osloc.find('\n')
+                line = osloc[0:endlinepos]
+                if line == '':
+                    osloc = osloc[endlinepos + 1:]
+                    continue
+                lineno += 1
+                if line.startswith(' '):
+                    print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                    lineno = -1
+                    break
+                line = re.sub(r' \(.*\)', '', line)
+                if verbose:
                     print(line)
-                lineno = -1
-                break
-            if tag != '':
-                if text == '':
-                    text = line[line.find(tag) + len(tag) + 1:]
-                if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable' or tag.find('COMPATIBILITY') != -1):
+                tabs = line.count('\t')
+                tag = ''
+                text = ''
+                if line[0:8] == 'USE CASE':
+                    tag = line[0:8]
+                    text = line[9:]
                     if tag not in data:
-                        data[tag] = text
-                    else:
-                        if isinstance(data[tag], str):
-                            oldtext = data[tag]
-                            data[tag] = []
-                            data[tag].append(oldtext)
-                        data[tag].append(text)
+                        data[tag] = {}
+                    parents[tabs + 1] = data[tag][text] = {}
+                    tag = ''
+                    eitherextratabs = 0
+                elif re.match('\t*YOU MUST NOT', line):
+                    tag = 'YOU MUST NOT'
+                elif re.match('\t*YOU MUST', line):
+                    tag = 'YOU MUST'
+                elif re.match('\t*ATTRIBUTE', line):
+                    tag = 'ATTRIBUTE'
+                elif re.match('\t*IF', line):
+                    tag = 'IF'
+                elif re.match('\t*EXCEPT IF', line):
+                    tag = 'EXCEPT IF'
+                elif re.match('\t*EITHER IF', line):
+                    tag = 'EITHER IF'
+                elif re.match('\t*OR IF', line):
+                    tag = 'OR IF'
+                elif re.match('\t*EITHER', line):
+                    tag = 'EITHER'
+                elif re.match('\t*OR', line):
+                    tag = 'OR'
+                elif line[0:12] == 'PATENT HINTS':
+                    tag = line[0:12]
+                elif line[0:15] == 'COPYLEFT CLAUSE':
+                    tag = line[0:15]
+                elif line[0:13] == 'COMPATIBILITY':
+                    tag = line[0:13]
+                elif line[0:23] == 'DEPENDING COMPATIBILITY':
+                    tag = line[0:23]
+                elif line[0:15] == 'INCOMPATIBILITY':
+                    tag = line[0:15]
                 else:
-                    if len(parents) == 0:
-                        print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
-                        lineno = -1
-                        break
-                    if tag != 'EITHER' and len(eitherlevels) > 0:
-                        for k in eitherlevels:
-                            if tabs < k and eitherlevels[k] > 0:
-                                eitherlevels[k] = 0
-                    if tag != 'OR' and len(orlevels) > 0:
-                        for k in orlevels:
-                            if tabs <= k and orlevels[k] > 0:
-                                orlevels[k] = 0
-                                if eitherextratabs > 0:
-                                    eitherextratabs -= 1
-                    if tag == 'EITHER':
-                        if tabs in eitherlevels:
-                            eitherlevels[tabs] += 1
+                    print('Unidentified or erroneously positioned language element in license', licensename, 'at line', lineno)
+                    if not verbose:
+                        print(line)
+                    lineno = -1
+                    break
+                if tag != '':
+                    if text == '':
+                        text = line[line.find(tag) + len(tag) + 1:]
+                    if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable' or tag.find('COMPATIBILITY') != -1):
+                        if tag not in data:
+                            data[tag] = text
                         else:
-                            eitherlevels[tabs] = 1
-                        text = str(eitherlevels[tabs])
-                        orlevels[tabs] = 0
-                    elif tag == 'OR':
-                        orlevels[tabs] += 1
-                        text = str(orlevels[tabs])
-                        if orlevels[tabs] == 1:
-                            eitherextratabs += 1
-                    if tabs + eitherextratabs in parents:
-                        if tag not in parents[tabs + eitherextratabs]:
-                            parents[tabs + eitherextratabs][tag] = {}
-                        parents[tabs + eitherextratabs + 1] = parents[tabs + eitherextratabs][tag][text] = {}
-            osloc = osloc[endlinepos + 1:]
-            if len(osloc) == 0:
-                break
+                            if isinstance(data[tag], str):
+                                oldtext = data[tag]
+                                data[tag] = []
+                                data[tag].append(oldtext)
+                            data[tag].append(text)
+                    else:
+                        if len(parents) == 0:
+                            print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                            lineno = -1
+                            break
+                        if tag != 'EITHER' and len(eitherlevels) > 0:
+                            for k in eitherlevels:
+                                if tabs < k and eitherlevels[k] > 0:
+                                    eitherlevels[k] = 0
+                        if tag != 'OR' and len(orlevels) > 0:
+                            for k in orlevels:
+                                if tabs <= k and orlevels[k] > 0:
+                                    orlevels[k] = 0
+                                    if eitherextratabs > 0:
+                                        eitherextratabs -= 1
+                        if tag == 'EITHER':
+                            if tabs in eitherlevels:
+                                eitherlevels[tabs] += 1
+                            else:
+                                eitherlevels[tabs] = 1
+                            text = str(eitherlevels[tabs])
+                            orlevels[tabs] = 0
+                        elif tag == 'OR':
+                            orlevels[tabs] += 1
+                            text = str(orlevels[tabs])
+                            if orlevels[tabs] == 1:
+                                eitherextratabs += 1
+                        if tabs + eitherextratabs in parents:
+                            if tag not in parents[tabs + eitherextratabs]:
+                                parents[tabs + eitherextratabs][tag] = {}
+                            parents[tabs + eitherextratabs + 1] = parents[tabs + eitherextratabs][tag][text] = {}
+                osloc = osloc[endlinepos + 1:]
+                if len(osloc) == 0:
+                    break
 
         if lineno == -1:
             break

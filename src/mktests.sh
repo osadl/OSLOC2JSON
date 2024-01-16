@@ -84,6 +84,24 @@ then
   exit 1
 fi
 
+cp examples/FTL.json examples/FTL-old.json
+mkdir -p examples/newexamples
+./src/osloc2json.py -r examples/FTL.json >examples/newexamples/FTL.txt
+./src/osloc2json.py examples/newexamples/FTL.txt
+if ! cmp examples/newexamples/FTL.json examples/FTL-old.json
+then
+  exit 1
+fi
+mv -f examples/FTL-old.json examples/FTL.json
+rm -Rf examples/newexamples
+
+./src/osloc2json.py -demo examples/FTL.json examples/MIT.txt examples/BSD-[2-3]-Clause.txt examples/Apache-2.0.txt examples/GPL-3.0-only.txt
+if ! cmp examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.json merged.json
+then
+  exit 1
+fi
+
+
 rm -f merged.json *.checklist
 
 exit 0

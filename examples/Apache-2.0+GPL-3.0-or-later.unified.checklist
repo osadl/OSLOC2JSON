@@ -52,146 +52,146 @@ INCOMPATIBILITY zlib-acknowledgement | GPL-3.0-or-later
 INCOMPATIBILITY XFree86-1.1 | GPL-3.0-or-later
 PATENT HINTS Yes | Apache-2.0, GPL-3.0-or-later
 USE CASE Source code delivery | Apache-2.0, GPL-3.0-or-later
-    YOU MUST Provide Copyright notices | GPL-3.0-or-later
-        ATTRIBUTE Appropriately | GPL-3.0-or-later
-        ATTRIBUTE Highlighted | GPL-3.0-or-later
-    YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
-    YOU MUST Use GPL-3.0-or-later License | GPL-3.0-or-later
-    IF AGPL-3.0-or-later | GPL-3.0-or-later
-        YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
-    IF Combined work With AGPL-3.0-only | GPL-3.0-or-later
-        YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
-    IF Service offerings | Apache-2.0
-        YOU MUST Indemnify Other contributors | Apache-2.0
-    IF Software modification | Apache-2.0, GPL-3.0-or-later
-        YOU MUST Forward Attribution notices | Apache-2.0
-        YOU MUST Forward Copyright notices | Apache-2.0
-        YOU MUST Forward Patent notices | Apache-2.0
-        YOU MUST Forward Trademark notices | Apache-2.0
-        YOU MUST Grant License | GPL-3.0-or-later
-            ATTRIBUTE Original license | GPL-3.0-or-later
-        YOU MUST Provide Legal notices | GPL-3.0-or-later
-            ATTRIBUTE Highlighted | GPL-3.0-or-later
-        YOU MUST Provide Modification date | GPL-3.0-or-later
-        YOU MUST Provide Modification notice | Apache-2.0, GPL-3.0-or-later
-            ATTRIBUTE Highlighted | GPL-3.0-or-later
-        IF Interactive AND Displaying Appropriate legal notices | GPL-3.0-or-later
-            YOU MUST Display Appropriate legal notices | GPL-3.0-or-later
-                ATTRIBUTE Highlighted | GPL-3.0-or-later
-        IF Non-permissive additional terms Added | GPL-3.0-or-later
-            EITHER 
-                YOU MUST Include Non-permissive additional terms In Source code | GPL-3.0-or-later
-            OR 
-                YOU MUST Reference Non-permissive additional terms In Source code | GPL-3.0-or-later
-        IF Work Includes File "NOTICE" | Apache-2.0
-            YOU MUST Delete Irrelevant parts | Apache-2.0
-            EITHER 
-                YOU MUST Provide File "NOTICE" | Apache-2.0
-            OR 
-                YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
-            OR
-                YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
-            OR
-                YOU MUST Display File "NOTICE" | Apache-2.0
-    YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-or-later
-    YOU MUST NOT Modify License notices | GPL-3.0-or-later
-    YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-or-later
-    YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
-        EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
-    YOU MUST NOT Sublicense | GPL-3.0-or-later
+	YOU MUST Provide Copyright notices | GPL-3.0-or-later
+		ATTRIBUTE Appropriately | GPL-3.0-or-later
+		ATTRIBUTE Highlighted | GPL-3.0-or-later
+	YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
+	YOU MUST Use GPL-3.0-or-later License | GPL-3.0-or-later
+	IF AGPL-3.0-or-later | GPL-3.0-or-later
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
+	IF Combined work With AGPL-3.0-only | GPL-3.0-or-later
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
+	IF Service offerings | Apache-2.0
+		YOU MUST Indemnify Other contributors | Apache-2.0
+	IF Software modification | Apache-2.0, GPL-3.0-or-later
+		YOU MUST Forward Attribution notices | Apache-2.0
+		YOU MUST Forward Copyright notices | Apache-2.0
+		YOU MUST Forward Patent notices | Apache-2.0
+		YOU MUST Forward Trademark notices | Apache-2.0
+		YOU MUST Grant License | GPL-3.0-or-later
+			ATTRIBUTE Original license | GPL-3.0-or-later
+		YOU MUST Provide Legal notices | GPL-3.0-or-later
+			ATTRIBUTE Highlighted | GPL-3.0-or-later
+		YOU MUST Provide Modification date | GPL-3.0-or-later
+		YOU MUST Provide Modification notice | Apache-2.0, GPL-3.0-or-later
+			ATTRIBUTE Highlighted | GPL-3.0-or-later
+		IF Interactive AND Displaying Appropriate legal notices | GPL-3.0-or-later
+			YOU MUST Display Appropriate legal notices | GPL-3.0-or-later
+				ATTRIBUTE Highlighted | GPL-3.0-or-later
+		IF Non-permissive additional terms Added | GPL-3.0-or-later
+			EITHER
+				YOU MUST Include Non-permissive additional terms In Source code | GPL-3.0-or-later
+			OR
+				YOU MUST Reference Non-permissive additional terms In Source code | GPL-3.0-or-later
+		IF Work Includes File "NOTICE" | Apache-2.0
+			YOU MUST Delete Irrelevant parts | Apache-2.0
+			EITHER
+				YOU MUST Provide File "NOTICE" | Apache-2.0
+			OR
+				YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
+				OR
+				YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
+				OR
+				YOU MUST Display File "NOTICE" | Apache-2.0
+	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-or-later
+	YOU MUST NOT Modify License notices | GPL-3.0-or-later
+	YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-or-later
+	YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
+		EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
+	YOU MUST NOT Sublicense | GPL-3.0-or-later
 USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
-    YOU MUST Provide Copyright notices | GPL-3.0-or-later
-        ATTRIBUTE Appropriately | GPL-3.0-or-later
-        ATTRIBUTE Highlighted | GPL-3.0-or-later
-    YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
-    YOU MUST Use GPL-3.0-or-later License | GPL-3.0-or-later
-    IF AGPL-3.0-or-later | GPL-3.0-or-later
-        YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
-    IF Combined work With AGPL-3.0-only | GPL-3.0-or-later
-        YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
-    IF Service offerings | Apache-2.0
-        YOU MUST Indemnify Other contributors | Apache-2.0
-    IF Software modification | Apache-2.0, GPL-3.0-or-later
-        IF Interactive AND Displaying Appropriate legal notices | GPL-3.0-or-later
-            YOU MUST Display Appropriate legal notices | GPL-3.0-or-later
-                ATTRIBUTE Highlighted | GPL-3.0-or-later
-        IF Non-permissive additional terms Added | GPL-3.0-or-later
-            EITHER 
-                YOU MUST Include Non-permissive additional terms In Source code | GPL-3.0-or-later
-                    ATTRIBUTE With Source code delivery | GPL-3.0-or-later
-            OR 
-                YOU MUST Reference Non-permissive additional terms In Source code | GPL-3.0-or-later
-                    ATTRIBUTE With Source code delivery | GPL-3.0-or-later
-        IF Work Includes File "NOTICE" | Apache-2.0
-            YOU MUST Delete Irrelevant parts | Apache-2.0
-            EITHER 
-                YOU MUST Provide File "NOTICE" | Apache-2.0
-            OR 
-                YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
-            OR
-                YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
-            OR
-                YOU MUST Display File "NOTICE" | Apache-2.0
-        YOU MUST Grant License | GPL-3.0-or-later
-            ATTRIBUTE Original license | GPL-3.0-or-later
-        YOU MUST Provide Legal notices | GPL-3.0-or-later
-            ATTRIBUTE Highlighted | GPL-3.0-or-later
-        YOU MUST Provide Modification date | GPL-3.0-or-later
-        YOU MUST Provide Modification notice | GPL-3.0-or-later
-            ATTRIBUTE Highlighted | GPL-3.0-or-later
-    IF User product | GPL-3.0-or-later
-        YOU MUST Provide Installation information | GPL-3.0-or-later
-            EXCEPT IF Installation Is NOT Feasible | GPL-3.0-or-later
-    YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-or-later
-    YOU MUST NOT Modify License notices | GPL-3.0-or-later
-    YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-or-later
-    YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
-        EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
-    YOU MUST NOT Sublicense | GPL-3.0-or-later
-    EITHER IF Binary delivery On Customary medium OR Installed | GPL-3.0-or-later
-        EITHER 
-            YOU MUST Provide Source code | GPL-3.0-or-later
-                ATTRIBUTE Customary medium | GPL-3.0-or-later
-                ATTRIBUTE Documented format | GPL-3.0-or-later
-                ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
-                ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
-                ATTRIBUTE Machine-readable | GPL-3.0-or-later
-        OR 
-            YOU MUST Provide Written offer | GPL-3.0-or-later
-                ATTRIBUTE Delayed source code delivery | GPL-3.0-or-later
-                    ATTRIBUTE Documented format | GPL-3.0-or-later
-                    ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
-                    ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
-                    ATTRIBUTE Machine-readable | GPL-3.0-or-later
-                    EITHER 
-                        ATTRIBUTE Customary medium | GPL-3.0-or-later
-                        ATTRIBUTE No profit | GPL-3.0-or-later
-                    OR 
-                        ATTRIBUTE No charge | GPL-3.0-or-later
-                        ATTRIBUTE Via Internet | GPL-3.0-or-later
-                ATTRIBUTE Duration As long as product is supported | GPL-3.0-or-later
-                ATTRIBUTE Duration At least 3 years | GPL-3.0-or-later
-    OR IF Binary delivery Via Internet | GPL-3.0-or-later
-        YOU MUST Provide Source code | GPL-3.0-or-later
-            ATTRIBUTE Documented format | GPL-3.0-or-later
-            ATTRIBUTE Duration As long as needed | GPL-3.0-or-later
-            ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
-            ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
-            ATTRIBUTE Machine-readable | GPL-3.0-or-later
-            ATTRIBUTE Via Internet | GPL-3.0-or-later
-            EITHER IF Source code On same server | GPL-3.0-or-later
-                ATTRIBUTE Equivalent | GPL-3.0-or-later
-                ATTRIBUTE No charge | GPL-3.0-or-later
-            OR IF Source code On other server | GPL-3.0-or-later
-                ATTRIBUTE Equivalent | GPL-3.0-or-later
-                ATTRIBUTE No charge | GPL-3.0-or-later
-                YOU MUST Reference Source code | GPL-3.0-or-later
-    OR IF Binary delivery Via peer-to-peer transmission | GPL-3.0-or-later
-        YOU MUST Reference Source code | GPL-3.0-or-later
-            ATTRIBUTE Documented format | GPL-3.0-or-later
-            ATTRIBUTE Duration As long as needed | GPL-3.0-or-later
-            ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
-            ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
-            ATTRIBUTE Machine-readable | GPL-3.0-or-later
-            ATTRIBUTE No charge | GPL-3.0-or-later
-            ATTRIBUTE Via Internet | GPL-3.0-or-later
+	YOU MUST Provide Copyright notices | GPL-3.0-or-later
+		ATTRIBUTE Appropriately | GPL-3.0-or-later
+		ATTRIBUTE Highlighted | GPL-3.0-or-later
+	YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
+	YOU MUST Use GPL-3.0-or-later License | GPL-3.0-or-later
+	IF AGPL-3.0-or-later | GPL-3.0-or-later
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
+	IF Combined work With AGPL-3.0-only | GPL-3.0-or-later
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
+	IF Service offerings | Apache-2.0
+		YOU MUST Indemnify Other contributors | Apache-2.0
+	IF Software modification | Apache-2.0, GPL-3.0-or-later
+		IF Interactive AND Displaying Appropriate legal notices | GPL-3.0-or-later
+			YOU MUST Display Appropriate legal notices | GPL-3.0-or-later
+				ATTRIBUTE Highlighted | GPL-3.0-or-later
+		IF Non-permissive additional terms Added | GPL-3.0-or-later
+			EITHER
+				YOU MUST Include Non-permissive additional terms In Source code | GPL-3.0-or-later
+					ATTRIBUTE With Source code delivery | GPL-3.0-or-later
+			OR
+				YOU MUST Reference Non-permissive additional terms In Source code | GPL-3.0-or-later
+					ATTRIBUTE With Source code delivery | GPL-3.0-or-later
+		IF Work Includes File "NOTICE" | Apache-2.0
+			YOU MUST Delete Irrelevant parts | Apache-2.0
+			EITHER
+				YOU MUST Provide File "NOTICE" | Apache-2.0
+			OR
+				YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
+				OR
+				YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
+				OR
+				YOU MUST Display File "NOTICE" | Apache-2.0
+		YOU MUST Grant License | GPL-3.0-or-later
+			ATTRIBUTE Original license | GPL-3.0-or-later
+		YOU MUST Provide Legal notices | GPL-3.0-or-later
+			ATTRIBUTE Highlighted | GPL-3.0-or-later
+		YOU MUST Provide Modification date | GPL-3.0-or-later
+		YOU MUST Provide Modification notice | GPL-3.0-or-later
+			ATTRIBUTE Highlighted | GPL-3.0-or-later
+	IF User product | GPL-3.0-or-later
+		YOU MUST Provide Installation information | GPL-3.0-or-later
+			EXCEPT IF Installation Is NOT Feasible | GPL-3.0-or-later
+	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-or-later
+	YOU MUST NOT Modify License notices | GPL-3.0-or-later
+	YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-or-later
+	YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
+		EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
+	YOU MUST NOT Sublicense | GPL-3.0-or-later
+	EITHER IF Binary delivery On Customary medium OR Installed | GPL-3.0-or-later
+		EITHER
+			YOU MUST Provide Source code | GPL-3.0-or-later
+				ATTRIBUTE Customary medium | GPL-3.0-or-later
+				ATTRIBUTE Documented format | GPL-3.0-or-later
+				ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
+				ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
+				ATTRIBUTE Machine-readable | GPL-3.0-or-later
+		OR
+			YOU MUST Provide Written offer | GPL-3.0-or-later
+				ATTRIBUTE Delayed source code delivery | GPL-3.0-or-later
+					ATTRIBUTE Documented format | GPL-3.0-or-later
+					ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
+					ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
+					ATTRIBUTE Machine-readable | GPL-3.0-or-later
+					EITHER
+						ATTRIBUTE Customary medium | GPL-3.0-or-later
+						ATTRIBUTE No profit | GPL-3.0-or-later
+					OR
+						ATTRIBUTE No charge | GPL-3.0-or-later
+						ATTRIBUTE Via Internet | GPL-3.0-or-later
+				ATTRIBUTE Duration As long as product is supported | GPL-3.0-or-later
+				ATTRIBUTE Duration At least 3 years | GPL-3.0-or-later
+	OR IF Binary delivery Via Internet | GPL-3.0-or-later
+		YOU MUST Provide Source code | GPL-3.0-or-later
+			ATTRIBUTE Documented format | GPL-3.0-or-later
+			ATTRIBUTE Duration As long as needed | GPL-3.0-or-later
+			ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
+			ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
+			ATTRIBUTE Machine-readable | GPL-3.0-or-later
+			ATTRIBUTE Via Internet | GPL-3.0-or-later
+			EITHER IF Source code On same server | GPL-3.0-or-later
+				ATTRIBUTE Equivalent | GPL-3.0-or-later
+				ATTRIBUTE No charge | GPL-3.0-or-later
+			OR IF Source code On other server | GPL-3.0-or-later
+				ATTRIBUTE Equivalent | GPL-3.0-or-later
+				ATTRIBUTE No charge | GPL-3.0-or-later
+				YOU MUST Reference Source code | GPL-3.0-or-later
+	OR IF Binary delivery Via peer-to-peer transmission | GPL-3.0-or-later
+		YOU MUST Reference Source code | GPL-3.0-or-later
+			ATTRIBUTE Documented format | GPL-3.0-or-later
+			ATTRIBUTE Duration As long as needed | GPL-3.0-or-later
+			ATTRIBUTE Including Installation scripts | GPL-3.0-or-later
+			ATTRIBUTE Including Tool chain information | GPL-3.0-or-later
+			ATTRIBUTE Machine-readable | GPL-3.0-or-later
+			ATTRIBUTE No charge | GPL-3.0-or-later
+			ATTRIBUTE Via Internet | GPL-3.0-or-later

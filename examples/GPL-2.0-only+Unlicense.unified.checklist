@@ -53,66 +53,66 @@ INCOMPATIBILITY XFree86-1.1 | GPL-2.0-only
 PATENT HINTS Yes | GPL-2.0-only
 PATENT HINTS No | Unlicense
 USE CASE Source code delivery | GPL-2.0-only, Unlicense
-    YOU MUST Not do anything else | Unlicense
-    YOU MUST Provide Copyright notices | GPL-2.0-only
-        ATTRIBUTE Appropriately | GPL-2.0-only
-        ATTRIBUTE Highlighted | GPL-2.0-only
-    YOU MUST Provide License text | GPL-2.0-only
-    YOU MUST Provide Warranty disclaimer | GPL-2.0-only
-        ATTRIBUTE Appropriately | GPL-2.0-only
-        ATTRIBUTE Highlighted | GPL-2.0-only
-    YOU MUST NOT Modify License notices | GPL-2.0-only
-    YOU MUST NOT Modify Warranty disclaimer | GPL-2.0-only
-    YOU MUST NOT Restrict Granted rights | GPL-2.0-only
-    IF Software modification | GPL-2.0-only
-        YOU MUST Grant License | GPL-2.0-only
-            ATTRIBUTE Original license | GPL-2.0-only
-        YOU MUST Provide Modification date | GPL-2.0-only
-        YOU MUST Provide Modification notice | GPL-2.0-only
-        IF Interactive AND Displaying License announcement | GPL-2.0-only
-            YOU MUST Display Copyright notices | GPL-2.0-only
-            YOU MUST Display License announcement | GPL-2.0-only
-            YOU MUST Display Warranty disclaimer | GPL-2.0-only
-            YOU MUST Reference License text | GPL-2.0-only
+	YOU MUST Not do anything else | Unlicense
+	YOU MUST Provide Copyright notices | GPL-2.0-only
+		ATTRIBUTE Appropriately | GPL-2.0-only
+		ATTRIBUTE Highlighted | GPL-2.0-only
+	YOU MUST Provide License text | GPL-2.0-only
+	YOU MUST Provide Warranty disclaimer | GPL-2.0-only
+		ATTRIBUTE Appropriately | GPL-2.0-only
+		ATTRIBUTE Highlighted | GPL-2.0-only
+	YOU MUST NOT Modify License notices | GPL-2.0-only
+	YOU MUST NOT Modify Warranty disclaimer | GPL-2.0-only
+	YOU MUST NOT Restrict Granted rights | GPL-2.0-only
+	IF Software modification | GPL-2.0-only
+		YOU MUST Grant License | GPL-2.0-only
+			ATTRIBUTE Original license | GPL-2.0-only
+		YOU MUST Provide Modification date | GPL-2.0-only
+		YOU MUST Provide Modification notice | GPL-2.0-only
+		IF Interactive AND Displaying License announcement | GPL-2.0-only
+			YOU MUST Display Copyright notices | GPL-2.0-only
+			YOU MUST Display License announcement | GPL-2.0-only
+			YOU MUST Display Warranty disclaimer | GPL-2.0-only
+			YOU MUST Reference License text | GPL-2.0-only
 USE CASE Binary delivery | GPL-2.0-only, Unlicense
-    YOU MUST Not do anything else | Unlicense
-    YOU MUST Provide Copyright notices | GPL-2.0-only
-        ATTRIBUTE Appropriately | GPL-2.0-only
-        ATTRIBUTE Highlighted | GPL-2.0-only
-    YOU MUST Provide License text | GPL-2.0-only
-    YOU MUST Provide Warranty disclaimer | GPL-2.0-only
-        ATTRIBUTE Appropriately | GPL-2.0-only
-        ATTRIBUTE Highlighted | GPL-2.0-only
-    YOU MUST NOT Modify License notices | GPL-2.0-only
-    YOU MUST NOT Modify Warranty disclaimer | GPL-2.0-only
-    YOU MUST NOT Restrict Granted rights | GPL-2.0-only
-    EITHER 
-        YOU MUST Provide Source code | GPL-2.0-only
-            ATTRIBUTE Customary medium | GPL-2.0-only
-            ATTRIBUTE Including Installation scripts | GPL-2.0-only
-            ATTRIBUTE Including Tool chain information | GPL-2.0-only
-            ATTRIBUTE Machine-readable | GPL-2.0-only
-            IF Binary delivery Via Internet | GPL-2.0-only
-                ATTRIBUTE Source code delivery Via Internet | GPL-2.0-only
-                    ATTRIBUTE Equivalent | GPL-2.0-only
-                    ATTRIBUTE On same server | GPL-2.0-only
-    OR 
-        YOU MUST Provide Written offer | GPL-2.0-only
-            ATTRIBUTE Delayed source code delivery | GPL-2.0-only
-                ATTRIBUTE Customary medium | GPL-2.0-only
-                ATTRIBUTE Including Installation scripts | GPL-2.0-only
-                ATTRIBUTE Including Tool chain information | GPL-2.0-only
-                ATTRIBUTE Machine-readable | GPL-2.0-only
-            ATTRIBUTE Duration 3 years | GPL-2.0-only
-            ATTRIBUTE No profit | GPL-2.0-only
-            ATTRIBUTE To Any third party | GPL-2.0-only
-    IF Software modification | GPL-2.0-only
-        YOU MUST Grant License | GPL-2.0-only
-            ATTRIBUTE Original license | GPL-2.0-only
-        YOU MUST Provide Modification date | GPL-2.0-only
-        YOU MUST Provide Modification notice | GPL-2.0-only
-        IF Interactive AND Displaying License announcement | GPL-2.0-only
-            YOU MUST Display Copyright notices | GPL-2.0-only
-            YOU MUST Display License announcement | GPL-2.0-only
-            YOU MUST Display Warranty disclaimer | GPL-2.0-only
-            YOU MUST Reference License text | GPL-2.0-only
+	YOU MUST Not do anything else | Unlicense
+	YOU MUST Provide Copyright notices | GPL-2.0-only
+		ATTRIBUTE Appropriately | GPL-2.0-only
+		ATTRIBUTE Highlighted | GPL-2.0-only
+	YOU MUST Provide License text | GPL-2.0-only
+	YOU MUST Provide Warranty disclaimer | GPL-2.0-only
+		ATTRIBUTE Appropriately | GPL-2.0-only
+		ATTRIBUTE Highlighted | GPL-2.0-only
+	YOU MUST NOT Modify License notices | GPL-2.0-only
+	YOU MUST NOT Modify Warranty disclaimer | GPL-2.0-only
+	YOU MUST NOT Restrict Granted rights | GPL-2.0-only
+	EITHER
+		YOU MUST Provide Source code | GPL-2.0-only
+			ATTRIBUTE Customary medium | GPL-2.0-only
+			ATTRIBUTE Including Installation scripts | GPL-2.0-only
+			ATTRIBUTE Including Tool chain information | GPL-2.0-only
+			ATTRIBUTE Machine-readable | GPL-2.0-only
+			IF Binary delivery Via Internet | GPL-2.0-only
+				ATTRIBUTE Source code delivery Via Internet | GPL-2.0-only
+					ATTRIBUTE Equivalent | GPL-2.0-only
+					ATTRIBUTE On same server | GPL-2.0-only
+	OR
+		YOU MUST Provide Written offer | GPL-2.0-only
+			ATTRIBUTE Delayed source code delivery | GPL-2.0-only
+				ATTRIBUTE Customary medium | GPL-2.0-only
+				ATTRIBUTE Including Installation scripts | GPL-2.0-only
+				ATTRIBUTE Including Tool chain information | GPL-2.0-only
+				ATTRIBUTE Machine-readable | GPL-2.0-only
+			ATTRIBUTE Duration 3 years | GPL-2.0-only
+			ATTRIBUTE No profit | GPL-2.0-only
+			ATTRIBUTE To Any third party | GPL-2.0-only
+	IF Software modification | GPL-2.0-only
+		YOU MUST Grant License | GPL-2.0-only
+			ATTRIBUTE Original license | GPL-2.0-only
+		YOU MUST Provide Modification date | GPL-2.0-only
+		YOU MUST Provide Modification notice | GPL-2.0-only
+		IF Interactive AND Displaying License announcement | GPL-2.0-only
+			YOU MUST Display Copyright notices | GPL-2.0-only
+			YOU MUST Display License announcement | GPL-2.0-only
+			YOU MUST Display Warranty disclaimer | GPL-2.0-only
+			YOU MUST Reference License text | GPL-2.0-only
