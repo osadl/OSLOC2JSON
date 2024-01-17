@@ -922,6 +922,10 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
       action = 'store_true',
       default = False,
       help = 'replace keys connected by OR with the individual keys and assign the value of the key to all of them')
+    parser.add_argument('-j', '--jsonvalidate',
+      action = 'store_true',
+      default = False,
+      help = 'validate input files in JSON format against the OSLOC schema')
     parser.add_argument('-l', '--licenseupgrade',
       action = 'store_true',
       default = False,
@@ -978,6 +982,23 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
             osloc2json(filenames, args.filename, json, args)
         profiler.print()
     else:
+        if args.jsonvalidate:
+            import fastjsonschema
+            schema = open('osloc-schema.json', 'r')
+            schemadata = json.load(schema)
+            validator = fastjsonschema.compile(schemadata)
+            for filename in filenames:
+                suffix = os.path.splitext(filename)[1]
+                if suffix != '.json':
+                    continue
+                sample = open(filename, 'r')
+                sampledata = json.load(sample)
+                try:
+                    validator(sampledata)
+                except fastjsonschema.JsonSchemaException as e:
+                    print(f"Data failed validation: {e}")
+                sample.close()
+            schema.close()
         osloc2json(filenames, args.filename, json, args)
 
 if __name__ == '__main__':

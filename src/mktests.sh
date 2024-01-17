@@ -101,6 +101,13 @@ then
   exit 1
 fi
 
+./src/osloc2json.py -j examples/FTL.json >examples/jsonvalidity
+if test -s examples/jsonvalidity
+then
+  echo JSON validity checker erroneously detected invalid JSON
+  exit 1
+fi
+rm -f examples/jsonvalidity
 
 rm -f merged.json *.checklist
 

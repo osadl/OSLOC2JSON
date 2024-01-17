@@ -19,6 +19,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install pyinstrument
+        pip install fastjsonschema
     - name: Analysing the code with pylint
       run: |
         pylint --disable=C --disable=R --disable=W $(git ls-files '*.py')
