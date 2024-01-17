@@ -12,6 +12,7 @@
     * [Additional keys available when in merge mode](#additional-keys-available-when-in-merge-mode)
     * [Some more merging examples](#some-more-merging-examples)
     * [Merging limitations](#merging-limitations)
+* [Schema](#schema)
 
 ## Purpose
 Convert the [OSADL Open Source License Obligations
@@ -24,7 +25,7 @@ checklists of several licenses.
 osloc2json.py --help
 ```
 ```
-usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-l] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
+usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-j] [-l] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
 
 positional arguments:
   OSLOC                 file names of OSLOC files to process
@@ -35,6 +36,7 @@ options:
                         name of output file for multiple licenses, has no effect if single license, default "osloc.json"
   -d, --devel           enable output of information that may be useful for development
   -e, --expand          replace keys connected by OR with the individual keys and assign the value of the key to all of them
+  -j, --jsonvalidate    validate input files in JSON format against the OSLOC schema
   -l, --licenseupgrade  attempt to avoid license incompatibility by upgrading licenses according to rules in "licenseupgraderules.json"
   -m, --merge           merge all licenses into a single one, has no effect if single license, default file name "merged.json"
   -o, --optimize        convert a dict with no values to a list of keys or string, append "-opt" to output file name if only one dict
@@ -87,6 +89,12 @@ rules in file "licenseupgraderules.json", optimize JSON ouput, unify expressions
 according to unify rules in file "unifyrules.json", convert output to OSLOC
 format and write it to standard output, write resulting JSON file to standard
 output and store it in file "merged.json".
+
+#### Validate JSON input files against OSLOC schema
+```bash
+./src/osloc2json.py -j FILE-1 FILE-2 FILE-N
+```
+JSON error description will be written to standard output if any
 
 ### Input and output files of a conversion of an OSLOC file to JSON format
 Original OSLOC file of the Freetype Project License (FTL):
@@ -797,3 +805,92 @@ of licenses and especially copyleft licenses. In this respect, the information
 on compatibility resulting from the merging of the checklists is only a very
 first indication, so that individual legal advice must always be obtained, which
 of course also applies to all other information in the checklists.
+
+## Schema
+The validate function (-j) uses the JSON below schema.
+```json
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+
+    "obligations": {
+        "patternProperties": {
+            "^EITHER$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "patternProperties": {
+                            "^OR$": {
+                                "patternProperties": {
+                                    "^[0-9]*$": {
+                                        "$ref": "#/obligations"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "^(ATTRIBUTE|EITHER IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+                                "patternProperties": {
+                                    "^.*$": {
+                                        "$ref": "#/obligations"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            },
+            "^(ATTRIBUTE|EITHER IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+                "patternProperties": {
+                    ".*": {
+                        "$ref": "#/obligations"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "^EXCEPT IF$": {
+                "type": ["string", "object"]
+            }
+        },
+        "additionalProperties": false
+    },
+
+    "type": "object",
+    "patternProperties": {
+        "^[0-9A-Za-z\\.-]*$": {
+            "required": ["USE CASE"],
+            "type": "object",
+            "properties": {
+                "USE CASE": {
+                    "type": ["string", "object"],
+                    "patternProperties": {
+                        "^.* ([Dd]elivery|service).*$": {
+                            "$ref": "#/obligations"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "COMPATIBILITY": {
+                    "type": ["string", "array"]
+                },
+                "DEPENDING COMPATIBILITY": {
+                    "type": ["string", "array"]
+                },
+                "INCOMPATIBILITY": {
+                    "type": ["string", "array"]
+                },
+                "COPYLEFT CLAUSE": {
+                    "type": "string",
+                    "enum": ["Yes", "No", "Questionable"]
+                },
+                "PATENT HINTS": {
+                    "type": "string",
+                    "enum": ["Yes", "No"]
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}
+```
