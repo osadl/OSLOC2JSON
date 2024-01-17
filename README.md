@@ -52,8 +52,32 @@ all OSLOC files are parsed, concatenated to a single JSON object and stored unde
 This is a software tool, no legal advice.
 
 ## Examples how to use the software
+### Usage scenarios
+#### Conversion to JSON format
+```bash
+osloc2json.py OSLOC.txt
+```
+Output will be written to OSLOC.json.
 
-### Convert an OSLOC file to JSON format
+#### Conversion to OSLOC format
+```bash
+osloc2json.py -r OSLOC.json >OSLOC.txt
+```
+Output will be written to standard output.
+
+#### Concatenation of several OSLOC or JSON files
+```bash
+osloc2json.py FILE-1 FILE-2 FILE-N
+```
+Output will be written to "osloc.json".
+
+#### Merging (remove duplicates, concatenate additional obligations) several OSLOC or JSON files
+```bash
+osloc2json.py -m FILE-1 FILE-2 FILE-N
+```
+Output will be written to "merged.json".
+
+### Input and output files of a conversion of an OSLOC file to JSON format
 Original OSLOC file of the Freetype Project License (FTL):
 ```
 USE CASE Source code delivery
