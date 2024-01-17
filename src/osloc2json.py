@@ -899,9 +899,10 @@ def main():
         filenametype = 'string'
     else:
         parser = argparse.ArgumentParser(prog = 'osloc2json.py', formatter_class = argparse.RawTextHelpFormatter,
-          epilog = 'Either a single OSLOC file is parsed, converted to JSON format and saved under the original name with the suffix ".json", or\n\
-all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or OUTPUT if specified, or\n\
-(-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under "merged.json" or OUTPUT if specified')
+            epilog = 'Either a single ".txt" suffixed OSLOC input file is parsed, converted to JSON format and saved under the original name with the suffix\n\
+replaced by ".json", or all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or (-f) OUTPUT\n\
+if specified, or (-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under\n\
+"merged.json". Input files can already have JSON format, but all processing other than conversion to JSON remains the same.')
         parser.add_argument('licensefilenames',
           metavar = 'OSLOC',
           nargs='+',
