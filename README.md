@@ -43,9 +43,10 @@ options:
   -u, --unify           unify license obligations if they are semantically similar as defined in the semantic dict "unifyrules.json"
   -v, --verbose         show names and texts the program is using
 
-Either a single OSLOC file is parsed, converted to JSON format and saved under the original name with the suffix ".json", or
-all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or OUTPUT if specified, or
-(-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under "merged.json" or OUTPUT if specified
+Either a single ".txt" suffixed OSLOC input file is parsed, converted to JSON format and saved under the original name with the suffix
+replaced by ".json", or all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or (-f) OUTPUT
+if specified, or (-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under
+"merged.json". The input files may already be in JSON format, but all processing except the conversion to JSON remains the same.
 ```
 
 ## Disclaimer

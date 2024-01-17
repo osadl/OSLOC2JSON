@@ -33,10 +33,12 @@
                     "type": ["string", "array"]
                 },
                 "COPYLEFT CLAUSE": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Yes", "No", "Questionable"]
                 },
                 "PATENT HINTS": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": ["Yes", "No"]
                 }
             },
             "additionalProperties": false

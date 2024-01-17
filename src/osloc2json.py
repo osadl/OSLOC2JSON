@@ -902,7 +902,7 @@ def main():
             epilog = 'Either a single ".txt" suffixed OSLOC input file is parsed, converted to JSON format and saved under the original name with the suffix\n\
 replaced by ".json", or all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or (-f) OUTPUT\n\
 if specified, or (-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under\n\
-"merged.json". Input files can already have JSON format, but all processing other than conversion to JSON remains the same.')
+"merged.json". The input files may already be in JSON format, but all processing except the conversion to JSON remains the same.')
         parser.add_argument('licensefilenames',
           metavar = 'OSLOC',
           nargs='+',
