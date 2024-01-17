@@ -807,7 +807,7 @@ first indication, so that individual legal advice must always be obtained, which
 of course also applies to all other information in the checklists.
 
 ## Schema
-The validate function (-j) uses the JSON below schema.
+The validate function (-j) uses the below JSON schema.
 ```json
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
