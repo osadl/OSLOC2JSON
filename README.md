@@ -71,11 +71,21 @@ osloc2json.py FILE-1 FILE-2 FILE-N
 ```
 Output will be written to "osloc.json".
 
-#### Merging (remove duplicates, concatenate additional obligations) several OSLOC or JSON files
+#### Merging (remove duplicates, concatenate additional obligations) of several OSLOC or JSON files
 ```bash
 osloc2json.py -m FILE-1 FILE-2 FILE-N
 ```
 Output will be written to "merged.json".
+
+#### Extended merging (remove duplicates, concatenate additional obligations) of several OSLOC or JSON files
+```bash
+./src/osloc2json.py -elmours FILE-1 FILE-2 FILE-N
+```
+Extend OR-ed use cases into serveral ones, allow license upgrade according to
+rules in file "licenseupgraderules.json", optimize JSON ouput, unify expressions
+according to unify rules in file "unifyrules.json", convert output to OSLOC
+format and write it to standard output, write resulting JSON file to standard
+output and store it in file "merged.json".
 
 ### Input and output files of a conversion of an OSLOC file to JSON format
 Original OSLOC file of the Freetype Project License (FTL):
