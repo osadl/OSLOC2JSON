@@ -25,7 +25,7 @@ checklists of several licenses.
 osloc2json.py --help
 ```
 ```
-usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-j] [-l] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
+usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-j] [-l] [-m] [-n] [-o] [-p] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
 
 positional arguments:
   OSLOC                 file names of OSLOC files to process
@@ -39,10 +39,12 @@ options:
   -j, --jsonvalidate    validate input files in JSON format against the OSLOC schema
   -l, --licenseupgrade  attempt to avoid license incompatibility by upgrading licenses according to rules in "licenseupgraderules.json"
   -m, --merge           merge all licenses into a single one, has no effect if single license, default file name "merged.json"
+  -n, --noop            do not execute any conversion operation
   -o, --optimize        convert a dict with no values to a list of keys or string, append "-opt" to output file name if only one dict
+  -p, --profiling       enable snapshot profiling
   -r, --recreate        recreate original checklist from JSON
   -s, --show            also list the output to screen
-  -u, --unify           unify license obligations if they are semantically similar as defined in the semantic dict "unifyrules.json"
+  -u, --unify           unify merged license obligations if they are semantically similar as defined in the semantic dict "unifyrules.json"
   -v, --verbose         show names and texts the program is using
 
 Either a single ".txt" suffixed OSLOC input file is parsed, converted to JSON format and saved under the original name with the suffix
@@ -92,7 +94,7 @@ output and store it in file "merged.json".
 
 #### Validate JSON input files against OSLOC schema
 ```bash
-./src/osloc2json.py -j FILE-1 FILE-2 FILE-N
+./src/osloc2json.py -jn FILE-1 FILE-2 FILE-N
 ```
 JSON error description will be written to standard output if any
 
@@ -849,15 +851,25 @@ The validate function (-j) uses the below JSON schema.
                 "additionalProperties": false
             },
             "^EXCEPT IF$": {
-                "type": ["string", "object"]
+                "type": ["string", "array", "object"]
             }
         },
         "additionalProperties": false
     },
 
+    "copyrightclause": {
+        "type": "string",
+        "enum": ["Yes", "No", "Questionable"]
+    },
+
+    "patenthints": {
+        "type": "string",
+        "enum": ["Yes", "No"]
+    },
+
     "type": "object",
     "patternProperties": {
-        "^[0-9A-Za-z\\.-]*$": {
+        "^[0-9A-Za-z\\.| -]*$": {
             "required": ["USE CASE"],
             "type": "object",
             "properties": {
@@ -879,13 +891,33 @@ The validate function (-j) uses the below JSON schema.
                 "INCOMPATIBILITY": {
                     "type": ["string", "array"]
                 },
+                "INCOMPATIBLE LICENSES": {
+                    "type": ["string", "array"]
+                },
+                "COPYLEFT LICENSES": {
+                    "type": ["string", "array"]
+                },
                 "COPYLEFT CLAUSE": {
-                    "type": "string",
-                    "enum": ["Yes", "No", "Questionable"]
+                    "oneOf": [{
+                        "type": "string",
+                        "$ref": "#/copyrightclause"
+                    },{
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/copyrightclause"
+                        }
+                    }]
                 },
                 "PATENT HINTS": {
-                    "type": "string",
-                    "enum": ["Yes", "No"]
+                    "oneOf": [{
+                        "type": "string",
+                        "$ref": "#/patenthints"
+                    },{
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/patenthints"
+                        }
+                    }]
                 }
             },
             "additionalProperties": false
