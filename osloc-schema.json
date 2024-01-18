@@ -17,7 +17,7 @@
                             },
                             "^(ATTRIBUTE|EITHER IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
                                 "patternProperties": {
-                                    "^.*$": {
+                                    ".*": {
                                         "$ref": "#/obligations"
                                     }
                                 },

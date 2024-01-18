@@ -828,7 +828,7 @@ The validate function (-j) uses the below JSON schema.
                             },
                             "^(ATTRIBUTE|EITHER IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
                                 "patternProperties": {
-                                    "^.*$": {
+                                    ".*": {
                                         "$ref": "#/obligations"
                                     }
                                 },
