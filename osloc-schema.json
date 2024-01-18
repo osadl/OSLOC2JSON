@@ -38,15 +38,25 @@
                 "additionalProperties": false
             },
             "^EXCEPT IF$": {
-                "type": ["string", "object"]
+                "type": ["string", "array", "object"]
             }
         },
         "additionalProperties": false
     },
 
+    "copyrightclause": {
+        "type": "string",
+        "enum": ["Yes", "No", "Questionable"]
+    },
+
+    "patenthints": {
+        "type": "string",
+        "enum": ["Yes", "No"]
+    },
+
     "type": "object",
     "patternProperties": {
-        "^[0-9A-Za-z\\.-]*$": {
+        "^[0-9A-Za-z\\.| -]*$": {
             "required": ["USE CASE"],
             "type": "object",
             "properties": {
@@ -68,13 +78,33 @@
                 "INCOMPATIBILITY": {
                     "type": ["string", "array"]
                 },
+                "INCOMPATIBLE LICENSES": {
+                    "type": ["string", "array"]
+                },
+                "COPYLEFT LICENSES": {
+                    "type": ["string", "array"]
+                },
                 "COPYLEFT CLAUSE": {
-                    "type": "string",
-                    "enum": ["Yes", "No", "Questionable"]
+                    "oneOf": [{
+                        "type": "string",
+                        "$ref": "#/copyrightclause"
+                    },{
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/copyrightclause"
+                        }
+                    }]
                 },
                 "PATENT HINTS": {
-                    "type": "string",
-                    "enum": ["Yes", "No"]
+                    "oneOf": [{
+                        "type": "string",
+                        "$ref": "#/patenthints"
+                    },{
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/patenthints"
+                        }
+                    }]
                 }
             },
             "additionalProperties": false

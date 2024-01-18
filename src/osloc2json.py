@@ -553,6 +553,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
         basename = licensefilenameparts[len(licensefilenameparts) - 1]
         suffix = os.path.splitext(licensefilename)[1]
         licensename = basename.replace(suffix, '')
+        if licensename.endswith('-opt'):
+            licensename = licensename[:-4]
+            optimize = True
         if licensename.endswith('.unified'):
             licensename = licensename[:-8]
         licensename = licensename.replace('+', '|')
@@ -896,7 +899,7 @@ def main():
     filenamehelp = 'file names of OSLOC files to process'
     if int(sys.version[0]) < 3:
 # pragma pylint: disable=used-before-assignment
-        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-d] [-e] [-l] [-m] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]',
+        parser = OptionParser(prog = 'osloc2json.py', usage = '%prog [-h] -f [OUTPUT] [-d] [-e] [-l] [-m] [-n] [-o] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]',
           description = 'positional arguments:   ' + filenamehelp)
         parser.add_argument = parser.add_option
         filenametype = 'string'
@@ -937,6 +940,10 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
       action = 'store_true',
       default = False,
       help = 'merge all licenses into a single one, has no effect if single license, default file name "merged.json"')
+    parser.add_argument('-n', '--noop',
+      action = 'store_true',
+      default = False,
+      help = 'do not execute any conversion operation')
     parser.add_argument('-o', '--optimize',
       action = 'store_true',
       default = False,
@@ -1012,7 +1019,8 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
                     print(f"Data failed validation: {e}")
                 sample.close()
             schema.close()
-        osloc2json(filenames, args.filename, json, args)
+        if not args.noop:
+            osloc2json(filenames, args.filename, json, args)
 
 if __name__ == '__main__':
     main()
