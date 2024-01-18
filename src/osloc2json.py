@@ -553,6 +553,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
         basename = licensefilenameparts[len(licensefilenameparts) - 1]
         suffix = os.path.splitext(licensefilename)[1]
         licensename = basename.replace(suffix, '')
+        if licensename.endswith('.unified'):
+            licensename = licensename[:-8]
+        licensename = licensename.replace('+', '|')
         if verbose:
             print(licensename + ':')
         oslocfile = open(licensefilename, 'r')
@@ -972,9 +975,19 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
             args = parser.parse_args()
         filenames = args.licensefilenames
 
-    if '+' in filenames[0]:
-        filenames = filenames[0].split('+')
-        filenames = [s + '.txt' for s in filenames]
+    if not args.jsonvalidate and '+' in filenames[0]:
+        suffix = os.path.splitext(filenames[0])[1]
+        if suffix == '.json':
+            dirname = os.path.dirname(filenames[0])
+            if len(dirname) > 0:
+                dirname += '/'
+            splitfilename = os.path.basename(filenames[0][:-5])
+            if splitfilename.endswith('.unified'):
+                splitfilename = splitfilename[:-8]
+            splitfilenames = splitfilename.split('+')
+            splitfilenames[0] = os.path.basename(splitfilenames[0])
+            splitfilenames = [dirname + s + '.txt' for s in splitfilenames]
+            filenames = splitfilenames
 
     if args.profiling:
         from pyinstrument import Profiler

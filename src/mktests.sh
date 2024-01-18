@@ -54,6 +54,12 @@ then
   exit 1
 fi
 
+./src/osloc2json.py -demou examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.unified.json
+if ! cmp examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.unified.json merged.json
+then
+  exit 1
+fi
+
 ./src/osloc2json.py -demur examples/GPL-2.0-only.txt examples/Unlicense.txt >merged.checklist
 if ! cmp examples/GPL-2.0-only+Unlicense.json merged.json || ! cmp examples/GPL-2.0-only+Unlicense.unified.checklist merged.checklist
 then
