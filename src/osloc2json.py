@@ -590,13 +590,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     continue
                 lineno += 1
                 if line.startswith(' '):
-                    print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                    print('Syntax error (leading space) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
                     lineno = -1
                     break
                 line = re.sub(r' \(.*\)', '', line)
                 if verbose:
                     print(line)
                 tabs = line.count('\t')
+                if devel:
+                    print(tabs, orlevels)
                 tag = ''
                 text = ''
                 if line[0:8] == 'USE CASE':
@@ -605,6 +607,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     if tag not in data:
                         data[tag] = {}
                     parents[tabs + 1] = data[tag][text] = {}
+                    if devel:
+                        print(data[tag])
                     tag = ''
                     eitherextratabs = 0
                 elif re.match('\t*YOU MUST NOT', line):
@@ -647,27 +651,21 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     if tabs == 0 and (text == 'Yes' or text == 'No' or text == 'Questionable' or tag.find('COMPATIBILITY') != -1):
                         if tag not in data:
                             data[tag] = text
+                            if devel:
+                                print(data[tag])
                         else:
                             if isinstance(data[tag], str):
                                 oldtext = data[tag]
                                 data[tag] = []
                                 data[tag].append(oldtext)
                             data[tag].append(text)
+                            if devel:
+                                print(data[tag])
                     else:
-                        if len(parents) == 0:
-                            print('Syntax error detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                        if len(parents) == 0 or (tabs == 0 and tag != 'USE CASE'):
+                            print('Syntax error', '(illegal position of tag ' + tag + ')' , 'detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
                             lineno = -1
                             break
-                        if tag != 'EITHER' and len(eitherlevels) > 0:
-                            for k in eitherlevels:
-                                if tabs < k and eitherlevels[k] > 0:
-                                    eitherlevels[k] = 0
-                        if tag != 'OR' and len(orlevels) > 0:
-                            for k in orlevels:
-                                if tabs <= k and orlevels[k] > 0:
-                                    orlevels[k] = 0
-                                    if eitherextratabs > 0:
-                                        eitherextratabs -= 1
                         if tag == 'EITHER':
                             if tabs in eitherlevels:
                                 eitherlevels[tabs] += 1
@@ -675,15 +673,33 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                 eitherlevels[tabs] = 1
                             text = str(eitherlevels[tabs])
                             orlevels[tabs] = 0
-                        elif tag == 'OR':
+                        else:
+                            if len(eitherlevels) > 0:
+                                for k in eitherlevels:
+                                    if tabs < k and eitherlevels[k] > 0:
+                                        eitherlevels[k] = 0
+                        if tag == 'OR':
+                            if tabs not in orlevels:
+                                print('Syntax error (OR before EITHER) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                                lineno = -1
+                                break
                             orlevels[tabs] += 1
                             text = str(orlevels[tabs])
                             if orlevels[tabs] == 1:
                                 eitherextratabs += 1
+                        if tag != 'EITHER':
+                            if len(orlevels) > 0:
+                                for k in orlevels.copy():
+                                    if (tag == 'OR' and tabs < k) or (tag != 'OR' and tabs <= k):
+                                        orlevels.pop(k)
+                                        if eitherextratabs > 0:
+                                            eitherextratabs -= 1
                         if tabs + eitherextratabs in parents:
                             if tag not in parents[tabs + eitherextratabs]:
                                 parents[tabs + eitherextratabs][tag] = {}
                             parents[tabs + eitherextratabs + 1] = parents[tabs + eitherextratabs][tag][text] = {}
+                            if devel:
+                                print(parents[tabs + eitherextratabs][tag])
                 osloc = osloc[endlinepos + 1:]
                 if len(osloc) == 0:
                     break

@@ -814,6 +814,16 @@ The validate function (-j) uses the below JSON schema.
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
 
+    "copyrightclause": {
+        "type": "string",
+        "enum": ["Yes", "No", "Questionable"]
+    },
+
+    "patenthints": {
+        "type": "string",
+        "enum": ["Yes", "No"]
+    },
+
     "obligations": {
         "patternProperties": {
             "^EITHER$": {
@@ -828,7 +838,7 @@ The validate function (-j) uses the below JSON schema.
                                 },
                                 "additionalProperties": false
                             },
-                            "^(ATTRIBUTE|EITHER IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+                            "^(ATTRIBUTE|EITHER IF|EXCEPT IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
                                 "patternProperties": {
                                     ".*": {
                                         "$ref": "#/obligations"
@@ -842,29 +852,16 @@ The validate function (-j) uses the below JSON schema.
                 },
                 "additionalProperties": false
             },
-            "^(ATTRIBUTE|EITHER IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+            "^(ATTRIBUTE|EITHER IF|EXCEPT IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
                 "patternProperties": {
                     ".*": {
                         "$ref": "#/obligations"
                     }
                 },
                 "additionalProperties": false
-            },
-            "^EXCEPT IF$": {
-                "type": ["string", "array", "object"]
             }
         },
         "additionalProperties": false
-    },
-
-    "copyrightclause": {
-        "type": "string",
-        "enum": ["Yes", "No", "Questionable"]
-    },
-
-    "patenthints": {
-        "type": "string",
-        "enum": ["Yes", "No"]
     },
 
     "type": "object",
