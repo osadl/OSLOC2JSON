@@ -364,6 +364,15 @@ def back2osloc(l, indent, key, ineitheror, previous):
         count = 0
         if previous in ['', 'ATTRIBUTE', 'IF', 'YOU MUST', 'YOU MUST NOT']:
             l = sortdict(l)
+        if 'OR' in l:
+            newl = {}
+            for e in l:
+                if e != 'OR':
+                    newl[e] = l[e]
+            for e in l:
+                if e == 'OR':
+                    newl[e] = l[e]
+            l = newl
         for e in l:
             if indent == 0 and e in ['COMPATIBILITY', 'COPYLEFT CLAUSE', 'DEPENDING COMPATIBILITY', 'INCOMPATIBILITY', 'INCOMPATIBLE LICENSES', 'PATENT HINTS']:
                 if isinstance(l[e], list):

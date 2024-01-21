@@ -101,6 +101,17 @@ fi
 mv -f examples/FTL-old.json examples/FTL.json
 rm -Rf examples/newexamples
 
+./src/osloc2json.py examples/GPL-3.0-only.txt
+mkdir -p examples/newexamples
+./src/osloc2json.py -r examples/GPL-3.0-only.json >examples/newexamples/GPL-3.0-only.txt
+./src/osloc2json.py examples/newexamples/GPL-3.0-only.txt
+if ! cmp examples/newexamples/GPL-3.0-only.json examples/GPL-3.0-only.json
+then
+  exit 1
+fi
+rm -f examples/GPL-3.0-only.json
+rm -Rf examples/newexamples
+
 ./src/osloc2json.py -emo examples/FTL.json examples/MIT.txt examples/BSD-[2-3]-Clause.txt examples/Apache-2.0.txt examples/GPL-3.0-only.txt
 if ! cmp examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.json merged.json
 then
