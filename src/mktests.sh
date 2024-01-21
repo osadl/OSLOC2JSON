@@ -112,6 +112,28 @@ fi
 rm -f examples/GPL-3.0-only.json
 rm -Rf examples/newexamples
 
+./src/osloc2json.py examples/Artistic-2.0.txt
+mkdir -p examples/newexamples
+./src/osloc2json.py -r examples/Artistic-2.0.json >examples/newexamples/Artistic-2.0.txt
+./src/osloc2json.py examples/newexamples/Artistic-2.0.txt
+if ! cmp examples/newexamples/Artistic-2.0.json examples/Artistic-2.0.json
+then
+  exit 1
+fi
+rm -f examples/Artistic-2.0.json
+rm -Rf examples/newexamples
+
+./src/osloc2json.py examples/Apache-2.0.txt
+mkdir -p examples/newexamples
+./src/osloc2json.py -r examples/Apache-2.0.json >examples/newexamples/Apache-2.0.txt
+./src/osloc2json.py examples/newexamples/Apache-2.0.txt
+if ! cmp examples/newexamples/Apache-2.0.json examples/Apache-2.0.json
+then
+  exit 1
+fi
+rm -f examples/Apache-2.0.json
+rm -Rf examples/newexamples
+
 ./src/osloc2json.py -emo examples/FTL.json examples/MIT.txt examples/BSD-[2-3]-Clause.txt examples/Apache-2.0.txt examples/GPL-3.0-only.txt
 if ! cmp examples/FTL+MIT+BSD-2-Clause+BSD-3-Clause+Apache-2.0+GPL-3.0-only.json merged.json
 then

@@ -394,7 +394,7 @@ def back2osloc(l, indent, key, ineitheror, previous):
                 if indent in ineitheror and ineitheror[indent] != '':
                     if previous != '1':
                         print()
-                        printnonl('\t'*(indent) + ineitheror[indent])
+                        printnonl('\t'*(indent-1) + ineitheror[indent])
             if e.isdigit():
                 increment = 0
                 ineitheror[indent] = previous

@@ -89,16 +89,16 @@ USE CASE Source code delivery | Apache-2.0, GPL-3.0-or-later
 				YOU MUST Provide File "NOTICE" | Apache-2.0
 			OR
 				YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
-				OR
+			OR
 				YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
-				OR
+			OR
 				YOU MUST Display File "NOTICE" | Apache-2.0
 	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-or-later
 	YOU MUST NOT Modify License notices | GPL-3.0-or-later
 	YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-or-later
-	YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
-		EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
 	YOU MUST NOT Sublicense | GPL-3.0-or-later
+	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
+		YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
 USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
 	YOU MUST Provide Copyright notices | GPL-3.0-or-later
 		ATTRIBUTE Appropriately | GPL-3.0-or-later
@@ -128,9 +128,9 @@ USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
 				YOU MUST Provide File "NOTICE" | Apache-2.0
 			OR
 				YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
-				OR
+			OR
 				YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
-				OR
+			OR
 				YOU MUST Display File "NOTICE" | Apache-2.0
 		YOU MUST Grant License | GPL-3.0-or-later
 			ATTRIBUTE Original license | GPL-3.0-or-later
@@ -140,13 +140,11 @@ USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
 		YOU MUST Provide Modification notice | GPL-3.0-or-later
 			ATTRIBUTE Highlighted | GPL-3.0-or-later
 	IF User product | GPL-3.0-or-later
-		YOU MUST Provide Installation information | GPL-3.0-or-later
-			EXCEPT IF Installation Is NOT Feasible | GPL-3.0-or-later
+		EXCEPT IF Installation Is NOT Feasible | GPL-3.0-or-later
+			YOU MUST Provide Installation information | GPL-3.0-or-later
 	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-or-later
 	YOU MUST NOT Modify License notices | GPL-3.0-or-later
 	YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-or-later
-	YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
-		EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
 	YOU MUST NOT Sublicense | GPL-3.0-or-later
 	EITHER IF Binary delivery On Customary medium OR Installed | GPL-3.0-or-later
 		EITHER
@@ -195,3 +193,5 @@ USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
 			ATTRIBUTE Machine-readable | GPL-3.0-or-later
 			ATTRIBUTE No charge | GPL-3.0-or-later
 			ATTRIBUTE Via Internet | GPL-3.0-or-later
+	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
+		YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later

@@ -120,6 +120,13 @@
                         }
                     }
                 },
+                "EXCEPT IF": {
+                    "Permitted Non-permissive additional terms": {
+                        "YOU MUST NOT": {
+                            "Restrict Granted rights": {}
+                        }
+                    }
+                },
                 "IF": {
                     "AGPL-3.0-or-later": {
                         "YOU MUST": {
@@ -221,10 +228,10 @@
                         }
                     },
                     "User product": {
-                        "YOU MUST": {
-                            "Provide Installation information": {
-                                "EXCEPT IF": {
-                                    "Installation Is NOT Feasible": {}
+                        "EXCEPT IF": {
+                            "Installation Is NOT Feasible": {
+                                "YOU MUST": {
+                                    "Provide Installation information": {}
                                 }
                             }
                         }
@@ -294,15 +301,17 @@
                     "Litigate Circumvention Of Technological measures": {},
                     "Modify License notices": {},
                     "Modify Warranty disclaimer": {},
-                    "Restrict Granted rights": {
-                        "EXCEPT IF": {
-                            "Permitted Non-permissive additional terms": {}
-                        }
-                    },
                     "Sublicense": {}
                 }
             },
             "Source code delivery": {
+                "EXCEPT IF": {
+                    "Permitted Non-permissive additional terms": {
+                        "YOU MUST NOT": {
+                            "Restrict Granted rights": {}
+                        }
+                    }
+                },
                 "IF": {
                     "AGPL-3.0-or-later": {
                         "YOU MUST": {
@@ -414,11 +423,6 @@
                     "Litigate Circumvention Of Technological measures": {},
                     "Modify License notices": {},
                     "Modify Warranty disclaimer": {},
-                    "Restrict Granted rights": {
-                        "EXCEPT IF": {
-                            "Permitted Non-permissive additional terms": {}
-                        }
-                    },
                     "Sublicense": {}
                 }
             }

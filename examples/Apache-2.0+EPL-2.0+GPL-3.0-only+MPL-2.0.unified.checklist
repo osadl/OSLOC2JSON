@@ -87,9 +87,9 @@ USE CASE Source code delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 				YOU MUST Provide File "NOTICE" | Apache-2.0
 			OR
 				YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
-				OR
+			OR
 				YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
-				OR
+			OR
 				YOU MUST Display File "NOTICE" | Apache-2.0
 	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-only
 	YOU MUST NOT Modify Attribution notices | EPL-2.0
@@ -100,9 +100,10 @@ USE CASE Source code delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 	YOU MUST NOT Modify Patent notices | EPL-2.0
 	YOU MUST NOT Modify Trademark notices | EPL-2.0
 	YOU MUST NOT Modify Warranty disclaimers | EPL-2.0, (Modify Warranty disclaimer): GPL-3.0-only
-	YOU MUST NOT Restrict Granted rights | GPL-3.0-only, MPL-2.0
-		EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-only
+	YOU MUST NOT Restrict Granted rights | MPL-2.0
 	YOU MUST NOT Sublicense | GPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | GPL-3.0-only
 USE CASE Binary delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 	YOU MUST Inform Recipients | MPL-2.0
 		ATTRIBUTE Delayed source code delivery | MPL-2.0
@@ -148,9 +149,9 @@ USE CASE Binary delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 				YOU MUST Provide File "NOTICE" | Apache-2.0
 			OR
 				YOU MUST Provide File "NOTICE" In Source code | Apache-2.0
-				OR
+			OR
 				YOU MUST Provide File "NOTICE" In Documentation | Apache-2.0
-				OR
+			OR
 				YOU MUST Display File "NOTICE" | Apache-2.0
 		YOU MUST Grant License | GPL-3.0-only
 			ATTRIBUTE Original license | GPL-3.0-only
@@ -160,8 +161,8 @@ USE CASE Binary delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 		YOU MUST Provide Modification notice | GPL-3.0-only
 			ATTRIBUTE Highlighted | GPL-3.0-only
 	IF User product | GPL-3.0-only
-		YOU MUST Provide Installation information | GPL-3.0-only
-			EXCEPT IF Installation Is NOT Feasible | GPL-3.0-only
+		EXCEPT IF Installation Is NOT Feasible | GPL-3.0-only
+			YOU MUST Provide Installation information | GPL-3.0-only
 	EITHER
 		YOU MUST Include Source code | EPL-2.0
 	OR
@@ -179,8 +180,6 @@ USE CASE Binary delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 	YOU MUST NOT Modify Patent notices | EPL-2.0
 	YOU MUST NOT Modify Trademark notices | EPL-2.0
 	YOU MUST NOT Modify Warranty disclaimers | EPL-2.0, (Modify Warranty disclaimer): GPL-3.0-only
-	YOU MUST NOT Restrict Granted rights | GPL-3.0-only
-		EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-only
 	YOU MUST NOT Sublicense | GPL-3.0-only
 	EITHER IF Binary delivery On Customary medium OR Installed | GPL-3.0-only
 		EITHER
@@ -229,3 +228,5 @@ USE CASE Binary delivery | Apache-2.0, EPL-2.0, GPL-3.0-only, MPL-2.0
 			ATTRIBUTE Machine-readable | GPL-3.0-only
 			ATTRIBUTE No charge | GPL-3.0-only
 			ATTRIBUTE Via Internet | GPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | GPL-3.0-only

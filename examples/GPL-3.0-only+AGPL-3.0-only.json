@@ -108,6 +108,11 @@
                         }
                     }
                 },
+                "EXCEPT IF": {
+                    "Permitted Non-permissive additional terms": {
+                        "YOU MUST NOT": "Restrict Granted rights"
+                    }
+                },
                 "IF": {
                     "AGPL-3.0-or-later": {
                         "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
@@ -159,9 +164,9 @@
                         }
                     },
                     "User product": {
-                        "YOU MUST": {
-                            "Provide Installation information": {
-                                "EXCEPT IF": "Installation Is NOT Feasible"
+                        "EXCEPT IF": {
+                            "Installation Is NOT Feasible": {
+                                "YOU MUST": "Provide Installation information"
                             }
                         }
                     }
@@ -223,15 +228,12 @@
                     },
                     "Provide License text": {}
                 },
-                "YOU MUST NOT": {
-                    "Litigate Circumvention Of Technological measures": {},
-                    "Modify License notices": {},
-                    "Modify Warranty disclaimer": {},
-                    "Restrict Granted rights": {
-                        "EXCEPT IF": "Permitted Non-permissive additional terms"
-                    },
-                    "Sublicense": {}
-                }
+                "YOU MUST NOT": [
+                    "Litigate Circumvention Of Technological measures",
+                    "Modify License notices",
+                    "Modify Warranty disclaimer",
+                    "Sublicense"
+                ]
             },
             "Network service": {
                 "IF": {
@@ -249,6 +251,11 @@
                 }
             },
             "Source code delivery": {
+                "EXCEPT IF": {
+                    "Permitted Non-permissive additional terms": {
+                        "YOU MUST NOT": "Restrict Granted rights"
+                    }
+                },
                 "IF": {
                     "AGPL-3.0-or-later": {
                         "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
@@ -301,15 +308,12 @@
                     },
                     "Provide License text": {}
                 },
-                "YOU MUST NOT": {
-                    "Litigate Circumvention Of Technological measures": {},
-                    "Modify License notices": {},
-                    "Modify Warranty disclaimer": {},
-                    "Restrict Granted rights": {
-                        "EXCEPT IF": "Permitted Non-permissive additional terms"
-                    },
-                    "Sublicense": {}
-                }
+                "YOU MUST NOT": [
+                    "Litigate Circumvention Of Technological measures",
+                    "Modify License notices",
+                    "Modify Warranty disclaimer",
+                    "Sublicense"
+                ]
             }
         }
     }
