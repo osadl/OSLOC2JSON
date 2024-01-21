@@ -50,7 +50,8 @@ options:
 Either a single ".txt" suffixed OSLOC input file is parsed, converted to JSON format and saved under the original name with the suffix
 replaced by ".json", or all OSLOC files are parsed, concatenated to a single JSON object and stored under "osloc.json" or (-f) OUTPUT
 if specified, or (-m) all OSLOC files are parsed, merged into a single JSON object (lists concatenated, duplicates removed) and stored under
-"merged.json". The input files may already be in JSON format, but all processing except the conversion to JSON remains the same.
+"merged.json". The input files may already be in JSON format, but all processing except the conversion to JSON remains the same, unless the
+-n option is used. The -n option is primarily intended for JSON validation (-jn), if this is the only required action.
 ```
 
 ## Disclaimer
