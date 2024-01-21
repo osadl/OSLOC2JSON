@@ -564,13 +564,18 @@ def osloc2json(licensefilenames, outfilename, json, args):
         oslocfile = open(licensefilename, 'r')
         if suffix == '.json':
             try:
-                data = json.load(oslocfile)[licensename]
+                data = json.load(oslocfile)
             except:
                 print('File', licensefilename, 'has no valid JSON format')
                 lineno = -1
                 break
-            jsondata[licensename] = data
             oslocfile.close()
+            jsonlicensename = list(data.keys())[0]
+            if licensename == jsonlicensename:
+                jsondata[licensename] = data[licensename]
+            else:
+                print('File', licensefilename, 'has license', '"' + jsonlicensename + '"', 'but filename indicates license', '"' + licensename + '"')
+                jsondata[jsonlicensename] = data[jsonlicensename]
             lineno = 0
         else:
             osloc = oslocfile.read()
