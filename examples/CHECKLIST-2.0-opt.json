@@ -1,0 +1,31 @@
+{
+    "CHECKLIST-2.0": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": "No",
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": "Provide Delayed source code delivery"
+                            },
+                            "2": {
+                                "YOU MUST": "Provide Source code Via Internet"
+                            }
+                        },
+                        "YOU MUST": "Distribute Source code In Product"
+                    },
+                    "2": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": "Credit Original authors"
+                            }
+                        },
+                        "YOU MUST NOT": "Promote"
+                    }
+                }
+            }
+        }
+    }
+}
