@@ -686,6 +686,11 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             else:
                                 eitherlevels[tabs] = 1
                             text = str(eitherlevels[tabs])
+                            for k in orlevels.copy():
+                                if tabs <= k:
+                                    orlevels.pop(k)
+                                    if eitherextratabs > 0:
+                                        eitherextratabs -= 1
                             orlevels[tabs] = 0
                         else:
                             if len(eitherlevels) > 0:
