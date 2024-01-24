@@ -375,6 +375,9 @@ def back2osloc(l, indent, key, ineitheror, previous):
             l = newl
         for e in l:
             if indent == 0 and e in ['COMPATIBILITY', 'COPYLEFT CLAUSE', 'DEPENDING COMPATIBILITY', 'INCOMPATIBILITY', 'INCOMPATIBLE LICENSES', 'PATENT HINTS']:
+                if e in ['COPYLEFT CLAUSE', 'PATENT HINTS']:
+                    if (isinstance(l[e], list) and len(l[e]) == 1 and l[e][0] == 'No') or (isinstance(l[e], str) and l[e] == 'No'):
+                        continue
                 if isinstance(l[e], list):
                     for v in l[e]:
                         print()
