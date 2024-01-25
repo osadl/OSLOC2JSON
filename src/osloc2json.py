@@ -601,10 +601,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
             lineno = 0
             while True:
                 endlinepos = osloc.find('\n')
-                line = osloc[0:endlinepos]
-                if line == '':
+                if endlinepos == 0:
                     osloc = osloc[endlinepos + 1:]
+                    if len(osloc) == 0:
+                        break
                     continue
+                line = osloc[0:endlinepos]
                 lineno += 1
                 if line.startswith(' '):
                     print('Syntax error (leading space) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
