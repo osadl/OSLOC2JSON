@@ -1021,7 +1021,7 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
             args = parser.parse_args()
         filenames = args.licensefilenames
 
-    if not args.jsonvalidate and '+' in filenames[0]:
+    if not args.jsonvalidate and args.merge and '+' in filenames[0]:
         dirname = os.path.dirname(filenames[0])
         if len(dirname) > 0:
             dirname += '/'
