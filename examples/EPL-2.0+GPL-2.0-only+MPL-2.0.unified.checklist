@@ -93,7 +93,16 @@ USE CASE Binary delivery | EPL-2.0, GPL-2.0-only, MPL-2.0
 		ATTRIBUTE Appropriately | GPL-2.0-only
 		ATTRIBUTE Highlighted | GPL-2.0-only
 	EITHER
-		YOU MUST Provide Source code | GPL-2.0-only, (Include Source code): EPL-2.0
+		YOU MUST Include Source code | EPL-2.0
+	OR
+		YOU MUST Provide Written offer | EPL-2.0, (Provide Delayed source code delivery): EPL-2.0
+			ATTRIBUTE Reasonable | EPL-2.0
+			EITHER
+				ATTRIBUTE Customary medium | EPL-2.0
+			OR
+				ATTRIBUTE Via Internet | EPL-2.0
+	EITHER
+		YOU MUST Provide Source code | GPL-2.0-only
 			ATTRIBUTE Customary medium | GPL-2.0-only
 			ATTRIBUTE Including Installation scripts | GPL-2.0-only
 			ATTRIBUTE Including Tool chain information | GPL-2.0-only
@@ -103,7 +112,7 @@ USE CASE Binary delivery | EPL-2.0, GPL-2.0-only, MPL-2.0
 					ATTRIBUTE Equivalent | GPL-2.0-only
 					ATTRIBUTE On same server | GPL-2.0-only
 	OR
-		YOU MUST Provide Written offer | EPL-2.0, GPL-2.0-only, (Provide Delayed source code delivery): EPL-2.0
+		YOU MUST Provide Written offer | GPL-2.0-only
 			ATTRIBUTE Delayed source code delivery | GPL-2.0-only
 				ATTRIBUTE Customary medium | GPL-2.0-only
 				ATTRIBUTE Including Installation scripts | GPL-2.0-only
@@ -111,12 +120,7 @@ USE CASE Binary delivery | EPL-2.0, GPL-2.0-only, MPL-2.0
 				ATTRIBUTE Machine-readable | GPL-2.0-only
 			ATTRIBUTE Duration 3 years | GPL-2.0-only
 			ATTRIBUTE No profit | GPL-2.0-only
-			ATTRIBUTE Reasonable | EPL-2.0
 			ATTRIBUTE To Any third party | GPL-2.0-only
-			EITHER
-				ATTRIBUTE Customary medium | EPL-2.0
-			OR
-				ATTRIBUTE Via Internet | EPL-2.0
 	YOU MUST NOT Modify Attribution notices | EPL-2.0
 	YOU MUST NOT Modify Copyright notices | EPL-2.0
 	YOU MUST NOT Modify Liability disclaimers | EPL-2.0

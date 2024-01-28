@@ -358,6 +358,24 @@ def optjson(l):
                     else:
                         l[e] = sorted(l[e], key = lambda s: s.lower())
 
+def uniq(l):
+    if isinstance(l, dict):
+        first = True
+        oldv = {}
+        for k1, v1 in l.copy().items():
+            for k2, v2 in l.copy().items():
+                 if k1 == k2:
+                     continue
+                 if k1 not in l or not isinstance(l[k1], dict) or k2 not in l or not isinstance(l[k2], dict):
+                     continue
+                 if not k1.isdigit() or not k2.isdigit():
+                     continue
+                 if v1 == v2:
+                     l.pop(k2)
+        for k in l:
+            if isinstance(l[k], dict):
+                uniq(l[k])
+
 printnonl = sys.stdout.write
 def back2osloc(l, indent, key, ineitheror, previous):
     if isinstance(l, dict):
@@ -508,6 +526,27 @@ def unifylicenses(licenses, rules):
     for k, v in rules.items():
         unifyobligations(licenses, k, v)
 
+def getchain(obj, tabs, result):
+    if tabs <= 0:
+        return result
+    if isinstance(obj, dict):
+        if len(obj.keys()) == 0:
+            lastkey = ''
+            tabs = 0
+        else:
+            lastkey = list(obj.keys())[len(obj.keys()) - 1]
+    else:
+        lastkey = obj
+        tabs = 0
+    if result != '' and lastkey != '':
+       result += '.'
+    result += lastkey
+    if re.search('[a-z]', lastkey):
+        tabs -= 1
+    if isinstance(obj, dict) and lastkey != '':
+        return getchain(obj[lastkey], tabs, result)
+    return getchain(obj, tabs, result)
+
 def osloc2json(licensefilenames, outfilename, json, args):
     """ Open OSLOC files, convert them to JSON objects and store them as specified """
     devel = args.devel
@@ -560,6 +599,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
     jsondata = {}
 
+    globaleitherlevels = {}
+    globaleitherchain = {}
+    globaleitheriflevels = {}
+    globaleitherifchain = {}
     for licensefilename in licensefilenames:
         licensefilenameparts = licensefilename.split('/')
         basename = licensefilenameparts[len(licensefilenameparts) - 1]
@@ -594,9 +637,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
             oslocfile.close()
             jsondata[licensename] = {}
             data = jsondata[licensename]
-            eitherlevels = {}
             orlevels = {}
             eitherextratabs = 0
+            oriflevels = {}
+            eitherifextratabs = 0
             parents = {}
             lineno = 0
             while True:
@@ -685,23 +729,25 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             print('Syntax error', '(illegal position of tag ' + tag + ')' , 'detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
                             lineno = -1
                             break
+
                         if tag == 'EITHER':
-                            if tabs in eitherlevels:
-                                eitherlevels[tabs] += 1
+                            flatchain = getchain(data, tabs, '')
+                            if tabs not in globaleitherlevels:
+                                globaleitherlevels[tabs] = 1
+                                globaleitherchain[tabs] = []
+                                globaleitherchain[tabs].append(flatchain)
                             else:
-                                eitherlevels[tabs] = 1
-                            text = str(eitherlevels[tabs])
+                                if flatchain in globaleitherchain[tabs]:
+                                    globaleitherlevels[tabs] += 1
+                                else:
+                                    globaleitherchain[tabs].append(flatchain)
+                            text = str(globaleitherlevels[tabs])
                             for k in orlevels.copy():
                                 if tabs <= k:
                                     orlevels.pop(k)
                                     if eitherextratabs > 0:
                                         eitherextratabs -= 1
                             orlevels[tabs] = 0
-                        else:
-                            if len(eitherlevels) > 0:
-                                for k in eitherlevels:
-                                    if tabs < k and eitherlevels[k] > 0:
-                                        eitherlevels[k] = 0
                         if tag == 'OR':
                             if tabs not in orlevels:
                                 print('Syntax error (OR before EITHER) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
@@ -718,12 +764,55 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                         orlevels.pop(k)
                                         if eitherextratabs > 0:
                                             eitherextratabs -= 1
-                        if tabs + eitherextratabs in parents:
-                            if tag not in parents[tabs + eitherextratabs]:
-                                parents[tabs + eitherextratabs][tag] = {}
-                            parents[tabs + eitherextratabs + 1] = parents[tabs + eitherextratabs][tag][text] = {}
+
+#                        if tag == 'EITHER IF':
+#                            eitheroriftext = text
+#                            flatchain = getchain(data, tabs, '')
+#                            if tabs not in globaleitheriflevels:
+#                                globaleitheriflevels[tabs] = 1
+#                                globaleitherifchain[tabs] = []
+#                                globaleitherifchain[tabs].append(flatchain)
+#                            else:
+#                                if flatchain in globaleitherifchain[tabs]:
+#                                    globaleitheriflevels[tabs] += 1
+#                                else:
+#                                    globaleitherifchain[tabs].append(flatchain)
+#                            text = str(globaleitheriflevels[tabs])
+#                            for k in oriflevels.copy():
+#                                if tabs <= k:
+#                                    oriflevels.pop(k)
+#                                    if eitherifextratabs > 0:
+#                                        eitherifextratabs -= 1
+#                            oriflevels[tabs] = 0
+#                        if tag == 'OR IF':
+#                            if tabs not in oriflevels:
+#                                print('Syntax error (OR IF before EITHER IF) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+#                                lineno = -1
+#                                break
+#                            oriflevels[tabs] += 1
+#                            text = str(oriflevels[tabs])
+#                            if oriflevels[tabs] == 1:
+#                                eitherifextratabs += 1
+#                        if tag != 'EITHER IF':
+#                            if len(oriflevels) > 0:
+#                               for k in oriflevels.copy():
+#                                    if (tag == 'OR IF' and tabs < k) or (tag != 'OR IF' and tabs <= k):
+#                                        oriflevels.pop(k)
+#                                        if eitherifextratabs > 0:
+#                                            eitherifextratabs -= 1
+
+                        if tabs + eitherextratabs + eitherifextratabs in parents:
+                            if tag not in parents[tabs + eitherextratabs + eitherifextratabs]:
+                                parents[tabs + eitherextratabs + eitherifextratabs][tag] = {}
+                            parents[tabs + eitherextratabs + eitherifextratabs + 1] = parents[tabs + eitherextratabs + eitherifextratabs][tag][text] = {}
                             if devel:
-                                print(parents[tabs + eitherextratabs][tag])
+                                print(parents[tabs + eitherextratabs + eitherifextratabs][tag])
+
+#                        if tag in ['EITHER IF', 'OR IF']:
+#                            parents[tabs + eitherextratabs + eitherifextratabs + 1] = parents[tabs + eitherextratabs + eitherifextratabs][tag][text][eitheroriftext] = {}
+#                            if devel:
+#                                print(parents[tabs + eitherextratabs + eitherifextratabs][tag][text])
+
                 osloc = osloc[endlinepos + 1:]
                 if len(osloc) == 0:
                     break
@@ -908,6 +997,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
             if optimize:
                 optjson(new)
+
+            uniq(new)
+
             if len(copyleft_licenses) > 0:
                 new['COPYLEFT LICENSES'] = copyleft_licenses
 

@@ -1,0 +1,11 @@
+USE CASE Binary delivery
+	EITHER
+		YOU MUST Distribute Source code In Product
+	OR
+		YOU MUST Provide Delayed source code delivery
+	OR
+		YOU MUST Provide Source code Via Internet
+	EITHER
+		YOU MUST NOT Promote
+	OR
+		YOU MUST Credit Original authors

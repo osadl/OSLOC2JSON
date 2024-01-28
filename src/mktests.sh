@@ -12,6 +12,12 @@ then
   exit 1
 fi
 
+./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-3.0.txt
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-3.0.json merged.json
+then
+  exit 1
+fi
+
 ./src/osloc2json.py -emo examples/FTL.txt examples/MIT.txt
 if ! cmp examples/FTL+MIT.json merged.json
 then
@@ -95,6 +101,13 @@ if ! cmp examples/Apache-2.0+EPL-2.0+GPL-3.0-only+MPL-2.0.unified.json merged.js
 then
   exit 1
 fi
+
+#./src/osloc2json.py -emor examples/GPL-3.0-or-later.txt examples/Minpack.txt >merged.checklist
+#if ! cmp examples/GPL-3.0-or-later+Minpack.checklist merged.checklist
+#then
+#  diff -u examples/GPL-3.0-or-later+Minpack.checklist merged.checklist
+#  exit 1
+#fi
 
 ./src/osloc2json.py -elmur examples/Apache-2.0.txt examples/GPL-2.0-or-later.txt >merged.checklist
 if ! cmp examples/Apache-2.0+GPL-3.0-or-later.unified.json merged.json || ! cmp examples/Apache-2.0+GPL-3.0-or-later.unified.checklist merged.checklist

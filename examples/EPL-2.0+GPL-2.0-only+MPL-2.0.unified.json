@@ -60,18 +60,7 @@
                                 "YOU MUST": {
                                     "Provide Written offer": {
                                         "ATTRIBUTE": {
-                                            "Delayed source code delivery": {
-                                                "ATTRIBUTE": {
-                                                    "Customary medium": {},
-                                                    "Including Installation scripts": {},
-                                                    "Including Tool chain information": {},
-                                                    "Machine-readable": {}
-                                                }
-                                            },
-                                            "Duration 3 years": {},
-                                            "No profit": {},
-                                            "Reasonable": {},
-                                            "To Any third party": {}
+                                            "Reasonable": {}
                                         },
                                         "EITHER": {
                                             "1": {
@@ -86,6 +75,32 @@
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Include Source code": {}
+                        }
+                    },
+                    "2": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Written offer": {
+                                        "ATTRIBUTE": {
+                                            "Delayed source code delivery": {
+                                                "ATTRIBUTE": {
+                                                    "Customary medium": {},
+                                                    "Including Installation scripts": {},
+                                                    "Including Tool chain information": {},
+                                                    "Machine-readable": {}
+                                                }
+                                            },
+                                            "Duration 3 years": {},
+                                            "No profit": {},
+                                            "To Any third party": {}
                                         }
                                     }
                                 }
