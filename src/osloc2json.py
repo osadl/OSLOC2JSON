@@ -1010,7 +1010,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
     if recreate:
         l = {}
-        if merge:
+        if merge and licenses > 1:
             deepcopy(l, newrefs)
         else:
             deepcopy(l, jsondata)
