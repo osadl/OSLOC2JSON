@@ -1,0 +1,95 @@
+{
+    "CHECKLIST-2.0|CHECKLIST-4.0": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": "No",
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Delayed source code delivery": {}
+                                }
+                            },
+                            "2": {
+                                "YOU MUST": {
+                                    "Provide Source code Via Internet": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Distribute Source code In Product": {}
+                        }
+                    },
+                    "2": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Credit Original authors": {}
+                                }
+                            }
+                        },
+                        "YOU MUST NOT": {
+                            "Promote": {}
+                        }
+                    },
+                    "3": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Delayed source code delivery": {}
+                                }
+                            },
+                            "2": {
+                                "YOU MUST": {
+                                    "Provide Source code Via Internet": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Distribute Source code In Product": {
+                                "ATTRIBUTE": {
+                                    "Customary medium": {}
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Source code delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Patch": {}
+                                }
+                            },
+                            "2": {
+                                "YOU MUST": {
+                                    "Provide Modification report": {}
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Mark Source code modification": {}
+                        }
+                    },
+                    "2": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Credit Original authors In Distribution material": {}
+                                }
+                            }
+                        },
+                        "YOU MUST NOT": {
+                            "Promote": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

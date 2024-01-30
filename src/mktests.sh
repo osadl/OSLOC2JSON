@@ -41,6 +41,12 @@ then
   exit 1
 fi
 
+./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-4.0.txt
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-4.0.json merged.json
+then
+  exit 1
+fi
+
 ./src/osloc2json.py -emo examples/FTL.txt examples/MIT.txt
 if ! cmp examples/FTL+MIT.json merged.json
 then

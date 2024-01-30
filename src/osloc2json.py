@@ -597,10 +597,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
     jsondata = {}
 
-    globaleitherlevels = {}
-    globaleitherchain = {}
-    globaleitheriflevels = {}
-    globaleitherifchain = {}
+    globaleitherchains = {}
+    globaleitherifchains = {}
     for licensefilename in licensefilenames:
         licensefilenameparts = licensefilename.split('/')
         basename = licensefilenameparts[len(licensefilenameparts) - 1]
@@ -730,16 +728,11 @@ def osloc2json(licensefilenames, outfilename, json, args):
 
                         if tag == 'EITHER':
                             flatchain = getchain(data, tabs, '')
-                            if tabs not in globaleitherlevels:
-                                globaleitherlevels[tabs] = 1
-                                globaleitherchain[tabs] = []
-                                globaleitherchain[tabs].append(flatchain)
+                            if flatchain not in globaleitherchains:
+                                globaleitherchains[flatchain] = 1
                             else:
-                                if flatchain in globaleitherchain[tabs]:
-                                    globaleitherlevels[tabs] += 1
-                                else:
-                                    globaleitherchain[tabs].append(flatchain)
-                            text = str(globaleitherlevels[tabs])
+                                globaleitherchains[flatchain] += 1
+                            text = str(globaleitherchains[flatchain])
                             for k in orlevels.copy():
                                 if tabs <= k:
                                     orlevels.pop(k)
@@ -766,16 +759,11 @@ def osloc2json(licensefilenames, outfilename, json, args):
 #                        if tag == 'EITHER IF':
 #                            eitheroriftext = text
 #                            flatchain = getchain(data, tabs, '')
-#                            if tabs not in globaleitheriflevels:
-#                                globaleitheriflevels[tabs] = 1
-#                                globaleitherifchain[tabs] = []
-#                                globaleitherifchain[tabs].append(flatchain)
+#                            if flatchain not in globaleitherifchains:
+#                                globaleitherifchains[flatchain] = 1
 #                            else:
-#                                if flatchain in globaleitherifchain[tabs]:
-#                                    globaleitheriflevels[tabs] += 1
-#                                else:
-#                                    globaleitherifchain[tabs].append(flatchain)
-#                            text = str(globaleitheriflevels[tabs])
+#                                globaleitherifchains[flatchain] += 1
+#                            text = str(globaleitherifchains[flatchain])
 #                            for k in oriflevels.copy():
 #                                if tabs <= k:
 #                                    oriflevels.pop(k)
@@ -783,6 +771,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
 #                                        eitherifextratabs -= 1
 #                            oriflevels[tabs] = 0
 #                        if tag == 'OR IF':
+#                            eitheroriftext = text
 #                            if tabs not in oriflevels:
 #                                print('Syntax error (OR IF before EITHER IF) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
 #                                lineno = -1
