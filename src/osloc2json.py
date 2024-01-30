@@ -360,8 +360,6 @@ def optjson(l):
 
 def uniq(l):
     if isinstance(l, dict):
-        first = True
-        oldv = {}
         for k1, v1 in l.copy().items():
             for k2, v2 in l.copy().items():
                  if k1 == k2:
@@ -1115,7 +1113,7 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
             args = parser.parse_args()
         filenames = args.licensefilenames
 
-    if not args.jsonvalidate and args.merge and '+' in filenames[0]:
+    if not args.jsonvalidate and len(filenames) == 1 and '+' in filenames[0]:
         dirname = os.path.dirname(filenames[0])
         if len(dirname) > 0:
             dirname += '/'

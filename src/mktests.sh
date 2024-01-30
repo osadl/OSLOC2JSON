@@ -1,5 +1,28 @@
 #!/bin/bash
 
+./src/osloc2json.py examples/Apache-2.0.txt examples/GPL-3.0-or-later.txt
+if ! cmp examples/Apache-2.0+GPL-3.0-or-later-concatenated.json osloc.json
+then
+  exit 1
+fi
+
+cd examples
+../src/osloc2json.py Apache-2.0+GPL-3.0-or-later
+if ! cmp Apache-2.0+GPL-3.0-or-later-concatenated.json osloc.json
+then
+  exit 1
+fi
+rm -f osloc.json
+
+../src/osloc2json.py -m Apache-2.0+GPL-3.0-or-later
+if ! cmp Apache-2.0+GPL-3.0-or-later.json merged.json
+then
+  exit 1
+fi
+rm -f merged.json
+
+cd - >/dev/null
+
 ./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt
 if ! cmp examples/CHECKLIST-2.0.json merged.json
 then
@@ -110,7 +133,7 @@ fi
 #fi
 
 ./src/osloc2json.py -elmur examples/Apache-2.0.txt examples/GPL-2.0-or-later.txt >merged.checklist
-if ! cmp examples/Apache-2.0+GPL-3.0-or-later.unified.json merged.json || ! cmp examples/Apache-2.0+GPL-3.0-or-later.unified.checklist merged.checklist
+if ! cmp examples/Apache-2.0+GPL-2.0-or-later.upgraded.unified.json merged.json || ! cmp examples/Apache-3.0+GPL-2.0-or-later.upgraded.unified.checklist merged.checklist
 then
   exit 1
 fi
@@ -165,15 +188,18 @@ then
   exit 1
 fi
 
-./src/osloc2json.py -jn examples/*.json >examples/jsonvalidity
-if test -s examples/jsonvalidity
-then
-  echo JSON validity checker erroneously detected invalid JSON
-  cat examples/jsonvalidity
-  exit 1
-fi
+for i in `ls -1 examples/*.json | grep -v concatenated`
+do
+  ./src/osloc2json.py -jn $i >examples/jsonvalidity
+  if test -s examples/jsonvalidity
+  then
+    echo JSON validity checker erroneously detected invalid JSON
+    cat examples/jsonvalidity
+    exit 1
+  fi
+done
 rm -f examples/jsonvalidity
 
-rm -f merged.json *.checklist
+rm -f osloc.json merged.json *.checklist
 
 exit 0
