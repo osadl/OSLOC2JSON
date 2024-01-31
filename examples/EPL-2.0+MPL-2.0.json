@@ -100,7 +100,9 @@
                             }
                         }
                     },
-                    "Notify License": {}
+                    "Notify License": {},
+                    "Notify License change": {},
+                    "Use MPL-2.0 License": {}
                 },
                 "YOU MUST NOT": [
                     "Modify Attribution notices",
@@ -141,9 +143,11 @@
                     }
                 },
                 "YOU MUST": [
+                    "Notify License change",
                     "Provide License notice",
                     "Provide License text",
-                    "Reference License text"
+                    "Reference License text",
+                    "Use MPL-2.0 License"
                 ],
                 "YOU MUST NOT": [
                     "Modify Attribution notices",

@@ -83,7 +83,7 @@ then
   exit 1
 fi
 
-./src/osloc2json.py -emo examples/EPL-2.0.txt examples/MPL-2.0.txt
+./src/osloc2json.py -emol examples/EPL-2.0.txt examples/MPL-1.1.txt
 if ! cmp examples/EPL-2.0+MPL-2.0.json merged.json
 then
   exit 1

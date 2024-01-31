@@ -582,7 +582,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                         licensefilenames.remove(license)
                         if newlicense not in licensefilenames:
                             licensefilenames.append(newlicense)
-                        addobligations[value[0]] = value[1]
+                        addobligations[value[0]] = value[1].split(',')
             licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
 
     licenses = len(licensefilenames)
@@ -807,15 +807,16 @@ def osloc2json(licensefilenames, outfilename, json, args):
         if lineno == -1:
             break
         if licenseupgrade and len(addobligations) > 0:
-            for newlicense, obligation in addobligations.items():
-                if newlicense != licensename or obligation.find('YOU MUST ') == -1:
-                    continue
-                for usecase in data['USE CASE']:
-                    obligation = obligation.replace('YOU MUST ', '')
-                    if 'YOU MUST' not in data['USE CASE'][usecase]:
-                        data['USE CASE'][usecase]['YOU MUST'] = {}
-                    if obligation not in data['USE CASE'][usecase]['YOU MUST']:
-                        data['USE CASE'][usecase]['YOU MUST'][obligation] = {}
+            for newlicense, obligations in addobligations.items():
+                for obligation in obligations:
+                    if newlicense != licensename or obligation.find('YOU MUST ') == -1:
+                        continue
+                    for usecase in data['USE CASE']:
+                        obligation = obligation.replace('YOU MUST ', '')
+                        if 'YOU MUST' not in data['USE CASE'][usecase]:
+                            data['USE CASE'][usecase]['YOU MUST'] = {}
+                        if obligation not in data['USE CASE'][usecase]['YOU MUST']:
+                            data['USE CASE'][usecase]['YOU MUST'][obligation] = {}
 
     if expand:
         expandor(jsondata, licensename)

@@ -256,13 +256,15 @@ Newer versions of licenses may be available that may offer more options with
 respect to license compatibility. Related upgrade rules may be defined in a file
 named "licenseupgraderules.json" with an associative array of two-element lists
 where the key denotes the licenses to be upgraded, the first list element the
-license to upgrade to and the optional second list element a license obligation
-to add such as, for example, "YOU MUST Notify License change". To enable
-automatic license upgrade, the "-l" or "--licenseupgrade" command line option
-must be specified. An upgrade rule file may look like the following example:
+license to upgrade to and the optional second list element comma-separated
+license obligations to add such as, for example, "YOU MUST Notify License
+change". To enable automatic license upgrade, the "-l" or "--licenseupgrade"
+command line option must be specified. An upgrade rule file may look like the
+following example:
 ```json
 {
-  "MPL-1.1": ["MPL-2.0", "YOU MUST Notify License change"],
+  "EUPL-1.1": ["EUPL-1.2", "YOU MUST NOT Restrict License change,YOU MUST Use EUPL-1.2 License"],
+  "MPL-1.1": ["MPL-2.0", "YOU MUST Notify License change,YOU MUST Use MPL-2.0 License"],
   "GPL-2.0-or-later": ["GPL-3.0-or-later", "YOU MUST Use GPL-3.0-or-later License"]
 }
 ```
