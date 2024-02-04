@@ -1124,6 +1124,7 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
         splitfilenames = [dirname + s + '.txt' for s in splitfilenames]
         filenames = splitfilenames
 
+    exitcode = 0
     if args.profiling:
         from pyinstrument import Profiler
         with Profiler(interval=0.0001) as profiler:
@@ -1145,10 +1146,13 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
                     validator(sampledata)
                 except fastjsonschema.JsonSchemaException as e:
                     print(f"Data failed validation: {e}")
+                    exitcode = 1
                 sample.close()
             schema.close()
         if not args.noop:
             osloc2json(filenames, args.filename, json, args)
+        if exitcode != 0:
+            sys.exit(exitcode)
 
 if __name__ == '__main__':
     main()
