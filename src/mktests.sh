@@ -217,4 +217,6 @@ rm -f examples/jsonvalidity
 
 rm -f osloc.json merged.json *.checklist
 
+echo All tests passed
+
 exit 0

@@ -24,6 +24,8 @@ try:
 except ImportError:
     pass
 
+FIXMULTIEITHERIF = False
+
 def sanitizelist(l):
     """ Remove duplicates, sort case-unsensitive alphabetically, remove singular form, if plural of same term exists """
     sane = sortlist(list(dict.fromkeys(l)))
@@ -382,7 +384,8 @@ def uniq(l):
                 uniq(l[k])
 
 printnonl = sys.stdout.write
-def back2osloc(l, indent, key, ineitheror, previous):
+def back2osloc(l, indent, key, ineitheror, previous, eitherorifenum, extraindent):
+
     if isinstance(l, dict):
         count = 0
         if previous in ['', 'ATTRIBUTE', 'IF', 'YOU MUST', 'YOU MUST NOT']:
@@ -418,9 +421,9 @@ def back2osloc(l, indent, key, ineitheror, previous):
                 indent -= 1
             if len(ineitheror) > 0 and not e.isdigit() and e != '*' and indent > 0:
                 if indent in ineitheror and ineitheror[indent] != '':
-                    if previous != '1' and previous != "*":
+                    if previous != '1' and previous != '*':
                         print()
-                        printnonl('\t'*(indent-1) + ineitheror[indent])
+                        printnonl('\t'*(indent - 1 - extraindent) + ineitheror[indent])
             if e.isdigit() or e == '*':
                 increment = 0
                 ineitheror[indent] = previous
@@ -434,7 +437,7 @@ def back2osloc(l, indent, key, ineitheror, previous):
                     if indent == 0:
                         printnonl(e + appendchar)
                     else:
-                        printnonl('\t'*indent + e + appendchar)
+                        printnonl('\t'*(indent - extraindent) + e + appendchar)
                     increment = 1
                 else:
                     if count == 0:
@@ -444,15 +447,15 @@ def back2osloc(l, indent, key, ineitheror, previous):
                             printnonl(key + ' ' + e)
                         else:
                             if count == 0:
-                                printnonl('\t'*indent + key + ' ' + e)
+                                printnonl('\t'*(indent - extraindent) + key + ' ' + e)
                             else:
                                 print()
                                 if indent - 1 == 0:
                                     printnonl(key + ' ' + e)
                                 else:
-                                    printnonl('\t'*(indent - 1) + key + ' ' + e)
+                                    printnonl('\t'*(indent - 1 - extraindent) + key + ' ' + e)
                     increment = 0
-            back2osloc(l[e], indent + increment, e, ineitheror, e)
+            back2osloc(l[e], indent + increment, e, ineitheror, e, eitherorifenum, extraindent)
             if e == 'OR':
                 indent += 1
             count = count + 1
@@ -460,13 +463,13 @@ def back2osloc(l, indent, key, ineitheror, previous):
         count = 0
         for e in l.copy():
             if isinstance(e, dict):
-                back2osloc(e, indent, key, ineitheror, '')
+                back2osloc(e, indent, key, ineitheror, '', eitherorifenum, extraindent)
             else:
                 if count == 0:
                     printnonl(e)
                 else:
                     print()
-                    printnonl('\t'*indent + key + ' ' + e)
+                    printnonl('\t'*(indent - extraindent) + key + ' ' + e)
                 count += 1
     elif isinstance(l, str):
         printnonl(l)
@@ -563,6 +566,8 @@ def osloc2json(licensefilenames, outfilename, json, args):
     show = args.show
     unify = args.unify
     verbose = args.verbose
+
+    global FIXMULTIEITHERIF
 
     addobligations = {}
 
@@ -763,37 +768,38 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                         if eitherextratabs > 0:
                                             eitherextratabs -= 1
 
-#                        if tag == 'EITHER IF':
-#                            eitheroriftext = text
-#                            flatchain = getchain(data, tabs, '')
-#                            if flatchain not in globaleitherifchains:
-#                                globaleitherifchains[flatchain] = 1
-#                            else:
-#                                globaleitherifchains[flatchain] += 1
-#                            text = str(globaleitherifchains[flatchain])
-#                            for k in oriflevels.copy():
-#                                if tabs <= k:
-#                                    oriflevels.pop(k)
-#                                    if eitherifextratabs > 0:
-#                                        eitherifextratabs -= 1
-#                            oriflevels[tabs] = 0
-#                        if tag == 'OR IF':
-#                            eitheroriftext = text
-#                            if tabs not in oriflevels:
-#                                print('Syntax error (OR IF before EITHER IF) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
-#                                lineno = -1
-#                                break
-#                            oriflevels[tabs] += 1
-#                            text = str(oriflevels[tabs])
-#                            if oriflevels[tabs] == 1:
-#                                eitherifextratabs += 1
-#                        if tag != 'EITHER IF':
-#                            if len(oriflevels) > 0:
-#                               for k in oriflevels.copy():
-#                                    if (tag == 'OR IF' and tabs < k) or (tag != 'OR IF' and tabs <= k):
-#                                        oriflevels.pop(k)
-#                                        if eitherifextratabs > 0:
-#                                            eitherifextratabs -= 1
+                        if FIXMULTIEITHERIF:
+                            if tag == 'EITHER IF':
+                                eitheroriftext = text
+                                flatchain = getchain(data, tabs, '')
+                                if flatchain not in globaleitherifchains:
+                                    globaleitherifchains[flatchain] = 1
+                                else:
+                                    globaleitherifchains[flatchain] += 1
+                                text = str(globaleitherifchains[flatchain])
+                                for k in oriflevels.copy():
+                                    if tabs <= k:
+                                        oriflevels.pop(k)
+                                        if eitherifextratabs > 0:
+                                            eitherifextratabs -= 1
+                                oriflevels[tabs] = 0
+                            if tag == 'OR IF':
+                                eitheroriftext = text
+                                if tabs not in oriflevels:
+                                    print('Syntax error (OR IF before EITHER IF) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                                    lineno = -1
+                                    break
+                                oriflevels[tabs] += 1
+                                text = str(oriflevels[tabs])
+                                if oriflevels[tabs] == 1:
+                                    eitherifextratabs += 1
+                            if tag != 'EITHER IF':
+                                if len(oriflevels) > 0:
+                                   for k in oriflevels.copy():
+                                        if (tag == 'OR IF' and tabs < k) or (tag != 'OR IF' and tabs <= k):
+                                            oriflevels.pop(k)
+                                            if eitherifextratabs > 0:
+                                                eitherifextratabs -= 1
 
                         if tabs + eitherextratabs + eitherifextratabs in parents:
                             if tag not in parents[tabs + eitherextratabs + eitherifextratabs]:
@@ -802,10 +808,11 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             if devel:
                                 print(parents[tabs + eitherextratabs + eitherifextratabs][tag])
 
-#                        if tag in ['EITHER IF', 'OR IF']:
-#                            parents[tabs + eitherextratabs + eitherifextratabs + 1] = parents[tabs + eitherextratabs + eitherifextratabs][tag][text][eitheroriftext] = {}
-#                            if devel:
-#                                print(parents[tabs + eitherextratabs + eitherifextratabs][tag][text])
+                        if FIXMULTIEITHERIF:
+                            if tag in ['EITHER IF', 'OR IF']:
+                                parents[tabs + eitherextratabs + eitherifextratabs + 1] = parents[tabs + eitherextratabs + eitherifextratabs][tag][text][eitheroriftext] = {}
+                                if devel:
+                                    print(parents[tabs + eitherextratabs + eitherifextratabs][tag][text])
 
                 osloc = osloc[endlinepos + 1:]
                 if len(osloc) == 0:
@@ -1011,7 +1018,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
             deepcopy(l, jsondata)
             if len(jsondata.keys()) == 1:
                 l = l[list(jsondata.keys())[0]]
-        back2osloc(l, 0, '', {}, '')
+        back2osloc(l, 0, '', {}, '', {}, 0)
         print()
 
     jsonfile = open(outfilename, 'w')
