@@ -1,0 +1,379 @@
+
+COMPATIBILITY Apache-2.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY Artistic-2.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY blessing | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY BSD-2-Clause | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY BSD-2-Clause-Patent | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY BSD-3-Clause | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY BSL-1.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY bzip2-1.0.5 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY bzip2-1.0.6 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY CC0-1.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY curl | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY EFL-2.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY FSFAP | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY FSFULLR | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY IBM-pibs | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY ICU | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY ISC | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY LGPL-2.1-or-later | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY LGPL-3.0-or-later | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY Libpng | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY MIT | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY MPL-2.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY NTP | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY Unlicense | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY UPL-1.0 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY WTFPL | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY X11 | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY Zlib | GPL-3.0-only, LGPL-3.0-only
+COMPATIBILITY ZPL-2.0 | GPL-3.0-only, LGPL-3.0-only
+COPYLEFT CLAUSE Yes | GPL-3.0-only, LGPL-3.0-only
+DEPENDING COMPATIBILITY AGPL-3.0-only | GPL-3.0-only, LGPL-3.0-only
+DEPENDING COMPATIBILITY AGPL-3.0-or-later | GPL-3.0-only, LGPL-3.0-only
+DEPENDING COMPATIBILITY EPL-2.0 | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY Apache-1.0 | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY Apache-1.1 | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY Artistic-2.0 | LGPL-3.0-only
+INCOMPATIBILITY BSD-4-Clause | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY BSD-4-Clause-UC | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY FTL | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY IJG | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY OpenSSL | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY Python-2.0 | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY XFree86-1.1 | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBILITY zlib-acknowledgement | GPL-3.0-only, LGPL-3.0-only
+INCOMPATIBLE LICENSES GPL-3.0-only | If licensed under LGPL-3.0-only
+PATENT HINTS Yes | GPL-3.0-only, LGPL-3.0-only
+USE CASE Source code delivery | GPL-3.0-only, LGPL-3.0-only
+	YOU MUST Provide Copyright notices | GPL-3.0-only
+		ATTRIBUTE Appropriately | GPL-3.0-only
+			ATTRIBUTE Highlighted | GPL-3.0-only
+	YOU MUST Provide Library | LGPL-3.0-only
+		ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
+			ATTRIBUTE Uncombined | LGPL-3.0-only
+	YOU MUST Provide License notices | LGPL-3.0-only
+	YOU MUST Provide License text | GPL-3.0-only
+	YOU MUST Reference Library | LGPL-3.0-only
+		ATTRIBUTE Uncombined | LGPL-3.0-only
+	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST NOT Modify License notices | GPL-3.0-only
+		YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-only
+		YOU MUST NOT Sublicense | GPL-3.0-only, LGPL-3.0-only
+	IF AGPL-3.0-or-later | GPL-3.0-only
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-only
+	IF Combined work With AGPL-3.0-only | GPL-3.0-only
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-only
+	IF Software modification | GPL-3.0-only
+		YOU MUST Grant License | GPL-3.0-only
+			ATTRIBUTE Original license | GPL-3.0-only
+		YOU MUST Provide Legal notices | GPL-3.0-only
+			ATTRIBUTE Highlighted | GPL-3.0-only
+		YOU MUST Provide Modification date | GPL-3.0-only
+		YOU MUST Provide Modification notice | GPL-3.0-only
+			ATTRIBUTE Highlighted | GPL-3.0-only
+		IF Interactive AND Displaying Appropriate legal notices | GPL-3.0-only
+			YOU MUST Display Appropriate legal notices | GPL-3.0-only
+				ATTRIBUTE Highlighted | GPL-3.0-only
+		IF Non-permissive additional terms Added | GPL-3.0-only
+			EITHER
+				YOU MUST Include Non-permissive additional terms In Source code | GPL-3.0-only
+			OR
+				YOU MUST Reference Non-permissive additional terms In Source code | GPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | GPL-3.0-only, LGPL-3.0-only
+USE CASE Binary delivery | GPL-3.0-only, LGPL-3.0-only
+	YOU MUST Provide Copyright notices | GPL-3.0-only, LGPL-3.0-only
+		ATTRIBUTE Appropriately | GPL-3.0-only, LGPL-3.0-only
+			ATTRIBUTE Highlighted | GPL-3.0-only, LGPL-3.0-only
+	YOU MUST Provide License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+	YOU MUST Provide License text | GPL-3.0-only
+	YOU MUST NOT Litigate Circumvention Of Technological measures | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST NOT Modify License notices | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST NOT Modify Warranty disclaimer | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST NOT Sublicense | GPL-3.0-only, LGPL-3.0-only
+	IF AGPL-3.0-or-later | GPL-3.0-only
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-only
+	IF Combined work With AGPL-3.0-only | GPL-3.0-only
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-only
+	IF Software modification | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST Grant License | GPL-3.0-only, LGPL-3.0-only
+			ATTRIBUTE Original license | GPL-3.0-only
+				ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
+		YOU MUST Provide Legal notices | GPL-3.0-only, LGPL-3.0-only
+			ATTRIBUTE Highlighted | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST Provide Modification date | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST Provide Modification notice | GPL-3.0-only, LGPL-3.0-only
+			ATTRIBUTE Highlighted | GPL-3.0-only, LGPL-3.0-only
+		IF Interactive AND Displaying Appropriate legal notices | GPL-3.0-only, LGPL-3.0-only
+			YOU MUST Display Appropriate legal notices | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Highlighted | GPL-3.0-only, LGPL-3.0-only
+		IF Non-permissive additional terms Added | GPL-3.0-only, LGPL-3.0-only
+			EITHER
+				YOU MUST Include Non-permissive additional terms In Source code | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE With Source code delivery | GPL-3.0-only, LGPL-3.0-only
+			OR
+				YOU MUST Reference Non-permissive additional terms In Source code | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE With Source code delivery | GPL-3.0-only, LGPL-3.0-only
+		IF Software modification Uses Linked work | LGPL-3.0-only
+			EITHER
+				YOU MUST Ensure Functionality Without Linked work | LGPL-3.0-only
+			OR
+				YOU MUST Use GPL-3.0-only | LGPL-3.0-only
+	IF User product | GPL-3.0-only
+		EXCEPT IF Installation Is NOT Feasible | GPL-3.0-only
+			YOU MUST Provide Installation information | GPL-3.0-only
+	EITHER IF Binary delivery On Customary medium OR Installed | GPL-3.0-only, LGPL-3.0-only
+		EITHER
+			YOU MUST Provide Source code | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Customary medium | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE Documented format | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE Including Installation scripts | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE Including Tool chain information | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE Machine-readable | GPL-3.0-only, LGPL-3.0-only
+		OR
+			YOU MUST Provide Written offer | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Delayed source code delivery | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE Documented format | GPL-3.0-only, LGPL-3.0-only
+						ATTRIBUTE Including Installation scripts | GPL-3.0-only, LGPL-3.0-only
+						ATTRIBUTE Including Tool chain information | GPL-3.0-only, LGPL-3.0-only
+						ATTRIBUTE Machine-readable | GPL-3.0-only, LGPL-3.0-only
+					EITHER
+						ATTRIBUTE Customary medium | GPL-3.0-only, LGPL-3.0-only
+							ATTRIBUTE No profit | GPL-3.0-only, LGPL-3.0-only
+					OR
+						ATTRIBUTE No charge | GPL-3.0-only, LGPL-3.0-only
+							ATTRIBUTE Via Internet | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Duration As long as product is supported | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Duration At least 3 years | GPL-3.0-only, LGPL-3.0-only
+	OR IF Binary delivery Via Internet | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST Provide Source code | GPL-3.0-only, LGPL-3.0-only
+			ATTRIBUTE Documented format | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Duration As long as needed | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Including Installation scripts | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Including Tool chain information | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Machine-readable | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Via Internet | GPL-3.0-only, LGPL-3.0-only
+			EITHER IF Source code On same server | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Equivalent | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE No charge | GPL-3.0-only, LGPL-3.0-only
+			OR IF Source code On other server | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Equivalent | GPL-3.0-only, LGPL-3.0-only
+					ATTRIBUTE No charge | GPL-3.0-only, LGPL-3.0-only
+				YOU MUST Reference Source code | GPL-3.0-only, LGPL-3.0-only
+	OR IF Binary delivery Via peer-to-peer transmission | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST Reference Source code | GPL-3.0-only, LGPL-3.0-only
+			ATTRIBUTE Documented format | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Duration As long as needed | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Including Installation scripts | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Including Tool chain information | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Machine-readable | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE No charge | GPL-3.0-only, LGPL-3.0-only
+				ATTRIBUTE Via Internet | GPL-3.0-only, LGPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-only, LGPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | GPL-3.0-only, LGPL-3.0-only
+USE CASE Source code delivery Of Combined work | LGPL-3.0-only
+	YOU MUST NOT Impede Modification Of the Library | LGPL-3.0-only
+		YOU MUST NOT Litigate Circumvention Of Technological measures | LGPL-3.0-only
+		YOU MUST NOT Modify Warranty disclaimer | LGPL-3.0-only
+		YOU MUST NOT Sublicense | LGPL-3.0-only
+	YOU MUST Notify Library | LGPL-3.0-only
+		ATTRIBUTE Highlighted | LGPL-3.0-only
+	YOU MUST Provide License announcement | LGPL-3.0-only
+		ATTRIBUTE Highlighted | LGPL-3.0-only
+	YOU MUST Provide License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+	IF Combined work With AGPL-3.0-only | LGPL-3.0-only
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only | LGPL-3.0-only
+	IF Displaying Copyright notices | LGPL-3.0-only
+		YOU MUST Display Copyright notices Of the Library | LGPL-3.0-only
+			YOU MUST Reference License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+	IF Software modification | LGPL-3.0-only
+		YOU MUST Grant License | LGPL-3.0-only
+			ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
+		YOU MUST Provide Legal notices | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		YOU MUST Provide Modification date | LGPL-3.0-only
+		YOU MUST Provide Modification notice | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		IF Interactive AND Displaying Appropriate legal notices | LGPL-3.0-only
+			YOU MUST Display Appropriate legal notices | LGPL-3.0-only
+				ATTRIBUTE Highlighted | LGPL-3.0-only
+		IF Non-permissive additional terms Added | LGPL-3.0-only
+			EITHER
+				YOU MUST Include Non-permissive additional terms In Source code | LGPL-3.0-only
+			OR
+				YOU MUST Reference Non-permissive additional terms In Source code | LGPL-3.0-only
+		IF Software modification Uses Linked work | LGPL-3.0-only
+			EITHER
+				YOU MUST Ensure Functionality Without Linked work | LGPL-3.0-only
+			OR
+				YOU MUST Use GPL-3.0-only | LGPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | LGPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | LGPL-3.0-only
+USE CASE Binary delivery Of Combined work | LGPL-3.0-only
+	YOU MUST NOT Impede Modification Of the Library | LGPL-3.0-only
+	YOU MUST NOT Impede Reverse engineering | LGPL-3.0-only
+		ATTRIBUTE For Debugging Of Modification | LGPL-3.0-only
+	YOU MUST NOT Litigate Circumvention Of Technological measures | LGPL-3.0-only
+	YOU MUST NOT Modify Warranty disclaimer | LGPL-3.0-only
+	YOU MUST NOT Sublicense | LGPL-3.0-only
+	YOU MUST Notify Library | LGPL-3.0-only
+		ATTRIBUTE Highlighted | LGPL-3.0-only
+	YOU MUST Provide License announcement | LGPL-3.0-only
+		ATTRIBUTE Highlighted | LGPL-3.0-only
+	YOU MUST Provide License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+	IF Combined work With AGPL-3.0-only | LGPL-3.0-only
+		YOU MUST Fulfill License obligations Of AGPL-3.0-only | LGPL-3.0-only
+	IF Displaying Copyright notices | LGPL-3.0-only
+		YOU MUST Display Copyright notices Of the Library | LGPL-3.0-only
+			YOU MUST Reference License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+	IF Software modification | LGPL-3.0-only
+		YOU MUST Grant License | LGPL-3.0-only
+			ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
+		YOU MUST Provide Legal notices | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		YOU MUST Provide Modification date | LGPL-3.0-only
+		YOU MUST Provide Modification notice | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		IF Interactive AND Displaying Appropriate legal notices | LGPL-3.0-only
+			YOU MUST Display Appropriate legal notices | LGPL-3.0-only
+				ATTRIBUTE Highlighted | LGPL-3.0-only
+		IF Non-permissive additional terms Added | LGPL-3.0-only
+			EITHER
+				YOU MUST Include Non-permissive additional terms In Source code | LGPL-3.0-only
+					ATTRIBUTE With Source code delivery | LGPL-3.0-only
+			OR
+				YOU MUST Reference Non-permissive additional terms In Source code | LGPL-3.0-only
+					ATTRIBUTE With Source code delivery | LGPL-3.0-only
+		IF Software modification Uses Linked work | LGPL-3.0-only
+			EITHER
+				YOU MUST Ensure Functionality Without Linked work | LGPL-3.0-only
+			OR
+				YOU MUST Use GPL-3.0-only | LGPL-3.0-only
+	IF User product | LGPL-3.0-only
+		EXCEPT IF Installation Is NOT Feasible | LGPL-3.0-only
+			YOU MUST Provide Installation information | LGPL-3.0-only
+				ATTRIBUTE Included in Source code delivery Of the Library | LGPL-3.0-only
+	EITHER
+		YOU MUST Permit Relinking With Modified library | LGPL-3.0-only
+			YOU MUST Provide Linkable work | LGPL-3.0-only
+			YOU MUST Provide Source code Of the Library | LGPL-3.0-only
+		EITHER IF Binary delivery On Customary medium OR Installed | LGPL-3.0-only
+			EITHER
+				YOU MUST Provide Source code Of the Library | LGPL-3.0-only
+					ATTRIBUTE Customary medium | LGPL-3.0-only
+						ATTRIBUTE Documented format | LGPL-3.0-only
+						ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+						ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+						ATTRIBUTE Machine-readable | LGPL-3.0-only
+			OR
+				YOU MUST Provide Written offer | LGPL-3.0-only
+					ATTRIBUTE Delayed source code delivery Of the Library | LGPL-3.0-only
+						ATTRIBUTE Documented format | LGPL-3.0-only
+							ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+							ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+							ATTRIBUTE Machine-readable | LGPL-3.0-only
+						EITHER
+							ATTRIBUTE Customary medium | LGPL-3.0-only
+								ATTRIBUTE No profit | LGPL-3.0-only
+						OR
+							ATTRIBUTE No charge | LGPL-3.0-only
+								ATTRIBUTE Via Internet | LGPL-3.0-only
+					ATTRIBUTE Duration As long as product is supported | LGPL-3.0-only
+					ATTRIBUTE Duration At least 3 years | LGPL-3.0-only
+		OR IF Binary delivery Via Internet | LGPL-3.0-only
+			YOU MUST Provide Source code Of the Library | LGPL-3.0-only
+				ATTRIBUTE Documented format | LGPL-3.0-only
+					ATTRIBUTE Duration As long as needed | LGPL-3.0-only
+					ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+					ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+					ATTRIBUTE Machine-readable | LGPL-3.0-only
+					ATTRIBUTE Via Internet | LGPL-3.0-only
+				EITHER IF Source code On same server | LGPL-3.0-only
+					ATTRIBUTE Equivalent | LGPL-3.0-only
+						ATTRIBUTE No charge | LGPL-3.0-only
+				OR IF Source code On other server | LGPL-3.0-only
+					ATTRIBUTE Equivalent | LGPL-3.0-only
+						ATTRIBUTE No charge | LGPL-3.0-only
+					YOU MUST Reference Source code | LGPL-3.0-only
+		OR IF Binary delivery Via peer-to-peer transmission | LGPL-3.0-only
+			YOU MUST Reference Source code Of the Library | LGPL-3.0-only
+				ATTRIBUTE Documented format | LGPL-3.0-only
+					ATTRIBUTE Duration As long as needed | LGPL-3.0-only
+					ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+					ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+					ATTRIBUTE Machine-readable | LGPL-3.0-only
+					ATTRIBUTE No charge | LGPL-3.0-only
+					ATTRIBUTE Via Internet | LGPL-3.0-only
+	OR
+		YOU MUST Provide Source code Of the Library | LGPL-3.0-only
+			EITHER IF Binary delivery On Customary medium OR Installed | LGPL-3.0-only
+				EITHER
+					YOU MUST Provide Source code Of the Library | LGPL-3.0-only
+						ATTRIBUTE Customary medium | LGPL-3.0-only
+							ATTRIBUTE Documented format | LGPL-3.0-only
+							ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+							ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+							ATTRIBUTE Machine-readable | LGPL-3.0-only
+				OR
+					YOU MUST Provide Written offer | LGPL-3.0-only
+						ATTRIBUTE Delayed source code delivery Of the Library | LGPL-3.0-only
+							ATTRIBUTE Documented format | LGPL-3.0-only
+								ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+								ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+								ATTRIBUTE Machine-readable | LGPL-3.0-only
+							EITHER
+								ATTRIBUTE Customary medium | LGPL-3.0-only
+									ATTRIBUTE No profit | LGPL-3.0-only
+							OR
+								ATTRIBUTE No charge | LGPL-3.0-only
+									ATTRIBUTE Via Internet | LGPL-3.0-only
+						ATTRIBUTE Duration As long as product is supported | LGPL-3.0-only
+						ATTRIBUTE Duration At least 3 years | LGPL-3.0-only
+			OR IF Binary delivery Via Internet | LGPL-3.0-only
+				YOU MUST Provide Source code Of the Library | LGPL-3.0-only
+					ATTRIBUTE Documented format | LGPL-3.0-only
+						ATTRIBUTE Duration As long as needed | LGPL-3.0-only
+						ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+						ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+						ATTRIBUTE Machine-readable | LGPL-3.0-only
+						ATTRIBUTE Via Internet | LGPL-3.0-only
+					EITHER IF Source code On same server | LGPL-3.0-only
+						ATTRIBUTE Equivalent | LGPL-3.0-only
+							ATTRIBUTE No charge | LGPL-3.0-only
+					OR IF Source code On other server | LGPL-3.0-only
+						ATTRIBUTE Equivalent | LGPL-3.0-only
+							ATTRIBUTE No charge | LGPL-3.0-only
+						YOU MUST Reference Source code | LGPL-3.0-only
+			OR IF Binary delivery Via peer-to-peer transmission | LGPL-3.0-only
+				YOU MUST Reference Source code Of the Library | LGPL-3.0-only
+					ATTRIBUTE Documented format | LGPL-3.0-only
+						ATTRIBUTE Duration As long as needed | LGPL-3.0-only
+						ATTRIBUTE Including Installation scripts | LGPL-3.0-only
+						ATTRIBUTE Including Tool chain information | LGPL-3.0-only
+						ATTRIBUTE Machine-readable | LGPL-3.0-only
+						ATTRIBUTE No charge | LGPL-3.0-only
+						ATTRIBUTE Via Internet | LGPL-3.0-only
+		YOU MUST Use Shared library | LGPL-3.0-only
+		EXCEPT IF Modified library NOT Interoperable | LGPL-3.0-only
+			YOU MUST Enable Relinking With Modified library | LGPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | LGPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | LGPL-3.0-only
+USE CASE Binary delivery Of Linked work With Header files Of Library Included In Linked work | LGPL-3.0-only
+	IF Substantial work | LGPL-3.0-only
+		YOU MUST Notify Library | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		YOU MUST Provide License announcement | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		YOU MUST Provide License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+USE CASE Binary delivery Of Combined library | LGPL-3.0-only
+	YOU MUST Provide Library | LGPL-3.0-only
+		ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
+			ATTRIBUTE Uncombined | LGPL-3.0-only
+	YOU MUST Provide License notices | LGPL-3.0-only
+	YOU MUST Reference Library | LGPL-3.0-only
+		ATTRIBUTE Uncombined | LGPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | LGPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | LGPL-3.0-only
+	YOU MUST NOT Litigate Circumvention Of Technological measures | LGPL-3.0-only
+		YOU MUST NOT Sublicense | LGPL-3.0-only

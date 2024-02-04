@@ -93,15 +93,6 @@ USE CASE Binary delivery | EPL-2.0, GPL-2.0-only, MPL-2.0
 		ATTRIBUTE Appropriately | GPL-2.0-only
 		ATTRIBUTE Highlighted | GPL-2.0-only
 	EITHER
-		YOU MUST Include Source code | EPL-2.0
-	OR
-		YOU MUST Provide Written offer | EPL-2.0, (Provide Delayed source code delivery): EPL-2.0
-			ATTRIBUTE Reasonable | EPL-2.0
-			EITHER
-				ATTRIBUTE Customary medium | EPL-2.0
-			OR
-				ATTRIBUTE Via Internet | EPL-2.0
-	EITHER
 		YOU MUST Provide Source code | GPL-2.0-only
 			ATTRIBUTE Customary medium | GPL-2.0-only
 			ATTRIBUTE Including Installation scripts | GPL-2.0-only
@@ -112,7 +103,7 @@ USE CASE Binary delivery | EPL-2.0, GPL-2.0-only, MPL-2.0
 					ATTRIBUTE Equivalent | GPL-2.0-only
 					ATTRIBUTE On same server | GPL-2.0-only
 	OR
-		YOU MUST Provide Written offer | GPL-2.0-only
+		YOU MUST Provide Written offer | EPL-2.0, GPL-2.0-only
 			ATTRIBUTE Delayed source code delivery | GPL-2.0-only
 				ATTRIBUTE Customary medium | GPL-2.0-only
 				ATTRIBUTE Including Installation scripts | GPL-2.0-only

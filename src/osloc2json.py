@@ -157,6 +157,8 @@ def flatten(v, prefix=''):
     result = []
     if isinstance(v, dict):
         for k, v2 in v.items():
+            if k.isdigit() and (prefix.endswith("['EITHER']") or prefix.endswith("['EITHER IF']")):
+                k = '*'
             p2 = "{}['{}']".format(prefix, k)
             if v2 == {}:
                 result.append(p2)
@@ -196,6 +198,11 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
     result = []
     if isinstance(v, dict):
         for k, v2 in v.copy().items():
+            if k.isdigit() and (prefix.endswith("['EITHER']") or prefix.endswith("['EITHER IF']")):
+                oldv2 = v[k]
+                v.pop(k)
+                k = '*'
+                v[k] = oldv2
             p2 = "{}['{}']".format(prefix, k)
             found = []
             if p2 in lrefs:
@@ -208,7 +215,7 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
                     islang = True
                     break
             if not islang:
-                if tag != '' and not re.search(r"\['[0-9]*'\]$", p2):
+                if tag != '' and not re.search(r"\['([0-9]*|\*)'\]$", p2):
                     for lref,license in lrefs.items():
                         if lref.startswith(p2):
                             for lic in license:
@@ -409,12 +416,12 @@ def back2osloc(l, indent, key, ineitheror, previous):
                     ineitheror[k] = ''
             if e == 'OR':
                 indent -= 1
-            if len(ineitheror) > 0 and not e.isdigit() and indent > 0:
+            if len(ineitheror) > 0 and not e.isdigit() and e != '*' and indent > 0:
                 if indent in ineitheror and ineitheror[indent] != '':
-                    if previous != '1':
+                    if previous != '1' and previous != "*":
                         print()
                         printnonl('\t'*(indent-1) + ineitheror[indent])
-            if e.isdigit():
+            if e.isdigit() or e == '*':
                 increment = 0
                 ineitheror[indent] = previous
             else:

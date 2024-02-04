@@ -89,9 +89,17 @@ then
   exit 1
 fi
 
-./src/osloc2json.py -emo examples/GPL-3.0-only.txt examples/AGPL-3.0-only.txt
-if ! cmp examples/GPL-3.0-only+AGPL-3.0-only.json merged.json
+./src/osloc2json.py -emor examples/GPL-3.0-only.txt examples/AGPL-3.0-only.txt >merged.checklist
+if ! cmp examples/GPL-3.0-only+AGPL-3.0-only.json merged.json || ! cmp examples/GPL-3.0-only+AGPL-3.0-only.checklist merged.checklist
 then
+  diff -u examples/GPL-3.0-only+AGPL-3.0-only.checklist merged.checklist
+  exit 1
+fi
+
+./src/osloc2json.py -emor examples/GPL-3.0-only.txt examples/LGPL-3.0-only.txt >merged.checklist
+if ! cmp examples/GPL-3.0-only+LGPL-3.0-only.json merged.json || ! cmp examples/GPL-3.0-only+LGPL-3.0-only.checklist merged.checklist
+then
+  diff -u examples/GPL-3.0-only+LGPL-3.0-only.checklist merged.checklist
   exit 1
 fi
 
@@ -122,6 +130,7 @@ fi
 ./src/osloc2json.py -emur examples/EPL-2.0.txt examples/GPL-2.0-only.txt examples/MPL-2.0.txt >merged.checklist
 if ! cmp examples/EPL-2.0+GPL-2.0-only+MPL-2.0.unified.json merged.json || ! cmp examples/EPL-2.0+GPL-2.0-only+MPL-2.0.unified.checklist merged.checklist
 then
+  diff -u examples/EPL-2.0+GPL-2.0-only+MPL-2.0.unified.checklist merged.checklist
   exit 1
 fi
 
