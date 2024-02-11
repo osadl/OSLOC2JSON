@@ -424,7 +424,9 @@ Without the option to expand OR-ed conditions the merged checklist would look li
     }
 }
 ```
-which would be rather meaningless. It must, however, be noted that this expansion feature requires that only complete use cases are OR-ed together. If, for example, the above use case had been
+which would be rather meaningless. It must, however, be noted that this
+expansion feature requires that only complete use cases are OR-ed together. If,
+for example, the above use case had been
 ```
 USE CASE Source code OR Binary delivery
 ```
@@ -436,7 +438,9 @@ and
 ```
 USE CASE Binary delivery
 ```
-whereby the former could not have been merged with another occurrence of "IF Source code delivery". Similarly in order to correctly use the expansion feature,
+whereby the former could not have been merged with another occurrence of "USE
+CASE Source code delivery". Similarly in order to correctly use the expansion
+feature,
 ```
 USE CASE Source code delivery OR Binary delivery Of Combined library
 ```
