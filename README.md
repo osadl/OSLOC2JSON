@@ -25,7 +25,7 @@ checklists of several licenses.
 osloc2json.py --help
 ```
 ```
-usage: osloc2json.py [-h] [-f [OUTPUT]] [-d] [-e] [-j] [-l] [-m] [-n] [-o] [-p] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
+usage: osloc2json.py [-h] [-f [OUTPUT]] [-1] [-d] [-e] [-j] [-l] [-m] [-n] [-o] [-p] [-r] [-s] [-u] [-v] OSLOC [OSLOC ...]
 
 positional arguments:
   OSLOC                 file names of OSLOC files to process
@@ -34,6 +34,7 @@ options:
   -h, --help            show this help message and exit
   -f [OUTPUT], --filename [OUTPUT]
                         name of output file for multiple licenses, has no effect if single license, default "osloc.json"
+  -1, --v1              use version 1 of the JSON data structure
   -d, --devel           enable output of information that may be useful for development
   -e, --expand          replace keys connected by OR with the individual keys and assign the value of the key to all of them
   -j, --jsonvalidate    validate input files in JSON format against the OSLOC schema
