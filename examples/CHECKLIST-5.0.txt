@@ -1,4 +1,51 @@
 USE CASE Binary delivery
+	EITHER
+		YOU MUST Include Source code
+			ATTRIBUTE Machine-readable
+		YOU MUST Provide License text
+		YOU MUST NOT Modify Copyright notices
+		YOU MUST NOT Modify License notice
+		YOU MUST NOT Modify Patent notices
+		YOU MUST NOT Modify Trademark notices
+		YOU MUST NOT Modify Warranty disclaimer
+	OR
+		YOU MUST Reference Source code
+			ATTRIBUTE Duration As long as distributed
+			ATTRIBUTE No charges
+			ATTRIBUTE Notice Following Copyright notices
+	EITHER
+		YOU MUST Include Source code
+			ATTRIBUTE Machine-readable
+		YOU MUST Provide License text
+		YOU MUST NOT Modify Copyright notices
+		YOU MUST NOT Modify License notice
+		YOU MUST NOT Modify Patent notices
+		YOU MUST NOT Modify Trademark notices
+		YOU MUST NOT Modify Warranty disclaimer
+	OR
+		YOU MUST Reference Source code
+			ATTRIBUTE Duration As long as distributed
+			ATTRIBUTE No charges
+	EITHER
+		YOU MUST Provide Source code
+	OR
+		ATTRIBUTE Reasonable
+		EITHER
+			ATTRIBUTE Customary medium
+		OR
+			ATTRIBUTE Via Internet
+		YOU MUST Provide Delayed source code delivery
+			ATTRIBUTE Inform Recipient
+	EITHER
+		YOU MUST Include Source code
+	OR
+		YOU MUST Provide Delayed source code delivery
+		YOU MUST Provide Written offer
+			ATTRIBUTE Reasonable
+			EITHER
+				ATTRIBUTE Customary medium
+			OR
+				ATTRIBUTE Via Internet
 	EITHER IF Condition1
 		YOU MUST Distribute Source code In Product
 			ATTRIBUTE Customary medium
@@ -18,6 +65,8 @@ USE CASE Binary delivery
 USE CASE Source code delivery
 	EITHER
 		YOU MUST Mark Source code modification
+		YOU MUST Notify Source code modification
+		YOU MUST NOT Use Name "ABC"
 	OR
 		YOU MUST Provide Patch
 	OR

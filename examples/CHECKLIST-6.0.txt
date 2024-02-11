@@ -1,15 +1,5 @@
 USE CASE Binary delivery
-	EITHER
-		YOU MUST Distribute Source code In Product
-	OR
-		YOU MUST Provide Delayed source code delivery
-	OR
-		YOU MUST Provide Source code Via Internet
-	EITHER
-		YOU MUST NOT Promote
-	OR
-		YOU MUST Credit Original authors
-	EITHER
+	EITHER IF Condition1
 		YOU MUST Include Source code
 			ATTRIBUTE Machine-readable
 		YOU MUST Provide License text
@@ -18,12 +8,11 @@ USE CASE Binary delivery
 		YOU MUST NOT Modify Patent notices
 		YOU MUST NOT Modify Trademark notices
 		YOU MUST NOT Modify Warranty disclaimer
-	OR
+	OR IF Condition2
 		YOU MUST Reference Source code
 			ATTRIBUTE Duration As long as distributed
 			ATTRIBUTE No charges
-			ATTRIBUTE Notice Following Copyright notices
-	EITHER
+	EITHER IF Condition3
 		YOU MUST Include Source code
 			ATTRIBUTE Machine-readable
 		YOU MUST Provide License text
@@ -32,7 +21,7 @@ USE CASE Binary delivery
 		YOU MUST NOT Modify Patent notices
 		YOU MUST NOT Modify Trademark notices
 		YOU MUST NOT Modify Warranty disclaimer
-	OR
+	OR IF Condition4
 		YOU MUST Reference Source code
 			ATTRIBUTE Duration As long as distributed
 			ATTRIBUTE No charges

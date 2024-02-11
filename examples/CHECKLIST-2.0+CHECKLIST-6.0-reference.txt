@@ -10,33 +10,6 @@ USE CASE Binary delivery
 	OR
 		YOU MUST Credit Original authors
 	EITHER
-		YOU MUST Include Source code
-			ATTRIBUTE Machine-readable
-		YOU MUST Provide License text
-		YOU MUST NOT Modify Copyright notices
-		YOU MUST NOT Modify License notice
-		YOU MUST NOT Modify Patent notices
-		YOU MUST NOT Modify Trademark notices
-		YOU MUST NOT Modify Warranty disclaimer
-	OR
-		YOU MUST Reference Source code
-			ATTRIBUTE Duration As long as distributed
-			ATTRIBUTE No charges
-			ATTRIBUTE Notice Following Copyright notices
-	EITHER
-		YOU MUST Include Source code
-			ATTRIBUTE Machine-readable
-		YOU MUST Provide License text
-		YOU MUST NOT Modify Copyright notices
-		YOU MUST NOT Modify License notice
-		YOU MUST NOT Modify Patent notices
-		YOU MUST NOT Modify Trademark notices
-		YOU MUST NOT Modify Warranty disclaimer
-	OR
-		YOU MUST Reference Source code
-			ATTRIBUTE Duration As long as distributed
-			ATTRIBUTE No charges
-	EITHER
 		YOU MUST Provide Source code
 	OR
 		ATTRIBUTE Reasonable
@@ -56,6 +29,32 @@ USE CASE Binary delivery
 				ATTRIBUTE Customary medium
 			OR
 				ATTRIBUTE Via Internet
+	EITHER IF Condition1
+		YOU MUST Include Source code
+			ATTRIBUTE Machine-readable
+		YOU MUST Provide License text
+		YOU MUST NOT Modify Copyright notices
+		YOU MUST NOT Modify License notice
+		YOU MUST NOT Modify Patent notices
+		YOU MUST NOT Modify Trademark notices
+		YOU MUST NOT Modify Warranty disclaimer
+	OR IF Condition2
+		YOU MUST Reference Source code
+			ATTRIBUTE Duration As long as distributed
+			ATTRIBUTE No charges
+	EITHER IF Condition3
+		YOU MUST Include Source code
+			ATTRIBUTE Machine-readable
+		YOU MUST Provide License text
+		YOU MUST NOT Modify Copyright notices
+		YOU MUST NOT Modify License notice
+		YOU MUST NOT Modify Patent notices
+		YOU MUST NOT Modify Trademark notices
+		YOU MUST NOT Modify Warranty disclaimer
+	OR IF Condition4
+		YOU MUST Reference Source code
+			ATTRIBUTE Duration As long as distributed
+			ATTRIBUTE No charges
 	EITHER IF Condition1
 		YOU MUST Distribute Source code In Product
 			ATTRIBUTE Customary medium

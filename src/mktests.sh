@@ -86,6 +86,21 @@ then
 fi
 rm -f CHECKLIST-2.0+CHECKLIST-4.0.json
 
+./src/osloc2json.py -mo examples/CHECKLIST-2.0.txt examples/CHECKLIST-5.0.txt
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-5.0-opt.json merged.json
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-5.0-opt.json merged.json
+  exit 1
+fi
+mv merged.json CHECKLIST-2.0+CHECKLIST-5.0-opt.json
+./src/osloc2json.py -r CHECKLIST-2.0+CHECKLIST-5.0-opt.json >merged.checklist
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-5.0-reference.txt merged.checklist
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-5.0-reference.txt merged.checklist
+  exit 1
+fi
+rm -f CHECKLIST-2.0+CHECKLIST-5.0-opt.json
+
 ./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-5.0.txt
 if ! cmp examples/CHECKLIST-2.0+CHECKLIST-5.0.json merged.json
 then
@@ -100,6 +115,21 @@ then
   exit 1
 fi
 rm -f CHECKLIST-2.0+CHECKLIST-5.0.json
+
+./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-6.0.txt
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-6.0.json merged.json
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-6.0.json merged.json
+  exit 1
+fi
+mv merged.json CHECKLIST-2.0+CHECKLIST-6.0.json
+./src/osloc2json.py -r CHECKLIST-2.0+CHECKLIST-6.0.json >merged.checklist
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-6.0-reference.txt merged.checklist
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-6.0-reference.txt merged.checklist
+  exit 1
+fi
+rm -f CHECKLIST-2.0+CHECKLIST-6.0.json
 
 # OSADL filename split
 cd examples

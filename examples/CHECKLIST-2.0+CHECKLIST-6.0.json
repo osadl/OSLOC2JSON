@@ -1,5 +1,5 @@
 {
-    "CHECKLIST-2.0|CHECKLIST-5.0": {
+    "CHECKLIST-2.0|CHECKLIST-6.0": {
         "COPYLEFT CLAUSE": "No",
         "PATENT HINTS": "No",
         "USE CASE": {
@@ -37,65 +37,6 @@
                     "3": {
                         "OR": {
                             "1": {
-                                "YOU MUST": {
-                                    "Reference Source code": {
-                                        "ATTRIBUTE": {
-                                            "Duration As long as distributed": {},
-                                            "No charges": {},
-                                            "Notice Following Copyright notices": {}
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "YOU MUST": {
-                            "Include Source code": {
-                                "ATTRIBUTE": {
-                                    "Machine-readable": {}
-                                }
-                            },
-                            "Provide License text": {}
-                        },
-                        "YOU MUST NOT": {
-                            "Modify Copyright notices": {},
-                            "Modify License notice": {},
-                            "Modify Patent notices": {},
-                            "Modify Trademark notices": {},
-                            "Modify Warranty disclaimer": {}
-                        }
-                    },
-                    "4": {
-                        "OR": {
-                            "1": {
-                                "YOU MUST": {
-                                    "Reference Source code": {
-                                        "ATTRIBUTE": {
-                                            "Duration As long as distributed": {},
-                                            "No charges": {}
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "YOU MUST": {
-                            "Include Source code": {
-                                "ATTRIBUTE": {
-                                    "Machine-readable": {}
-                                }
-                            },
-                            "Provide License text": {}
-                        },
-                        "YOU MUST NOT": {
-                            "Modify Copyright notices": {},
-                            "Modify License notice": {},
-                            "Modify Patent notices": {},
-                            "Modify Trademark notices": {},
-                            "Modify Warranty disclaimer": {}
-                        }
-                    },
-                    "5": {
-                        "OR": {
-                            "1": {
                                 "ATTRIBUTE": {
                                     "Reasonable": {}
                                 },
@@ -126,7 +67,7 @@
                             "Provide Source code": {}
                         }
                     },
-                    "6": {
+                    "4": {
                         "OR": {
                             "1": {
                                 "YOU MUST": {
@@ -165,6 +106,72 @@
                                 "1": {
                                     "Condition2": {
                                         "YOU MUST": {
+                                            "Reference Source code": {
+                                                "ATTRIBUTE": {
+                                                    "Duration As long as distributed": {},
+                                                    "No charges": {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "YOU MUST": {
+                                "Include Source code": {
+                                    "ATTRIBUTE": {
+                                        "Machine-readable": {}
+                                    }
+                                },
+                                "Provide License text": {}
+                            },
+                            "YOU MUST NOT": {
+                                "Modify Copyright notices": {},
+                                "Modify License notice": {},
+                                "Modify Patent notices": {},
+                                "Modify Trademark notices": {},
+                                "Modify Warranty disclaimer": {}
+                            }
+                        }
+                    },
+                    "2": {
+                        "Condition3": {
+                            "OR IF": {
+                                "1": {
+                                    "Condition4": {
+                                        "YOU MUST": {
+                                            "Reference Source code": {
+                                                "ATTRIBUTE": {
+                                                    "Duration As long as distributed": {},
+                                                    "No charges": {}
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "YOU MUST": {
+                                "Include Source code": {
+                                    "ATTRIBUTE": {
+                                        "Machine-readable": {}
+                                    }
+                                },
+                                "Provide License text": {}
+                            },
+                            "YOU MUST NOT": {
+                                "Modify Copyright notices": {},
+                                "Modify License notice": {},
+                                "Modify Patent notices": {},
+                                "Modify Trademark notices": {},
+                                "Modify Warranty disclaimer": {}
+                            }
+                        }
+                    },
+                    "3": {
+                        "Condition1": {
+                            "OR IF": {
+                                "1": {
+                                    "Condition2": {
+                                        "YOU MUST": {
                                             "Provide Delayed source code delivery": {}
                                         }
                                     }
@@ -187,7 +194,7 @@
                             }
                         }
                     },
-                    "2": {
+                    "4": {
                         "Condition4": {
                             "OR IF": {
                                 "1": {

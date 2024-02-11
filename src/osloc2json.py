@@ -442,7 +442,7 @@ def back2osloc(l, indent, key, ineitheror, ineitheriforif, previous, eitherifori
                 indent -= 1
             if len(ineitheror) > 0 and not e.isdigit() and indent > 0:
                 if indent in ineitheror:
-                    if previous != '1':
+                    if previous != '1' and e == list(l.keys())[0]:
                         print()
                         printnonl('\t'*(indent - 1 - extraindent) + ineitheror[indent])
             if version > 1:

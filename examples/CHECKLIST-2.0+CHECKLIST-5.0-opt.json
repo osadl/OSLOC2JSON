@@ -1,0 +1,209 @@
+{
+    "CHECKLIST-2.0|CHECKLIST-5.0": {
+        "COPYLEFT CLAUSE": "No",
+        "PATENT HINTS": "No",
+        "USE CASE": {
+            "Binary delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": "Provide Delayed source code delivery"
+                            },
+                            "2": {
+                                "YOU MUST": "Provide Source code Via Internet"
+                            }
+                        },
+                        "YOU MUST": "Distribute Source code In Product"
+                    },
+                    "2": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": "Credit Original authors"
+                            }
+                        },
+                        "YOU MUST NOT": "Promote"
+                    },
+                    "3": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Reference Source code": {
+                                        "ATTRIBUTE": [
+                                            "Duration As long as distributed",
+                                            "No charges",
+                                            "Notice Following Copyright notices"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Include Source code": {
+                                "ATTRIBUTE": "Machine-readable"
+                            },
+                            "Provide License text": {}
+                        },
+                        "YOU MUST NOT": [
+                            "Modify Copyright notices",
+                            "Modify License notice",
+                            "Modify Patent notices",
+                            "Modify Trademark notices",
+                            "Modify Warranty disclaimer"
+                        ]
+                    },
+                    "4": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Reference Source code": {
+                                        "ATTRIBUTE": [
+                                            "Duration As long as distributed",
+                                            "No charges"
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": {
+                            "Include Source code": {
+                                "ATTRIBUTE": "Machine-readable"
+                            },
+                            "Provide License text": {}
+                        },
+                        "YOU MUST NOT": [
+                            "Modify Copyright notices",
+                            "Modify License notice",
+                            "Modify Patent notices",
+                            "Modify Trademark notices",
+                            "Modify Warranty disclaimer"
+                        ]
+                    },
+                    "5": {
+                        "OR": {
+                            "1": {
+                                "ATTRIBUTE": "Reasonable",
+                                "EITHER": {
+                                    "1": {
+                                        "ATTRIBUTE": "Customary medium",
+                                        "OR": {
+                                            "1": {
+                                                "ATTRIBUTE": "Via Internet"
+                                            }
+                                        }
+                                    }
+                                },
+                                "YOU MUST": {
+                                    "Provide Delayed source code delivery": {
+                                        "ATTRIBUTE": "Inform Recipient"
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": "Provide Source code"
+                    },
+                    "6": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": {
+                                    "Provide Delayed source code delivery": {},
+                                    "Provide Written offer": {
+                                        "ATTRIBUTE": "Reasonable",
+                                        "EITHER": {
+                                            "1": {
+                                                "ATTRIBUTE": "Customary medium",
+                                                "OR": {
+                                                    "1": {
+                                                        "ATTRIBUTE": "Via Internet"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "YOU MUST": "Include Source code"
+                    }
+                },
+                "EITHER IF": {
+                    "1": {
+                        "Condition1": {
+                            "OR IF": {
+                                "1": {
+                                    "Condition2": {
+                                        "YOU MUST": "Provide Delayed source code delivery"
+                                    }
+                                },
+                                "2": {
+                                    "Condition3": {
+                                        "YOU MUST": "Provide Source code Via Internet"
+                                    }
+                                }
+                            },
+                            "YOU MUST": {
+                                "Distribute Source code In Product": {
+                                    "ATTRIBUTE": [
+                                        "Customary medium",
+                                        "Machine-readable"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "2": {
+                        "Condition4": {
+                            "OR IF": {
+                                "1": {
+                                    "Condition5": {
+                                        "YOU MUST": "Provide Delayed source code delivery"
+                                    }
+                                },
+                                "2": {
+                                    "Condition6": {
+                                        "YOU MUST": "Provide Source code Via Internet"
+                                    }
+                                }
+                            },
+                            "YOU MUST": {
+                                "Distribute Source code In Product": {
+                                    "ATTRIBUTE": [
+                                        "Customary medium",
+                                        "Machine-readable"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Source code delivery": {
+                "EITHER": {
+                    "1": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": "Provide Patch"
+                            },
+                            "2": {
+                                "YOU MUST": "Provide Modification report"
+                            }
+                        },
+                        "YOU MUST": [
+                            "Mark Source code modification",
+                            "Notify Source code modification"
+                        ],
+                        "YOU MUST NOT": "Use Name \"ABC\""
+                    },
+                    "2": {
+                        "OR": {
+                            "1": {
+                                "YOU MUST": "Credit Original authors In Distribution material"
+                            }
+                        },
+                        "YOU MUST NOT": "Promote"
+                    }
+                }
+            }
+        }
+    }
+}
