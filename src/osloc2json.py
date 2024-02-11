@@ -368,17 +368,17 @@ def uniq(l):
     if isinstance(l, dict):
         for k1, v1 in l.copy().items():
             for k2, v2 in l.copy().items():
-                 if k1 == k2:
-                     continue
-                 if k1 not in l or not isinstance(l[k1], dict) or k2 not in l or not isinstance(l[k2], dict):
-                     continue
-                 if not k1.isdigit() or not k2.isdigit():
-                     continue
-                 if v1 == v2:
-                     if int(k1) > int(k2):
-                         l.pop(k1)
-                     else:
-                         l.pop(k2)
+                if k1 == k2:
+                    continue
+                if k1 not in l or not isinstance(l[k1], dict) or k2 not in l or not isinstance(l[k2], dict):
+                    continue
+                if not k1.isdigit() or not k2.isdigit():
+                    continue
+                if v1 == v2:
+                    if int(k1) > int(k2):
+                        l.pop(k1)
+                    else:
+                        l.pop(k2)
         for k in l:
             if isinstance(l[k], dict):
                 uniq(l[k])
@@ -583,7 +583,7 @@ def getchain(obj, tabs, result):
         lastkey = obj
         tabs = 0
     if result != '' and lastkey != '':
-       result += '.'
+        result += '.'
     result += lastkey
     if re.search('[a-z]', lastkey) or (lastkey == '1' and result.split('.')[-2] == 'OR'):
         tabs -= 1
@@ -836,7 +836,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                     eitherifextratabs += 1
                             if tag != 'EITHER IF':
                                 if len(oriflevels) > 0:
-                                   for k in oriflevels.copy():
+                                    for k in oriflevels.copy():
                                         if (tag == 'OR IF' and tabs < k) or (tag != 'OR IF' and tabs <= k):
                                             oriflevels.pop(k)
                                             if eitherifextratabs > 0:
