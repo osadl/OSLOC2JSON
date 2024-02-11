@@ -327,7 +327,7 @@ then
   exit 1
 fi
 
-for i in `ls -1 examples/*.json | grep -v concatenated | grep -v examples/GPL-3.0-only+LGPL-3.0-only`
+for i in `ls -1 examples/*.json | grep -v -e concatenated -e bogus`
 do
   if echo $i | grep -q -e -v1
   then
@@ -335,14 +335,29 @@ do
   else
     v1=
   fi
-  ./src/osloc2json.py $v1 -jn $i >examples/jsonvalidity
-  if test -s examples/jsonvalidity
+  if ! ./src/osloc2json.py $v1 -jn $i >examples/jsonvalidity || test -s examples/jsonvalidity
   then
-    echo JSON validity checker erroneously detected invalid JSON in file $i
+    echo JSON validity checker erroneously assumed the correct JSON file $i invalid
     cat examples/jsonvalidity
     exit 1
   fi
 done
+rm -f examples/jsonvalidity
+
+# Test detection of invalid language construct "OF"
+if ./src/osloc2json.py -jn examples/FTL-bogus.json >examples/jsonvalidity || ! grep -q "'OF'" examples/jsonvalidity
+then
+  echo JSON validity checker erroneously assumed the incorrect JSON file examples/FTL-bogus.json valid
+  exit
+fi
+rm -f examples/jsonvalidity
+
+# Test detection of disallowed "EITHER/OR IF" sequence
+if ./src/osloc2json.py -jn examples/GPL-2.0-only+Unlicense-bogus.json >examples/jsonvalidity || ! grep -q "must NOT match a disallowed definition" examples/jsonvalidity
+then
+  echo JSON validity checker erroneously assumed the incorrect JSON file examples/GPL-2.0-only+Unlicense-bogus.json valid
+  exit
+fi
 rm -f examples/jsonvalidity
 
 rm -f osloc.json merged.json *.checklist

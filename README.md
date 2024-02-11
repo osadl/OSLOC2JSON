@@ -833,7 +833,12 @@ first indication, so that individual legal advice must always be obtained, which
 of course also applies to all other information in the checklists.
 
 ## Schema
-The validate function (-j) uses the below JSON schema.
+The validate function (-j) uses the below JSON schema. This version 2 of the
+schema is used by default for the conversion in either direction and for
+validation. The deprecated first version of the schema is still supported, but
+requires that the command line option "-1" is specified. Version 1 did not
+correctly treat the EITHER IF/OR IF block and failed when another block
+occurred at the same indent level.
 ```json
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
@@ -853,30 +858,56 @@ The validate function (-j) uses the below JSON schema.
             "^EITHER$": {
                 "patternProperties": {
                     "^[0-9]*$": {
-                        "patternProperties": {
-                            "^OR$": {
-                                "patternProperties": {
-                                    "^[0-9]*$": {
-                                        "$ref": "#/obligations"
-                                    }
-                                },
-                                "additionalProperties": false
-                            },
-                            "^(ATTRIBUTE|EITHER IF|EXCEPT IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
-                                "patternProperties": {
-                                    ".*": {
-                                        "$ref": "#/obligations"
-                                    }
-                                },
-                                "additionalProperties": false
-                            }
+                        "required": ["OR"],
+                        "not": {
+                           "required": ["OR IF"]
                         },
-                        "additionalProperties": false
+                        "property": {
+                           "$ref": "#/obligations"
+                        }
                     }
                 },
                 "additionalProperties": false
             },
-            "^(ATTRIBUTE|EITHER IF|EXCEPT IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+            "^OR$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "$ref": "#/obligations"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "^EITHER IF$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "patternProperties": {
+                            ".*": {
+                               "required": ["OR IF"],
+                               "not": {
+                                   "required": ["OR"]
+                               },
+                               "property": {
+                                   "$ref": "#/obligations"
+                               }
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "^OR IF$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "patternProperties": {
+                            ".*": {
+                                "$ref": "#/obligations"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "^(ATTRIBUTE|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
                 "patternProperties": {
                     ".*": {
                         "$ref": "#/obligations"
@@ -888,62 +919,67 @@ The validate function (-j) uses the below JSON schema.
         "additionalProperties": false
     },
 
-    "type": "object",
-    "patternProperties": {
-        "^[0-9A-Za-z\\.| -]*$": {
-            "required": ["USE CASE"],
-            "type": "object",
-            "properties": {
-                "USE CASE": {
-                    "type": ["string", "object"],
-                    "patternProperties": {
-                        "^.* ([Dd]elivery|service).*$": {
-                            "$ref": "#/obligations"
-                        }
+    "license": {
+        "type": "object",
+        "patternProperties": {
+            "^[0-9A-Za-z\\.| -]*$": {
+                "required": ["USE CASE"],
+                "type": "object",
+                "properties": {
+                    "USE CASE": {
+                        "type": ["string", "object"],
+                        "patternProperties": {
+                            "^.* ([Dd]elivery|service).*$": {
+                                "$ref": "#/obligations"
+                            }
+                        },
+                        "additionalProperties": false
                     },
-                    "additionalProperties": false
-                },
-                "COMPATIBILITY": {
-                    "type": ["string", "array"]
-                },
-                "DEPENDING COMPATIBILITY": {
-                    "type": ["string", "array"]
-                },
-                "INCOMPATIBILITY": {
-                    "type": ["string", "array"]
-                },
-                "INCOMPATIBLE LICENSES": {
-                    "type": ["string", "array"]
-                },
-                "COPYLEFT LICENSES": {
-                    "type": ["string", "array"]
-                },
-                "COPYLEFT CLAUSE": {
-                    "oneOf": [{
-                        "type": "string",
-                        "$ref": "#/copyrightclause"
-                    },{
-                        "type": "array",
-                        "items": {
+                    "COMPATIBILITY": {
+                        "type": ["string", "array"]
+                    },
+                    "DEPENDING COMPATIBILITY": {
+                        "type": ["string", "array"]
+                    },
+                    "INCOMPATIBILITY": {
+                        "type": ["string", "array"]
+                    },
+                    "INCOMPATIBLE LICENSES": {
+                        "type": ["string", "array"]
+                    },
+                    "COPYLEFT LICENSES": {
+                        "type": ["string", "array"]
+                    },
+                    "COPYLEFT CLAUSE": {
+                        "oneOf": [{
+                            "type": "string",
                             "$ref": "#/copyrightclause"
-                        }
-                    }]
-                },
-                "PATENT HINTS": {
-                    "oneOf": [{
-                        "type": "string",
-                        "$ref": "#/patenthints"
-                    },{
-                        "type": "array",
-                        "items": {
+                        },{
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/copyrightclause"
+                            }
+                        }]
+                    },
+                    "PATENT HINTS": {
+                        "oneOf": [{
+                            "type": "string",
                             "$ref": "#/patenthints"
-                        }
-                    }]
-                }
-            },
+                        },{
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/patenthints"
+                            }
+                        }]
+                    }
+                },
             "additionalProperties": false
-        }
+            }
+        },
+        "additionalProperties": false
     },
-    "additionalProperties": false
+
+    "type": "object",
+    "$ref": "#/license"
 }
 ```

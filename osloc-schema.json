@@ -1,3 +1,4 @@
+
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
 
@@ -16,25 +17,21 @@
             "^EITHER$": {
                 "patternProperties": {
                     "^[0-9]*$": {
-                        "patternProperties": {
-                            "^OR$": {
-                                "patternProperties": {
-                                    "^[0-9]*$": {
-                                        "$ref": "#/obligations"
-                                    }
-                                },
-                                "additionalProperties": false
-                            },
-                            "^(ATTRIBUTE|EITHER|EITHER IF|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
-                                "patternProperties": {
-                                    ".*": {
-                                        "$ref": "#/obligations"
-                                    }
-                                },
-                                "additionalProperties": false
-                            }
+                        "required": ["OR"],
+                        "not": {
+                           "required": ["OR IF"]
                         },
-                        "additionalProperties": false
+                        "property": {
+                           "$ref": "#/obligations"
+                        }
+                    }
+                },
+                "additionalProperties": false
+            },
+            "^OR$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "$ref": "#/obligations"
                     }
                 },
                 "additionalProperties": false
@@ -44,47 +41,32 @@
                     "^[0-9]*$": {
                         "patternProperties": {
                             ".*": {
-                                "patternProperties": {
-                                    "^(ATTRIBUTE|EITHER|EITHER IF|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
-                                        "patternProperties": {
-                                            ".*": {
-                                                "$ref": "#/obligations"
-                                            }
-                                        },
-                                        "additionalProperties": false
-                                    },
-                                    "^OR IF$": {
-                                        "patternProperties": {
-                                            "^[0-9]*": {
-                                                "patternProperties": {
-                                                    ".*": {
-                                                        "patternProperties": {
-                                                            "^(ATTRIBUTE|EITHER|EITHER IF|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
-                                                                "patternProperties": {
-                                                                    ".*": {
-                                                                        "$ref": "#/obligations"
-                                                                    }
-                                                                },
-                                                            "additionalProperties": false
-                                                            }
-                                                        },
-                                                    "additionalProperties": false
-                                                    }
-                                                },
-                                                "additionalProperties": false
-                                            }
-                                        },
-                                        "additionalProperties": false
-                                    }
-                                },
-                                "additionalProperties": false
+                               "required": ["OR IF"],
+                               "not": {
+                                   "required": ["OR"]
+                               },
+                               "property": {
+                                   "$ref": "#/obligations"
+                               }
                             }
-                        }
+                        },
+                        "additionalProperties": false
                     }
-                },
-                "additionalProperties": false
+                }
             },
-            "^(ATTRIBUTE|EXCEPT IF|IF|OR|OR IF|YOU MUST|YOU MUST NOT)$": {
+            "^OR IF$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "patternProperties": {
+                            ".*": {
+                                "$ref": "#/obligations"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "^(ATTRIBUTE|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
                 "patternProperties": {
                     ".*": {
                         "$ref": "#/obligations"
@@ -96,61 +78,66 @@
         "additionalProperties": false
     },
 
-    "type": "object",
-    "patternProperties": {
-        "^[0-9A-Za-z\\.| -]*$": {
-            "required": ["USE CASE"],
-            "type": "object",
-            "properties": {
-                "USE CASE": {
-                    "type": ["string", "object"],
-                    "patternProperties": {
-                        "^.* ([Dd]elivery|service).*$": {
-                            "$ref": "#/obligations"
-                        }
+    "license": {
+        "type": "object",
+        "patternProperties": {
+            "^[0-9A-Za-z\\.| -]*$": {
+                "required": ["USE CASE"],
+                "type": "object",
+                "properties": {
+                    "USE CASE": {
+                        "type": ["string", "object"],
+                        "patternProperties": {
+                            "^.* ([Dd]elivery|service).*$": {
+                                "$ref": "#/obligations"
+                            }
+                        },
+                        "additionalProperties": false
                     },
-                    "additionalProperties": false
-                },
-                "COMPATIBILITY": {
-                    "type": ["string", "array"]
-                },
-                "DEPENDING COMPATIBILITY": {
-                    "type": ["string", "array"]
-                },
-                "INCOMPATIBILITY": {
-                    "type": ["string", "array"]
-                },
-                "INCOMPATIBLE LICENSES": {
-                    "type": ["string", "array"]
-                },
-                "COPYLEFT LICENSES": {
-                    "type": ["string", "array"]
-                },
-                "COPYLEFT CLAUSE": {
-                    "oneOf": [{
-                        "type": "string",
-                        "$ref": "#/copyrightclause"
-                    },{
-                        "type": "array",
-                        "items": {
+                    "COMPATIBILITY": {
+                        "type": ["string", "array"]
+                    },
+                    "DEPENDING COMPATIBILITY": {
+                        "type": ["string", "array"]
+                    },
+                    "INCOMPATIBILITY": {
+                        "type": ["string", "array"]
+                    },
+                    "INCOMPATIBLE LICENSES": {
+                        "type": ["string", "array"]
+                    },
+                    "COPYLEFT LICENSES": {
+                        "type": ["string", "array"]
+                    },
+                    "COPYLEFT CLAUSE": {
+                        "oneOf": [{
+                            "type": "string",
                             "$ref": "#/copyrightclause"
-                        }
-                    }]
-                },
-                "PATENT HINTS": {
-                    "oneOf": [{
-                        "type": "string",
-                        "$ref": "#/patenthints"
-                    },{
-                        "type": "array",
-                        "items": {
+                        },{
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/copyrightclause"
+                            }
+                        }]
+                    },
+                    "PATENT HINTS": {
+                        "oneOf": [{
+                            "type": "string",
                             "$ref": "#/patenthints"
-                        }
-                    }]
-                }
-            },
+                        },{
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/patenthints"
+                            }
+                        }]
+                    }
+                },
             "additionalProperties": false
-        }
+            }
+        },
+        "additionalProperties": false
     },
-    "additionalProperties": false
+
+    "type": "object",
+    "$ref": "#/license"
 }

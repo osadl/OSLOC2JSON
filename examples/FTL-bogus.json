@@ -1,0 +1,33 @@
+{
+    "FTL": {
+        "USE CASE": {
+            "Binary delivery": {
+                "YOU MUST": {
+                    "Credit FreeType Team": {},
+                    "Credit In Documentation FreeType Team": {}
+                },
+                "YOU MUST NOT": {
+                    "Promote": {}
+                }
+            },
+            "Source code delivery": {
+                "OF": {
+                    "Software modification": {
+                        "YOU MUST": {
+                            "Provide Modification report": {}
+                        }
+                    }
+                },
+                "YOU MUST": {
+                    "Credit FreeType Team": {},
+                    "Forward Copyright notices": {},
+                    "Forward License text": {}
+                },
+                "YOU MUST NOT": {
+                    "Modify License text": {},
+                    "Promote": {}
+                }
+            }
+        }
+    }
+}
