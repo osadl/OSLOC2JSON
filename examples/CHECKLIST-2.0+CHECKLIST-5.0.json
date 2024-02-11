@@ -1,5 +1,5 @@
 {
-    "CHECKLIST-2.0|CHECKLIST-4.0": {
+    "CHECKLIST-2.0|CHECKLIST-5.0": {
         "COPYLEFT CLAUSE": "No",
         "PATENT HINTS": "No",
         "USE CASE": {
@@ -33,25 +33,61 @@
                         "YOU MUST NOT": {
                             "Promote": {}
                         }
-                    },
-                    "3": {
-                        "OR": {
-                            "1": {
-                                "YOU MUST": {
-                                    "Provide Delayed source code delivery": {}
+                    }
+                },
+                "EITHER IF": {
+                    "1": {
+                        "Condition1": {
+                            "OR IF": {
+                                "1": {
+                                    "Condition2": {
+                                        "YOU MUST": {
+                                            "Provide Delayed source code delivery": {}
+                                        }
+                                    }
+                                },
+                                "2": {
+                                    "Condition3": {
+                                        "YOU MUST": {
+                                            "Provide Source code Via Internet": {}
+                                        }
+                                    }
                                 }
                             },
-                            "2": {
-                                "YOU MUST": {
-                                    "Provide Source code Via Internet": {}
+                            "YOU MUST": {
+                                "Distribute Source code In Product": {
+                                    "ATTRIBUTE": {
+                                        "Customary medium": {},
+                                        "Machine-readable": {}
+                                    }
                                 }
                             }
-                        },
-                        "YOU MUST": {
-                            "Distribute Source code In Product": {
-                                "ATTRIBUTE": {
-                                    "Customary medium": {},
-                                    "Machine-readable": {}
+                        }
+                    },
+                    "2": {
+                        "Condition4": {
+                            "OR IF": {
+                                "1": {
+                                    "Condition5": {
+                                        "YOU MUST": {
+                                            "Provide Delayed source code delivery": {}
+                                        }
+                                    }
+                                },
+                                "2": {
+                                    "Condition6": {
+                                        "YOU MUST": {
+                                            "Provide Source code Via Internet": {}
+                                        }
+                                    }
+                                }
+                            },
+                            "YOU MUST": {
+                                "Distribute Source code In Product": {
+                                    "ATTRIBUTE": {
+                                        "Customary medium": {},
+                                        "Machine-readable": {}
+                                    }
                                 }
                             }
                         }

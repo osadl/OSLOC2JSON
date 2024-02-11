@@ -25,7 +25,7 @@
                                 },
                                 "additionalProperties": false
                             },
-                            "^(ATTRIBUTE|EITHER IF|EXCEPT IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+                            "^(ATTRIBUTE|EITHER|EITHER IF|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
                                 "patternProperties": {
                                     ".*": {
                                         "$ref": "#/obligations"
@@ -39,7 +39,52 @@
                 },
                 "additionalProperties": false
             },
-            "^(ATTRIBUTE|EITHER IF|EXCEPT IF|IF|OR IF|YOU MUST|YOU MUST NOT)$": {
+            "^EITHER IF$": {
+                "patternProperties": {
+                    "^[0-9]*$": {
+                        "patternProperties": {
+                            ".*": {
+                                "patternProperties": {
+                                    "^(ATTRIBUTE|EITHER|EITHER IF|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
+                                        "patternProperties": {
+                                            ".*": {
+                                                "$ref": "#/obligations"
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    "^OR IF$": {
+                                        "patternProperties": {
+                                            "^[0-9]*": {
+                                                "patternProperties": {
+                                                    ".*": {
+                                                        "patternProperties": {
+                                                            "^(ATTRIBUTE|EITHER|EITHER IF|EXCEPT IF|IF|YOU MUST|YOU MUST NOT)$": {
+                                                                "patternProperties": {
+                                                                    ".*": {
+                                                                        "$ref": "#/obligations"
+                                                                    }
+                                                                },
+                                                            "additionalProperties": false
+                                                            }
+                                                        },
+                                                    "additionalProperties": false
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            },
+            "^(ATTRIBUTE|EXCEPT IF|IF|OR|OR IF|YOU MUST|YOU MUST NOT)$": {
                 "patternProperties": {
                     ".*": {
                         "$ref": "#/obligations"

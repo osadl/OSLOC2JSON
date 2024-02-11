@@ -1,4 +1,3 @@
-
 COMPATIBILITY blessing | EPL-2.0, GPL-2.0-only, MPL-2.0
 COMPATIBILITY BSD-2-Clause | EPL-2.0, GPL-2.0-only, MPL-2.0
 COMPATIBILITY BSD-2-Clause-Patent | EPL-2.0, GPL-2.0-only, MPL-2.0
@@ -92,6 +91,15 @@ USE CASE Binary delivery | EPL-2.0, GPL-2.0-only, MPL-2.0
 	YOU MUST Provide Warranty disclaimer | GPL-2.0-only
 		ATTRIBUTE Appropriately | GPL-2.0-only
 		ATTRIBUTE Highlighted | GPL-2.0-only
+	EITHER
+		YOU MUST Include Source code | EPL-2.0
+	OR
+		YOU MUST Provide Written offer | EPL-2.0, GPL-2.0-only, (Provide Delayed source code delivery): EPL-2.0
+			ATTRIBUTE Reasonable | EPL-2.0
+			EITHER
+				ATTRIBUTE Customary medium | EPL-2.0
+			OR
+				ATTRIBUTE Via Internet | EPL-2.0
 	EITHER
 		YOU MUST Provide Source code | GPL-2.0-only
 			ATTRIBUTE Customary medium | GPL-2.0-only

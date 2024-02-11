@@ -162,113 +162,53 @@
             "USE CASE": {
                 "Binary delivery": {
                     "EITHER IF": {
-                        "1": {
-                            "Binary delivery On Customary medium OR Installed": {
-                                "EITHER": {
-                                    "1": {
-                                        "OR": {
-                                            "1": {
-                                                "YOU MUST": {
-                                                    "Provide Written offer": {
-                                                        "ATTRIBUTE": {
-                                                            "Delayed source code delivery": {
-                                                                "ATTRIBUTE": {
-                                                                    "Documented format": {},
-                                                                    "Including Installation scripts": {},
-                                                                    "Including Tool chain information": {},
-                                                                    "Machine-readable": {}
-                                                                },
-                                                                "EITHER": {
-                                                                    "1": {
-                                                                        "ATTRIBUTE": {
-                                                                            "Customary medium": {},
-                                                                            "No profit": {}
-                                                                        },
-                                                                        "OR": {
-                                                                            "1": {
-                                                                                "ATTRIBUTE": {
-                                                                                    "No charge": {},
-                                                                                    "Via Internet": {}
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            },
-                                                            "Duration As long as product is supported": {},
-                                                            "Duration At least 3 years": {}
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "YOU MUST": {
-                                            "Provide Source code": {
-                                                "ATTRIBUTE": {
-                                                    "Customary medium": {},
-                                                    "Documented format": {},
-                                                    "Including Installation scripts": {},
-                                                    "Including Tool chain information": {},
-                                                    "Machine-readable": {}
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                "OR IF": {
-                                    "1": {
-                                        "Binary delivery Via Internet": {
+                        "Binary delivery On Customary medium OR Installed": {
+                            "EITHER": {
+                                "1": {
+                                    "OR": {
+                                        "1": {
                                             "YOU MUST": {
-                                                "Provide Source code": {
+                                                "Provide Written offer": {
                                                     "ATTRIBUTE": {
-                                                        "Documented format": {},
-                                                        "Duration As long as needed": {},
-                                                        "Including Installation scripts": {},
-                                                        "Including Tool chain information": {},
-                                                        "Machine-readable": {},
-                                                        "Via Internet": {}
-                                                    },
-                                                    "EITHER IF": {
-                                                        "1": {
-                                                            "Source code On same server": {
-                                                                "ATTRIBUTE": {
-                                                                    "Equivalent": {},
-                                                                    "No charge": {}
-                                                                },
-                                                                "OR IF": {
-                                                                    "1": {
-                                                                        "Source code On other server": {
+                                                        "Delayed source code delivery": {
+                                                            "ATTRIBUTE": {
+                                                                "Documented format": {},
+                                                                "Including Installation scripts": {},
+                                                                "Including Tool chain information": {},
+                                                                "Machine-readable": {}
+                                                            },
+                                                            "EITHER": {
+                                                                "1": {
+                                                                    "ATTRIBUTE": {
+                                                                        "Customary medium": {},
+                                                                        "No profit": {}
+                                                                    },
+                                                                    "OR": {
+                                                                        "1": {
                                                                             "ATTRIBUTE": {
-                                                                                "Equivalent": {},
-                                                                                "No charge": {}
-                                                                            },
-                                                                            "YOU MUST": {
-                                                                                "Reference Source code": {}
+                                                                                "No charge": {},
+                                                                                "Via Internet": {}
                                                                             }
                                                                         }
                                                                     }
                                                                 }
                                                             }
-                                                        }
+                                                        },
+                                                        "Duration As long as product is supported": {},
+                                                        "Duration At least 3 years": {}
                                                     }
                                                 }
                                             }
                                         }
                                     },
-                                    "2": {
-                                        "Binary delivery Via peer-to-peer transmission": {
-                                            "YOU MUST": {
-                                                "Reference Source code": {
-                                                    "ATTRIBUTE": {
-                                                        "Documented format": {},
-                                                        "Duration As long as needed": {},
-                                                        "Including Installation scripts": {},
-                                                        "Including Tool chain information": {},
-                                                        "Machine-readable": {},
-                                                        "No charge": {},
-                                                        "Via Internet": {}
-                                                    }
-                                                }
+                                    "YOU MUST": {
+                                        "Provide Source code": {
+                                            "ATTRIBUTE": {
+                                                "Customary medium": {},
+                                                "Documented format": {},
+                                                "Including Installation scripts": {},
+                                                "Including Tool chain information": {},
+                                                "Machine-readable": {}
                                             }
                                         }
                                     }
@@ -349,6 +289,56 @@
                                 "Installation Is NOT Feasible": {
                                     "YOU MUST": {
                                         "Provide Installation information": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "OR IF": {
+                        "Binary delivery Via Internet": {
+                            "YOU MUST": {
+                                "Provide Source code": {
+                                    "ATTRIBUTE": {
+                                        "Documented format": {},
+                                        "Duration As long as needed": {},
+                                        "Including Installation scripts": {},
+                                        "Including Tool chain information": {},
+                                        "Machine-readable": {},
+                                        "Via Internet": {}
+                                    },
+                                    "EITHER IF": {
+                                        "Source code On same server": {
+                                            "ATTRIBUTE": {
+                                                "Equivalent": {},
+                                                "No charge": {}
+                                            }
+                                        }
+                                    },
+                                    "OR IF": {
+                                        "Source code On other server": {
+                                            "ATTRIBUTE": {
+                                                "Equivalent": {},
+                                                "No charge": {}
+                                            },
+                                            "YOU MUST": {
+                                                "Reference Source code": {}
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "Binary delivery Via peer-to-peer transmission": {
+                            "YOU MUST": {
+                                "Reference Source code": {
+                                    "ATTRIBUTE": {
+                                        "Documented format": {},
+                                        "Duration As long as needed": {},
+                                        "Including Installation scripts": {},
+                                        "Including Tool chain information": {},
+                                        "Machine-readable": {},
+                                        "No charge": {},
+                                        "Via Internet": {}
                                     }
                                 }
                             }

@@ -357,7 +357,14 @@ USE CASE Binary delivery Of Combined work | LGPL-3.0-only
 			YOU MUST Enable Relinking With Modified library | LGPL-3.0-only
 	EXCEPT IF Permitted Non-permissive additional terms | LGPL-3.0-only
 		YOU MUST NOT Restrict Granted rights | LGPL-3.0-only
-USE CASE Source code delivery Of Combined library OR Binary delivery Of Combined library | LGPL-3.0-only
+USE CASE Binary delivery Of Linked work With Header files Of Library Included In Linked work | LGPL-3.0-only
+	IF Substantial work | LGPL-3.0-only
+		YOU MUST Notify Library | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		YOU MUST Provide License announcement | LGPL-3.0-only
+			ATTRIBUTE Highlighted | LGPL-3.0-only
+		YOU MUST Provide License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+USE CASE Source code delivery Of Combined library | LGPL-3.0-only
 	YOU MUST Provide Library | LGPL-3.0-only
 		ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
 		ATTRIBUTE Uncombined | LGPL-3.0-only
@@ -368,10 +375,14 @@ USE CASE Source code delivery Of Combined library OR Binary delivery Of Combined
 		YOU MUST NOT Restrict Granted rights | LGPL-3.0-only
 	YOU MUST NOT Litigate Circumvention Of Technological measures | LGPL-3.0-only
 	YOU MUST NOT Sublicense | LGPL-3.0-only
-USE CASE Binary delivery Of Linked work With Header files Of Library Included In Linked work | LGPL-3.0-only
-	IF Substantial work | LGPL-3.0-only
-		YOU MUST Notify Library | LGPL-3.0-only
-			ATTRIBUTE Highlighted | LGPL-3.0-only
-		YOU MUST Provide License announcement | LGPL-3.0-only
-			ATTRIBUTE Highlighted | LGPL-3.0-only
-		YOU MUST Provide License text GPL-3.0-only AND LGPL-3.0-only | LGPL-3.0-only
+USE CASE Binary delivery Of Combined library | LGPL-3.0-only
+	YOU MUST Provide Library | LGPL-3.0-only
+		ATTRIBUTE Original license LGPL-3.0-only | LGPL-3.0-only
+		ATTRIBUTE Uncombined | LGPL-3.0-only
+	YOU MUST Provide License notices | LGPL-3.0-only
+	YOU MUST Reference Library | LGPL-3.0-only
+		ATTRIBUTE Uncombined | LGPL-3.0-only
+	EXCEPT IF Permitted Non-permissive additional terms | LGPL-3.0-only
+		YOU MUST NOT Restrict Granted rights | LGPL-3.0-only
+	YOU MUST NOT Litigate Circumvention Of Technological measures | LGPL-3.0-only
+	YOU MUST NOT Sublicense | LGPL-3.0-only

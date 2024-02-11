@@ -24,8 +24,6 @@ try:
 except ImportError:
     pass
 
-FIXMULTIEITHERIF = False
-
 def sanitizelist(l):
     """ Remove duplicates, sort case-unsensitive alphabetically, remove singular form, if plural of same term exists """
     sane = sortlist(list(dict.fromkeys(l)))
@@ -65,7 +63,7 @@ def expandor(d, parent):
     if isinstance(d, dict):
         for k, v in d.copy().items():
             if isinstance(v, dict):
-                if (parent == 'USE CASE' or parent == 'IF') and k.find(' OR ') != -1:
+                if (parent == 'USE CASE') and k.find(' OR ') != -1:
                     for k1 in k.split(' OR '):
                         d[k1] = v
                     d.pop(k)
@@ -201,11 +199,10 @@ def addlrefs(v, lrefs, parent = {}, tag = '', prefix = ''):
     if isinstance(v, dict):
         for k, v2 in v.copy().items():
             if k.isdigit() and (prefix.endswith("['EITHER']") or prefix.endswith("['EITHER IF']")):
-                oldv2 = v[k]
-                v.pop(k)
-                k = '*'
-                v[k] = oldv2
-            p2 = "{}['{}']".format(prefix, k)
+                wildk = '*'
+            else:
+                wildk = k
+            p2 = "{}['{}']".format(prefix, wildk)
             found = []
             if p2 in lrefs:
                 for lic in lrefs[p2]:
@@ -378,17 +375,19 @@ def uniq(l):
                  if not k1.isdigit() or not k2.isdigit():
                      continue
                  if v1 == v2:
-                     l.pop(k2)
+                     if int(k1) > int(k2):
+                         l.pop(k1)
+                     else:
+                         l.pop(k2)
         for k in l:
             if isinstance(l[k], dict):
                 uniq(l[k])
 
 printnonl = sys.stdout.write
-def back2osloc(l, indent, key, ineitheror, previous, eitherorifenum, extraindent):
-
+def back2osloc(l, indent, key, ineitheror, ineitheriforif, previous, eitheriforifenum, extraindent, version):
     if isinstance(l, dict):
         count = 0
-        if previous in ['', 'ATTRIBUTE', 'IF', 'YOU MUST', 'YOU MUST NOT']:
+        if previous in ['', 'ATTRIBUTE', 'EXCEPT IF', 'IF', 'YOU MUST', 'YOU MUST NOT']:
             l = sortdict(l)
         if 'OR' in l:
             newl = {}
@@ -399,6 +398,15 @@ def back2osloc(l, indent, key, ineitheror, previous, eitherorifenum, extraindent
                 if e == 'OR':
                     newl[e] = l[e]
             l = newl
+        if version > 1 and 'OR IF' in l:
+            newl = {}
+            for e in l:
+                if e != 'OR IF':
+                    newl[e] = l[e]
+            for e in l:
+                if e == 'OR IF':
+                    newl[e] = l[e]
+            l = newl
         for e in l:
             if indent == 0 and e in ['COMPATIBILITY', 'COPYLEFT CLAUSE', 'DEPENDING COMPATIBILITY', 'INCOMPATIBILITY', 'INCOMPATIBLE LICENSES', 'PATENT HINTS']:
                 if e in ['COPYLEFT CLAUSE', 'PATENT HINTS']:
@@ -406,30 +414,58 @@ def back2osloc(l, indent, key, ineitheror, previous, eitherorifenum, extraindent
                         continue
                 if isinstance(l[e], list):
                     for v in l[e]:
-                        print()
+                        if previous != '':
+                            print()
                         printnonl(e + ' ' + v)
+                        previous = e
                 else:
-                    print()
+                    if previous != '':
+                        print()
                     printnonl(e + ' ' + l[e])
+                    previous = e
                 continue
             if indent == 0 and e == 'COPYLEFT LICENSES':
                 continue
-            for k in ineitheror:
+            if version > 1:
+                for k in ineitheriforif.copy():
+                    if k > indent:
+                        ineitheriforif.pop(k)
+                for k in eitheriforifenum.copy():
+                    if k > indent:
+                        eitheriforifenum.pop(k)
+                if e == 'OR IF':
+                    extraindent += 1
+            for k in ineitheror.copy():
                 if k > indent:
-                    ineitheror[k] = ''
+                    ineitheror.pop(k)
             if e == 'OR':
                 indent -= 1
-            if len(ineitheror) > 0 and not e.isdigit() and e != '*' and indent > 0:
-                if indent in ineitheror and ineitheror[indent] != '':
-                    if previous != '1' and previous != '*':
+            if len(ineitheror) > 0 and not e.isdigit() and indent > 0:
+                if indent in ineitheror:
+                    if previous != '1':
                         print()
                         printnonl('\t'*(indent - 1 - extraindent) + ineitheror[indent])
-            if e.isdigit() or e == '*':
+            if version > 1:
+                if len(ineitheriforif) > 0 and not e.isdigit() and indent > 0:
+                    if indent in ineitheriforif:
+                        if indent in eitheriforifenum and eitheriforifenum[indent] != '1' and previous.isdigit():
+                            print()
+                            printnonl('\t'*(indent - 1 - extraindent) + ineitheriforif[indent] + ' ')
+
+            if e.isdigit():
                 increment = 0
-                ineitheror[indent] = previous
+                if version == 1:
+                    ineitheror[indent] = previous
+                if version > 1:
+                    if previous in ['EITHER', 'OR']:
+                        ineitheror[indent] = previous
+                    if previous in ['EITHER IF', 'OR IF']:
+                        ineitheriforif[indent] = previous
+                        eitheriforifenum[indent] = e
             else:
                 if not re.search('[a-z]', e):
-                    print()
+                    if previous != '':
+                        print()
                     if e not in ['EITHER', 'OR']:
                         appendchar = ' '
                     else:
@@ -455,21 +491,21 @@ def back2osloc(l, indent, key, ineitheror, previous, eitherorifenum, extraindent
                                 else:
                                     printnonl('\t'*(indent - 1 - extraindent) + key + ' ' + e)
                     increment = 0
-            back2osloc(l[e], indent + increment, e, ineitheror, e, eitherorifenum, extraindent)
+            back2osloc(l[e], indent + increment, e, ineitheror, ineitheriforif, e, eitheriforifenum, extraindent, version)
             if e == 'OR':
                 indent += 1
-            count = count + 1
+            count += 1
     elif isinstance(l, list):
         count = 0
         for e in l.copy():
             if isinstance(e, dict):
-                back2osloc(e, indent, key, ineitheror, '', eitherorifenum, extraindent)
+                back2osloc(e, indent, key, ineitheror, ineitheriforif, '', eitheriforifenum, extraindent, version)
             else:
                 if count == 0:
                     printnonl(e)
                 else:
                     print()
-                    printnonl('\t'*(indent - extraindent) + key + ' ' + e)
+                    printnonl('\t'*(indent - 1 - extraindent) + key + ' ' + e)
                 count += 1
     elif isinstance(l, str):
         printnonl(l)
@@ -549,7 +585,7 @@ def getchain(obj, tabs, result):
     if result != '' and lastkey != '':
        result += '.'
     result += lastkey
-    if re.search('[a-z]', lastkey):
+    if re.search('[a-z]', lastkey) or (lastkey == '1' and result.split('.')[-2] == 'OR'):
         tabs -= 1
     if isinstance(obj, dict) and lastkey != '':
         return getchain(obj[lastkey], tabs, result)
@@ -566,8 +602,10 @@ def osloc2json(licensefilenames, outfilename, json, args):
     show = args.show
     unify = args.unify
     verbose = args.verbose
-
-    global FIXMULTIEITHERIF
+    if args.v1:
+        version = 1
+    else:
+        version = 2
 
     addobligations = {}
 
@@ -641,6 +679,9 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 jsondata[jsonlicensename] = data[jsonlicensename]
             lineno = 0
         else:
+            if licensename in jsondata:
+                lineno = 0
+                continue
             osloc = oslocfile.read()
             oslocfile.close()
             jsondata[licensename] = {}
@@ -739,12 +780,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             break
 
                         if tag == 'EITHER':
-                            flatchain = getchain(data, tabs, '')
-                            if flatchain not in globaleitherchains:
-                                globaleitherchains[flatchain] = 1
+                            totalchain = getchain(data, tabs, '') + '.' + tag
+                            if totalchain not in globaleitherchains:
+                                globaleitherchains[totalchain] = 1
                             else:
-                                globaleitherchains[flatchain] += 1
-                            text = str(globaleitherchains[flatchain])
+                                globaleitherchains[totalchain] += 1
+                            text = str(globaleitherchains[totalchain])
                             for k in orlevels.copy():
                                 if tabs <= k:
                                     orlevels.pop(k)
@@ -768,15 +809,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                         if eitherextratabs > 0:
                                             eitherextratabs -= 1
 
-                        if FIXMULTIEITHERIF:
+                        if version > 1:
                             if tag == 'EITHER IF':
                                 eitheroriftext = text
-                                flatchain = getchain(data, tabs, '')
-                                if flatchain not in globaleitherifchains:
-                                    globaleitherifchains[flatchain] = 1
+                                totalchain = getchain(data, tabs, '') + '.' + tag
+                                if totalchain in globaleitherifchains:
+                                    globaleitherifchains[totalchain] += 1
                                 else:
-                                    globaleitherifchains[flatchain] += 1
-                                text = str(globaleitherifchains[flatchain])
+                                    globaleitherifchains[totalchain] = 1
+                                text = str(globaleitherifchains[totalchain])
                                 for k in oriflevels.copy():
                                     if tabs <= k:
                                         oriflevels.pop(k)
@@ -808,7 +849,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             if devel:
                                 print(parents[tabs + eitherextratabs + eitherifextratabs][tag])
 
-                        if FIXMULTIEITHERIF:
+                        if version > 1:
                             if tag in ['EITHER IF', 'OR IF']:
                                 parents[tabs + eitherextratabs + eitherifextratabs + 1] = parents[tabs + eitherextratabs + eitherifextratabs][tag][text][eitheroriftext] = {}
                                 if devel:
@@ -1001,6 +1042,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 optjson(new)
 
             uniq(new)
+            uniq(newrefs)
 
             if len(copyleft_licenses) > 0:
                 new['COPYLEFT LICENSES'] = copyleft_licenses
@@ -1018,11 +1060,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
             deepcopy(l, jsondata)
             if len(jsondata.keys()) == 1:
                 l = l[list(jsondata.keys())[0]]
-        back2osloc(l, 0, '', {}, '', {}, 0)
+        back2osloc(l, 0, '', {}, {}, '', {}, 0, version)
         print()
 
     jsonfile = open(outfilename, 'w')
     json.dump(jsondata, jsonfile, indent = 4, sort_keys = True)
+    jsonfile.write('\n')
     jsonfile.close()
 
     if show:
@@ -1055,6 +1098,10 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
       default = 'osloc.json',
       nargs='?',
       help = 'name of output file for multiple licenses, has no effect if single license, default "osloc.json"')
+    parser.add_argument('-1', '--v1',
+      action = 'store_true',
+      default = False,
+      help = 'use version 1 of the JSON data structure')
     parser.add_argument('-d', '--devel',
       action = 'store_true',
       default = False,
@@ -1117,7 +1164,7 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
             args = parser.parse_args()
         filenames = args.licensefilenames
 
-    if not args.jsonvalidate and len(filenames) == 1 and '+' in filenames[0]:
+    if not args.jsonvalidate and len(filenames) == 1 and '+' in filenames[0] and os.path.splitext(filenames[0])[1] != '.json':
         dirname = os.path.dirname(filenames[0])
         if len(dirname) > 0:
             dirname += '/'
@@ -1131,6 +1178,10 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
         splitfilenames = [dirname + s + '.txt' for s in splitfilenames]
         filenames = splitfilenames
 
+    if args.v1:
+        one = '-v1'
+    else:
+        one = ''
     exitcode = 0
     if args.profiling:
         from pyinstrument import Profiler
@@ -1140,7 +1191,8 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
     else:
         if args.jsonvalidate:
             import fastjsonschema
-            schema = open('osloc-schema.json', 'r')
+            schema = 'osloc-schema.json'
+            schema = open('osloc-schema' + one + '.json', 'r')
             schemadata = json.load(schema)
             validator = fastjsonschema.compile(schemadata)
             for filename in filenames:

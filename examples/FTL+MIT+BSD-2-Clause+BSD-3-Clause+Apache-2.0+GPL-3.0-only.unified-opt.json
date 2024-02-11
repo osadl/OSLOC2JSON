@@ -1,5 +1,5 @@
 {
-    "GPL-3.0-only|AGPL-3.0-only": {
+    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|Apache-2.0|GPL-3.0-only": {
         "COMPATIBILITY": [
             "Apache-2.0",
             "Artistic-2.0",
@@ -15,24 +15,40 @@
             "EFL-2.0",
             "FSFAP",
             "FSFULLR",
+            "GPL-1.0-or-later",
+            "GPL-2.0-or-later",
+            "GPL-3.0-only",
+            "GPL-3.0-or-later",
             "IBM-pibs",
             "ICU",
             "ISC",
+            "LGPL-2.1-only",
+            "LGPL-2.1-or-later",
+            "LGPL-3.0-only",
+            "LGPL-3.0-or-later",
             "Libpng",
             "MIT",
             "MPL-2.0",
             "NTP",
             "Unlicense",
             "UPL-1.0",
+            "W3C",
+            "W3C-19980720",
+            "W3C-20150513",
             "WTFPL",
             "X11",
             "Zlib",
             "ZPL-2.0"
         ],
-        "COPYLEFT CLAUSE": "Yes",
-        "COPYLEFT LICENSES": [
+        "COPYLEFT CLAUSE": [
+            "No",
+            "Yes"
+        ],
+        "COPYLEFT LICENSES": "GPL-3.0-only",
+        "DEPENDING COMPATIBILITY": [
             "AGPL-3.0-only",
-            "GPL-3.0-only"
+            "AGPL-3.0-or-later",
+            "EPL-2.0"
         ],
         "INCOMPATIBILITY": [
             "Apache-1.0",
@@ -46,11 +62,11 @@
             "XFree86-1.1",
             "zlib-acknowledgement"
         ],
-        "INCOMPATIBLE LICENSES": [
-            "AGPL-3.0-only",
-            "GPL-3.0-only"
+        "INCOMPATIBLE LICENSES": "FTL",
+        "PATENT HINTS": [
+            "No",
+            "Yes"
         ],
-        "PATENT HINTS": "Yes",
         "USE CASE": {
             "Binary delivery": {
                 "EITHER IF": {
@@ -175,6 +191,9 @@
                     "Combined work With AGPL-3.0-only OR AGPL-3.0-or-later": {
                         "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
                     },
+                    "Service offerings": {
+                        "YOU MUST": "Indemnify Other contributors"
+                    },
                     "Software modification": {
                         "IF": {
                             "Interactive AND Displaying Appropriate legal notices": {
@@ -203,6 +222,25 @@
                                         }
                                     }
                                 }
+                            },
+                            "Work Includes File \"NOTICE\"": {
+                                "EITHER": {
+                                    "1": {
+                                        "OR": {
+                                            "1": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Source code"
+                                            },
+                                            "2": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Documentation"
+                                            },
+                                            "3": {
+                                                "YOU MUST": "Display File \"NOTICE\""
+                                            }
+                                        },
+                                        "YOU MUST": "Provide File \"NOTICE\""
+                                    }
+                                },
+                                "YOU MUST": "Delete Irrelevant parts"
                             }
                         },
                         "YOU MUST": {
@@ -227,35 +265,24 @@
                     }
                 },
                 "YOU MUST": {
-                    "Provide Copyright notices": {
+                    "Credit FreeType Team": {},
+                    "Credit In Documentation FreeType Team": {},
+                    "Provide Copyright notices In Documentation OR Distribution material": {
                         "ATTRIBUTE": [
                             "Appropriately",
                             "Highlighted"
                         ]
                     },
-                    "Provide License text": {}
+                    "Provide License text In Documentation OR Distribution material": {},
+                    "Provide Warranty disclaimer In Documentation OR Distribution material": {}
                 },
                 "YOU MUST NOT": [
                     "Litigate Circumvention Of Technological measures",
                     "Modify License notices",
                     "Modify Warranty disclaimer",
+                    "Promote",
                     "Sublicense"
                 ]
-            },
-            "Network service": {
-                "IF": {
-                    "Software modification": {
-                        "YOU MUST": {
-                            "Provide Source code": {
-                                "ATTRIBUTE": [
-                                    "Customary method",
-                                    "No charges",
-                                    "Via Internet"
-                                ]
-                            }
-                        }
-                    }
-                }
             },
             "Source code delivery": {
                 "EXCEPT IF": {
@@ -266,6 +293,9 @@
                 "IF": {
                     "Combined work With AGPL-3.0-only OR AGPL-3.0-or-later": {
                         "YOU MUST": "Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later"
+                    },
+                    "Service offerings": {
+                        "YOU MUST": "Indemnify Other contributors"
                     },
                     "Software modification": {
                         "IF": {
@@ -287,9 +317,32 @@
                                         "YOU MUST": "Include Non-permissive additional terms In Source code"
                                     }
                                 }
+                            },
+                            "Work Includes File \"NOTICE\"": {
+                                "EITHER": {
+                                    "1": {
+                                        "OR": {
+                                            "1": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Source code"
+                                            },
+                                            "2": {
+                                                "YOU MUST": "Provide File \"NOTICE\" In Documentation"
+                                            },
+                                            "3": {
+                                                "YOU MUST": "Display File \"NOTICE\""
+                                            }
+                                        },
+                                        "YOU MUST": "Provide File \"NOTICE\""
+                                    }
+                                },
+                                "YOU MUST": "Delete Irrelevant parts"
                             }
                         },
                         "YOU MUST": {
+                            "Forward Attribution notices": {},
+                            "Forward Copyright notices": {},
+                            "Forward Patent notices": {},
+                            "Forward Trademark notices": {},
                             "Grant License": {
                                 "ATTRIBUTE": "Original license"
                             },
@@ -297,25 +350,29 @@
                                 "ATTRIBUTE": "Highlighted"
                             },
                             "Provide Modification date": {},
-                            "Provide Modification notice": {
+                            "Provide Modification report": {
                                 "ATTRIBUTE": "Highlighted"
                             }
                         }
                     }
                 },
                 "YOU MUST": {
+                    "Credit FreeType Team": {},
                     "Provide Copyright notices": {
                         "ATTRIBUTE": [
                             "Appropriately",
                             "Highlighted"
                         ]
                     },
-                    "Provide License text": {}
+                    "Provide License text": {},
+                    "Provide Warranty disclaimer": {}
                 },
                 "YOU MUST NOT": [
                     "Litigate Circumvention Of Technological measures",
                     "Modify License notices",
+                    "Modify License text",
                     "Modify Warranty disclaimer",
+                    "Promote",
                     "Sublicense"
                 ]
             }

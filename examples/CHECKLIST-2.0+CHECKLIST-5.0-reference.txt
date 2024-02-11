@@ -1,0 +1,38 @@
+USE CASE Binary delivery
+	EITHER
+		YOU MUST Distribute Source code In Product
+	OR
+		YOU MUST Provide Delayed source code delivery
+	OR
+		YOU MUST Provide Source code Via Internet
+	EITHER
+		YOU MUST NOT Promote
+	OR
+		YOU MUST Credit Original authors
+	EITHER IF Condition1
+		YOU MUST Distribute Source code In Product
+			ATTRIBUTE Customary medium
+			ATTRIBUTE Machine-readable
+	OR IF Condition2
+		YOU MUST Provide Delayed source code delivery
+	OR IF Condition3
+		YOU MUST Provide Source code Via Internet
+	EITHER IF Condition4
+		YOU MUST Distribute Source code In Product
+			ATTRIBUTE Customary medium
+			ATTRIBUTE Machine-readable
+	OR IF Condition5
+		YOU MUST Provide Delayed source code delivery
+	OR IF Condition6
+		YOU MUST Provide Source code Via Internet
+USE CASE Source code delivery
+	EITHER
+		YOU MUST Mark Source code modification
+	OR
+		YOU MUST Provide Patch
+	OR
+		YOU MUST Provide Modification report
+	EITHER
+		YOU MUST NOT Promote
+	OR
+		YOU MUST Credit Original authors In Distribution material

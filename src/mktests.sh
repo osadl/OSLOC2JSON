@@ -1,37 +1,68 @@
 #!/bin/bash
 
+# Forward conversion v1
+./src/osloc2json.py -1 examples/GPL-3.0-or-later.txt
+if ! cmp examples/GPL-3.0-or-later.json examples/GPL-3.0-or-later-reference-v1.json
+then
+  exit 1
+fi
+rm -f examples/GPL-3.0-or-later.json
+
+# Reverse conversion v1
+./src/osloc2json.py -1r examples/GPL-3.0-or-later.txt >recreated.checklist
+mv recreated.checklist GPL-3.0-or-later.txt
+./src/osloc2json.py -1 GPL-3.0-or-later.txt
+if ! cmp GPL-3.0-or-later.json examples/GPL-3.0-or-later-reference-v1.json
+then
+  diff -u GPL-3.0-or-later.json examples/GPL-3.0-or-later-reference-v1.json
+  exit 1
+fi
+rm -f examples/GPL-3.0-or-later.json GPL-3.0-or-later.*
+
+# Forward conversion v2
+./src/osloc2json.py examples/GPL-3.0-or-later.txt
+if ! cmp examples/GPL-3.0-or-later.json examples/GPL-3.0-or-later-reference.json
+then
+  exit 1
+fi
+rm -f examples/GPL-3.0-or-later.json
+
+# Reverse conversion v2
+./src/osloc2json.py -r examples/GPL-3.0-or-later.txt >recreated.checklist
+mv recreated.checklist GPL-3.0-or-later.txt
+./src/osloc2json.py GPL-3.0-or-later.txt
+if ! cmp examples/GPL-3.0-or-later-reference.json GPL-3.0-or-later.json
+then
+  exit 1
+fi
+rm -f examples/GPL-3.0-or-later.json GPL-3.0-or-later.*
+
+# Merging v1
+./src/osloc2json.py -1 examples/Apache-2.0.txt examples/GPL-3.0-or-later.txt
+if ! cmp examples/Apache-2.0+GPL-3.0-or-later-concatenated-v1.json osloc.json
+then
+  exit 1
+fi
+
+# Merging v2
 ./src/osloc2json.py examples/Apache-2.0.txt examples/GPL-3.0-or-later.txt
 if ! cmp examples/Apache-2.0+GPL-3.0-or-later-concatenated.json osloc.json
 then
   exit 1
 fi
 
-cd examples
-../src/osloc2json.py Apache-2.0+GPL-3.0-or-later
-if ! cmp Apache-2.0+GPL-3.0-or-later-concatenated.json osloc.json
-then
-  exit 1
-fi
-rm -f osloc.json
-
-../src/osloc2json.py -m Apache-2.0+GPL-3.0-or-later
-if ! cmp Apache-2.0+GPL-3.0-or-later.json merged.json
-then
-  exit 1
-fi
-rm -f merged.json
-
-cd - >/dev/null
-
+# Muliple EITHER/OR and EITHER IF/OR IF blocks
 ./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt
 if ! cmp examples/CHECKLIST-2.0.json merged.json
 then
+  diff -u examples/CHECKLIST-2.0.json merged.json
   exit 1
 fi
 
 ./src/osloc2json.py -mo examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt
 if ! cmp examples/CHECKLIST-2.0-opt.json merged.json
 then
+  diff -u examples/CHECKLIST-2.0-opt.json merged.json
   exit 1
 fi
 
@@ -46,6 +77,62 @@ if ! cmp examples/CHECKLIST-2.0+CHECKLIST-4.0.json merged.json
 then
   exit 1
 fi
+mv merged.json CHECKLIST-2.0+CHECKLIST-4.0.json
+./src/osloc2json.py -r CHECKLIST-2.0+CHECKLIST-4.0.json >merged.checklist
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-4.0-reference.txt merged.checklist
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-4.0-reference.txt merged.checklist
+  exit 1
+fi
+rm -f CHECKLIST-2.0+CHECKLIST-4.0.json
+
+./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-5.0.txt
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-5.0.json merged.json
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-5.0.json merged.json
+  exit 1
+fi
+mv merged.json CHECKLIST-2.0+CHECKLIST-5.0.json
+./src/osloc2json.py -r CHECKLIST-2.0+CHECKLIST-5.0.json >merged.checklist
+if ! cmp examples/CHECKLIST-2.0+CHECKLIST-5.0-reference.txt merged.checklist
+then
+  diff -u examples/CHECKLIST-2.0+CHECKLIST-5.0-reference.txt merged.checklist
+  exit 1
+fi
+rm -f CHECKLIST-2.0+CHECKLIST-5.0.json
+
+# OSADL filename split
+cd examples
+
+../src/osloc2json.py -1 Apache-2.0+GPL-3.0-or-later
+if ! cmp Apache-2.0+GPL-3.0-or-later-concatenated-v1.json osloc.json
+then
+  exit 1
+fi
+rm -f osloc.json
+
+../src/osloc2json.py Apache-2.0+GPL-3.0-or-later
+if ! cmp Apache-2.0+GPL-3.0-or-later-concatenated.json osloc.json
+then
+  exit 1
+fi
+rm -f osloc.json
+
+../src/osloc2json.py -1m Apache-2.0+GPL-3.0-or-later
+if ! cmp Apache-2.0+GPL-3.0-or-later-v1.json merged.json
+then
+  exit 1
+fi
+rm -f merged.json
+
+../src/osloc2json.py -m Apache-2.0+GPL-3.0-or-later
+if ! cmp Apache-2.0+GPL-3.0-or-later.json merged.json
+then
+  exit 1
+fi
+rm -f merged.json
+
+cd - >/dev/null
 
 ./src/osloc2json.py -emo examples/FTL.txt examples/MIT.txt
 if ! cmp examples/FTL+MIT.json merged.json
@@ -96,10 +183,17 @@ then
   exit 1
 fi
 
-./src/osloc2json.py -emor examples/GPL-3.0-only.txt examples/LGPL-3.0-only.txt >merged.checklist
+./src/osloc2json.py -mor examples/GPL-3.0-only.txt examples/LGPL-3.0-only.txt >merged.checklist
 if ! cmp examples/GPL-3.0-only+LGPL-3.0-only.json merged.json || ! cmp examples/GPL-3.0-only+LGPL-3.0-only.checklist merged.checklist
 then
   diff -u examples/GPL-3.0-only+LGPL-3.0-only.checklist merged.checklist
+  exit 1
+fi
+
+./src/osloc2json.py -emor examples/GPL-3.0-only.txt examples/LGPL-3.0-only.txt >merged.checklist
+if ! cmp examples/GPL-3.0-only+LGPL-3.0-only.expanded.json merged.json || ! cmp examples/GPL-3.0-only+LGPL-3.0-only.expanded.checklist merged.checklist
+then
+  diff -u examples/GPL-3.0-only+LGPL-3.0-only.expanded.checklist merged.checklist
   exit 1
 fi
 
@@ -140,12 +234,12 @@ then
   exit 1
 fi
 
-#./src/osloc2json.py -emor examples/GPL-3.0-or-later.txt examples/Minpack.txt >merged.checklist
-#if ! cmp examples/GPL-3.0-or-later+Minpack.checklist merged.checklist
-#then
-#  diff -u examples/GPL-3.0-or-later+Minpack.checklist merged.checklist
-#  exit 1
-#fi
+./src/osloc2json.py -emor examples/GPL-3.0-or-later.txt examples/Minpack.txt >merged.checklist
+if ! cmp examples/GPL-3.0-or-later+Minpack.checklist merged.checklist
+then
+  diff -u examples/GPL-3.0-or-later+Minpack.checklist merged.checklist
+  exit 1
+fi
 
 ./src/osloc2json.py -elmur examples/Apache-2.0.txt examples/GPL-2.0-or-later.txt >merged.checklist
 if ! cmp examples/Apache-2.0+GPL-2.0-or-later.upgraded.unified.json merged.json || ! cmp examples/Apache-3.0+GPL-2.0-or-later.upgraded.unified.checklist merged.checklist
@@ -203,12 +297,18 @@ then
   exit 1
 fi
 
-for i in `ls -1 examples/*.json | grep -v concatenated`
+for i in `ls -1 examples/*.json | grep -v concatenated | grep -v examples/GPL-3.0-only+LGPL-3.0-only`
 do
-  ./src/osloc2json.py -jn $i >examples/jsonvalidity
+  if echo $i | grep -q -e -v1
+  then
+    v1=-1
+  else
+    v1=
+  fi
+  ./src/osloc2json.py $v1 -jn $i >examples/jsonvalidity
   if test -s examples/jsonvalidity
   then
-    echo JSON validity checker erroneously detected invalid JSON
+    echo JSON validity checker erroneously detected invalid JSON in file $i
     cat examples/jsonvalidity
     exit 1
   fi

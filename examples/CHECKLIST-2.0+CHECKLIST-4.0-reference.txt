@@ -1,8 +1,6 @@
 USE CASE Binary delivery
 	EITHER
 		YOU MUST Distribute Source code In Product
-			ATTRIBUTE Customary medium
-			ATTRIBUTE Machine-readable
 	OR
 		YOU MUST Provide Delayed source code delivery
 	OR
@@ -11,6 +9,14 @@ USE CASE Binary delivery
 		YOU MUST NOT Promote
 	OR
 		YOU MUST Credit Original authors
+	EITHER
+		YOU MUST Distribute Source code In Product
+			ATTRIBUTE Customary medium
+			ATTRIBUTE Machine-readable
+	OR
+		YOU MUST Provide Delayed source code delivery
+	OR
+		YOU MUST Provide Source code Via Internet
 USE CASE Source code delivery
 	EITHER
 		YOU MUST Mark Source code modification

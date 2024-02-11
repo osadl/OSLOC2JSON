@@ -276,9 +276,9 @@ By default, the resulting merged checklist will be written to a file named
 "merged.json", but can be specified using the -f option. Here also, the -o
 option can be used.
 
-#### Extending OR-linked conditions
-Conditions that contain multiple OR-linked subconditions may optionally split
-into independent individual conditions, which can then be subsumed with the
+#### Expanding OR-linked conditions
+Use cases that contain multiple OR-linked subconditions may optionally be split
+into independent individual use cases, which can then be subsumed with the
 conditions of checklists that contain them in unlinked form in the first place.
 The MIT checklist, for example, combines the two conditions "Binary delivery"
 and "Source code delivery" to "Binary delivery OR Source code delivery"
@@ -423,7 +423,27 @@ Without the option to expand OR-ed conditions the merged checklist would look li
     }
 }
 ```
-which would be rather meaningless.
+which would be rather meaningless. It must, however, be noted that this expansion feature requires that only complete use cases are OR-ed together. If, for example, the above use case had been
+```
+USE CASE Source code OR Binary delivery
+```
+the expansion would have led to
+```
+USE CASE Source code
+```
+and
+```
+USE CASE Binary delivery
+```
+whereby the former could not have been merged with another occurrence of "IF Source code delivery". Similarly in order to correctly use the expansion feature,
+```
+USE CASE Source code delivery OR Binary delivery Of Combined library
+```
+would lead to an incorrect merge result, but
+```
+USE CASE Source code delivery Of Combined library OR Binary delivery Of Combined library
+```
+would work.
 
 ### Additional command line option when in merge mode
 In merge mode, the -u (--unify) option may be specified which will remove

@@ -5,7 +5,7 @@
         "USE CASE": {
             "Binary delivery": {
                 "EITHER": {
-                    "3": {
+                    "1": {
                         "OR": {
                             "1": {
                                 "YOU MUST": "Provide Delayed source code delivery"
@@ -16,7 +16,7 @@
                         },
                         "YOU MUST": "Distribute Source code In Product"
                     },
-                    "4": {
+                    "2": {
                         "OR": {
                             "1": {
                                 "YOU MUST": "Credit Original authors"

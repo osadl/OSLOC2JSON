@@ -263,6 +263,29 @@
                     "Sublicense"
                 ]
             },
+            "Binary delivery Of Combined library": {
+                "EXCEPT IF": {
+                    "Permitted Non-permissive additional terms": {
+                        "YOU MUST NOT": "Restrict Granted rights"
+                    }
+                },
+                "YOU MUST": {
+                    "Provide Library": {
+                        "ATTRIBUTE": [
+                            "Original license LGPL-3.0-only",
+                            "Uncombined"
+                        ]
+                    },
+                    "Provide License notices": {},
+                    "Reference Library": {
+                        "ATTRIBUTE": "Uncombined"
+                    }
+                },
+                "YOU MUST NOT": [
+                    "Litigate Circumvention Of Technological measures",
+                    "Sublicense"
+                ]
+            },
             "Binary delivery Of Combined work": {
                 "EITHER": {
                     "1": {
@@ -707,7 +730,7 @@
                     "Sublicense"
                 ]
             },
-            "Source code delivery Of Combined library OR Binary delivery Of Combined library": {
+            "Source code delivery Of Combined library": {
                 "EXCEPT IF": {
                     "Permitted Non-permissive additional terms": {
                         "YOU MUST NOT": "Restrict Granted rights"
