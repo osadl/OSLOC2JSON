@@ -1213,6 +1213,7 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
             schemadata = json.load(schema)
             validator = fastjsonschema.compile(schemadata)
             for filename in filenames:
+                failure = False
                 suffix = os.path.splitext(filename)[1]
                 if suffix != '.json':
                     continue
@@ -1221,7 +1222,7 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
                     json.loads(sample.read(), object_pairs_hook = check_duplicates)
                 except ValueError as e:
                     print("%s found in JSON file %r" % (e, filename))
-                    exitcode = 1
+                    failure = True
                 else:
                     sample.seek(0)
                     sampledata = json.load(sample)
@@ -1229,8 +1230,13 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
                         validator(sampledata)
                     except fastjsonschema.JsonSchemaException as e:
                         print("Data failed validation in JSON file %r: %s" % (filename, e))
-                        exitcode = 1
+                        failure = True
                 sample.close()
+                if failure:
+                    exitcode = 1
+                else:
+                    if args.verbose:
+                        print('File %r passed syntax and schema validation' % filename)
             schema.close()
         if not args.noop:
             osloc2json(filenames, args.filename, json, args)
