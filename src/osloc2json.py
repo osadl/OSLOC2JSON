@@ -76,7 +76,7 @@ def printdict(d):
         if isinstance(v, dict):
             printdict(v)
         else:
-            print("{0} : {1}".format(k, v))
+            print('{0} : {1}'.format(k, v))
 
 def nonecheck(d):
     """ Recursively check a dict for None values (for debugging only) """
@@ -591,6 +591,15 @@ def getchain(obj, tabs, result):
         return getchain(obj[lastkey], tabs, result)
     return getchain(obj, tabs, result)
 
+def check_duplicates(ordered_pairs):
+    d = {}
+    for k, v in ordered_pairs:
+        if k in d:
+           raise ValueError('Duplicate key %r' % (k,))
+        else:
+           d[k] = v
+    return d
+
 def osloc2json(licensefilenames, outfilename, json, args):
     """ Open OSLOC files, convert them to JSON objects and store them as specified """
     devel = args.devel
@@ -617,7 +626,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
             try:
                 rulesfile = open('../' + rulesfilename, 'r')
             except:
-                printnonl('File "' + rulesfilename + '" not found or not accessible in current or in parent directory: ')
+                print('Upgrade rules file %r not found or not accessible in current or in parent directory' % rulesfilename)
         rules = {}
         try:
             rules = json.load(rulesfile)
@@ -663,24 +672,30 @@ def osloc2json(licensefilenames, outfilename, json, args):
         if verbose:
             print(licensename + ':')
         oslocfile = open(licensefilename, 'r')
+        lineno = 0
         if suffix == '.json':
             try:
                 data = json.load(oslocfile)
-            except:
-                print('File', licensefilename, 'has no valid JSON format')
-                lineno = -1
-                break
+            except json.decoder.JSONDecodeError as e:
+                print(e)
+                print('File %r has no valid JSON format, exiting' % licensefilename)
+                sys.exit(1)
             oslocfile.close()
             jsonlicensename = list(data.keys())[0]
             if licensename == jsonlicensename:
+                if licensename in jsondata:
+                    print('Duplicate license name %r found, skipping' % licensename)
+                    continue
                 jsondata[licensename] = data[licensename]
             else:
                 print('File', licensefilename, 'has license', '"' + jsonlicensename + '"', 'but filename indicates license', '"' + licensename + '"')
+                if jsonlicensename in jsondata:
+                    print('Duplicate license name %r found, skipping' % jsonlicensename)
+                    continue
                 jsondata[jsonlicensename] = data[jsonlicensename]
-            lineno = 0
         else:
             if licensename in jsondata:
-                lineno = 0
+                print('Duplicate license name %r found, skipping' % licensename)
                 continue
             osloc = oslocfile.read()
             oslocfile.close()
@@ -691,7 +706,6 @@ def osloc2json(licensefilenames, outfilename, json, args):
             oriflevels = {}
             eitherifextratabs = 0
             parents = {}
-            lineno = 0
             while True:
                 endlinepos = osloc.find('\n')
                 if endlinepos == 0:
@@ -702,7 +716,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 line = osloc[0:endlinepos]
                 lineno += 1
                 if line.startswith(' '):
-                    print('Syntax error (leading space) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                    print('Syntax error (leading space) detected in license %r at line %d, output will be incomplete' % (licensename, lineno))
                     lineno = -1
                     break
                 line = re.sub(r' \(.*\)', '', line)
@@ -752,7 +766,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 elif line[0:15] == 'INCOMPATIBILITY':
                     tag = line[0:15]
                 else:
-                    print('Unidentified or erroneously positioned language element in license', licensename, 'at line', lineno)
+                    print('Unidentified or erroneously positioned language element in license %r at line %d' % (licensename, lineno))
                     if not verbose:
                         print(line)
                     lineno = -1
@@ -775,7 +789,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                                 print(data[tag])
                     else:
                         if len(parents) == 0 or (tabs == 0 and tag != 'USE CASE'):
-                            print('Syntax error', '(illegal position of tag ' + tag + ')' , 'detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                            print('Syntax error (illegal position of tag %r), detected in license %r at line %d, output will be incomplete' % (tag, licensename, lineno))
                             lineno = -1
                             break
 
@@ -794,7 +808,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             orlevels[tabs] = 0
                         if tag == 'OR':
                             if tabs not in orlevels:
-                                print('Syntax error (OR before EITHER) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                                print('Syntax error (OR before EITHER) detected in license %r at line %d, output will be incomplete' % (licensename, lineno))
                                 lineno = -1
                                 break
                             orlevels[tabs] += 1
@@ -827,7 +841,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                             if tag == 'OR IF':
                                 eitheroriftext = text
                                 if tabs not in oriflevels:
-                                    print('Syntax error (OR IF before EITHER IF) detected in license', licensename, 'at line', lineno, '- output will be incomplete.')
+                                    print('Syntax error (OR IF before EITHER IF) detected in license %r at line %d, output will be incomplete' % (licensename, lineno))
                                     lineno = -1
                                     break
                                 oriflevels[tabs] += 1
@@ -860,7 +874,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     break
 
         if lineno == -1:
-            break
+            continue
         if licenseupgrade and len(addobligations) > 0:
             for newlicense, obligations in addobligations.items():
                 for obligation in obligations:
@@ -893,7 +907,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 if 'USE CASE' in licensedata:
                     chain = ['USE CASE']
                     if isemptyusecase(chain, licensedata['USE CASE']):
-                        Nonetext = "Not do anything else"
+                        Nonetext = 'Not do anything else'
                         if isinstance(licensedata['USE CASE'], list):
                             oldlist = licensedata['USE CASE']
                             licensedata['USE CASE'] = {}
@@ -1028,15 +1042,15 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     try:
                         rulesfile = open('../' + rulesfilename, 'r')
                     except:
-                        printnonl('File "' + rulesfilename + '" not found or not accessible in current or in parent directory: ')
+                        print('Unify rules file %r not found or not accessible in current or in parent directory' % rulesfilename)
                 try:
                     rules = json.load(rulesfile)
                     rulesfile.close()
                 except:
                     print('Cannot unify')
-
-                unifylicenses(newrefs, rules)
-                unifylicenses(new, rules)
+                else:
+                    unifylicenses(newrefs, rules)
+                    unifylicenses(new, rules)
 
             if optimize:
                 optjson(new)
@@ -1191,7 +1205,6 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
     else:
         if args.jsonvalidate:
             import fastjsonschema
-            schema = 'osloc-schema.json'
             schema = open('osloc-schema' + one + '.json', 'r')
             schemadata = json.load(schema)
             validator = fastjsonschema.compile(schemadata)
@@ -1200,12 +1213,19 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
                 if suffix != '.json':
                     continue
                 sample = open(filename, 'r')
-                sampledata = json.load(sample)
                 try:
-                    validator(sampledata)
-                except fastjsonschema.JsonSchemaException as e:
-                    print(f"Data failed validation: {e}")
+                    json.loads(sample.read(), object_pairs_hook = check_duplicates)
+                except ValueError as e:
+                    print("%s found in JSON file %r" % (e, filename))
                     exitcode = 1
+                else:
+                    sample.seek(0)
+                    sampledata = json.load(sample)
+                    try:
+                        validator(sampledata)
+                    except fastjsonschema.JsonSchemaException as e:
+                        print("Data failed validation in JSON file %r: %s" % (filename, e))
+                        exitcode = 1
                 sample.close()
             schema.close()
         if not args.noop:

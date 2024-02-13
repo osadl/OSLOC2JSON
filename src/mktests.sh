@@ -52,14 +52,14 @@ then
 fi
 
 # Muliple EITHER/OR and EITHER IF/OR IF blocks
-./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt
+./src/osloc2json.py -m examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt | grep -v Duplicate
 if ! cmp examples/CHECKLIST-2.0.json merged.json
 then
   diff -u examples/CHECKLIST-2.0.json merged.json
   exit 1
 fi
 
-./src/osloc2json.py -mo examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt
+./src/osloc2json.py -mo examples/CHECKLIST-2.0.txt examples/CHECKLIST-2.0.txt | grep -v Duplicate
 if ! cmp examples/CHECKLIST-2.0-opt.json merged.json
 then
   diff -u examples/CHECKLIST-2.0-opt.json merged.json
