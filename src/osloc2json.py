@@ -671,8 +671,12 @@ def osloc2json(licensefilenames, outfilename, json, args):
         licensename = licensename.replace('+', '|')
         if verbose:
             print(licensename + ':')
-        oslocfile = open(licensefilename, 'r')
         lineno = 0
+        try:
+            oslocfile = open(licensefilename, 'r')
+        except:
+            print('File %r not found' % licensefilename)
+            sys.exit(1)
         if suffix == '.json':
             try:
                 data = json.load(oslocfile)
@@ -688,7 +692,7 @@ def osloc2json(licensefilenames, outfilename, json, args):
                     continue
                 jsondata[licensename] = data[licensename]
             else:
-                print('File', licensefilename, 'has license', '"' + jsonlicensename + '"', 'but filename indicates license', '"' + licensename + '"')
+                print('File %r has license %r, but filename indicates license %r' % (licensefilename, jsonlicensename, licensename))
                 if jsonlicensename in jsondata:
                     print('Duplicate license name %r found, skipping' % jsonlicensename)
                     continue
