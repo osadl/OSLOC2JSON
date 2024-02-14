@@ -627,22 +627,27 @@ def osloc2json(licensefilenames, outfilename, json, args):
                 rulesfile = open('../' + rulesfilename, 'r')
             except:
                 print('Upgrade rules file %r not found or not accessible in current or in parent directory' % rulesfilename)
-        rules = {}
         try:
-            rules = json.load(rulesfile)
+            x = rulesfile
+        except NameError:
+            pass
+        else:
+            try:
+                rules = json.load(rulesfile)
+            except json.decoder.JSONDecodeError as e:
+                print(e)
+                print('Upgrade rules file %r has no valid JSON format, skipped step attempting to upgrade licenses' % rulesfilename)
+            else:
+                for license in licensefilenames.copy():
+                    for oldlicense, value in rules.items():
+                        if license.find(oldlicense) != -1:
+                            newlicense = license.replace(oldlicense, value[0])
+                            licensefilenames.remove(license)
+                            if newlicense not in licensefilenames:
+                                licensefilenames.append(newlicense)
+                            addobligations[value[0]] = value[1].split(',')
+                licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
             rulesfile.close()
-        except:
-            print('Skipped attempt to upgrade licenses')
-        if len(rules) > 0:
-            for license in licensefilenames.copy():
-                for oldlicense, value in rules.items():
-                    if license.find(oldlicense) != -1:
-                        newlicense = license.replace(oldlicense, value[0])
-                        licensefilenames.remove(license)
-                        if newlicense not in licensefilenames:
-                            licensefilenames.append(newlicense)
-                        addobligations[value[0]] = value[1].split(',')
-            licensefilenames = sorted(licensefilenames, key = lambda s: s.lower())
 
     licenses = len(licensefilenames)
 
@@ -1218,7 +1223,8 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
                 sys.exit(1)
             try:
                 schemadata = json.load(schema)
-            except:
+            except json.decoder.JSONDecodeError as e:
+                print(e)
                 print('Schema JSON data from file %r could not be loaded, cannot validate' % schemafilename)
                 sys.exit(1)
             validator = fastjsonschema.compile(schemadata)
