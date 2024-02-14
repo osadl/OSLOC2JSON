@@ -1209,29 +1209,44 @@ if specified, or (-m) all OSLOC files are parsed, merged into a single JSON obje
     else:
         if args.jsonvalidate:
             import fastjsonschema
-            schema = open('osloc-schema' + one + '.json', 'r')
-            schemadata = json.load(schema)
+
+            schemafilename = 'osloc-schema' + one + '.json'
+            try:
+                schema = open(schemafilename, 'r')
+            except:
+                print('Schema data file %r not opened, cannot validate' % schemafilename)
+                sys.exit(1)
+            try:
+                schemadata = json.load(schema)
+            except:
+                print('Schema JSON data from file %r could not be loaded, cannot validate' % schemafilename)
+                sys.exit(1)
             validator = fastjsonschema.compile(schemadata)
             for filename in filenames:
                 failure = False
                 suffix = os.path.splitext(filename)[1]
                 if suffix != '.json':
+                    print('File name %r has suffix other than .json, not validating' % filename)
                     continue
-                sample = open(filename, 'r')
                 try:
-                    json.loads(sample.read(), object_pairs_hook = check_duplicates)
-                except ValueError as e:
-                    print("%s found in JSON file %r" % (e, filename))
+                    sample = open(filename, 'r')
+                except:
+                    print('File %r not opened' % filename)
                     failure = True
                 else:
-                    sample.seek(0)
-                    sampledata = json.load(sample)
+                    samplestr = sample.read()
                     try:
-                        validator(sampledata)
-                    except fastjsonschema.JsonSchemaException as e:
-                        print("Data failed validation in JSON file %r: %s" % (filename, e))
+                        sampledata = json.loads(samplestr, object_pairs_hook = check_duplicates)
+                    except ValueError as e:
+                        print("%s found in JSON file %r" % (e, filename))
                         failure = True
-                sample.close()
+                    else:
+                        try:
+                            validator(sampledata)
+                        except fastjsonschema.JsonSchemaException as e:
+                            print("Data failed validation in JSON file %r: %s" % (filename, e))
+                            failure = True
+                    sample.close()
                 if failure:
                     exitcode = 1
                 else:
