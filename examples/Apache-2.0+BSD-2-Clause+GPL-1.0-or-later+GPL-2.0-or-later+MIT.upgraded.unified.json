@@ -1,5 +1,5 @@
 {
-    "FTL|MIT|BSD-2-Clause|BSD-3-Clause|Apache-2.0|GPL-3.0-only": {
+    "Apache-2.0|BSD-2-Clause|GPL-3.0-or-later|MIT": {
         "COMPATIBILITY": [
             "0BSD",
             "Apache-2.0",
@@ -26,7 +26,6 @@
             "FSFULLRWD",
             "GPL-1.0-or-later",
             "GPL-2.0-or-later",
-            "GPL-3.0-only",
             "GPL-3.0-or-later",
             "HPND",
             "IBM-pibs",
@@ -37,7 +36,6 @@
             "LGPL-2.0-or-later",
             "LGPL-2.1-only",
             "LGPL-2.1-or-later",
-            "LGPL-3.0-only",
             "LGPL-3.0-or-later",
             "Libpng",
             "libpng-2.0",
@@ -77,7 +75,7 @@
             "Yes"
         ],
         "COPYLEFT LICENSES": [
-            "GPL-3.0-only"
+            "GPL-3.0-or-later"
         ],
         "DEPENDING COMPATIBILITY": [
             "AGPL-3.0-only",
@@ -98,7 +96,6 @@
             "Python-2.0",
             "zlib-acknowledgement"
         ],
-        "INCOMPATIBLE LICENSES": "FTL",
         "PATENT HINTS": [
             "No",
             "Yes"
@@ -301,25 +298,20 @@
                     }
                 },
                 "YOU MUST": {
-                    "Credit FreeType Team": {},
-                    "Credit In Documentation FreeType Team": {},
-                    "Provide Copyright notices": {
+                    "Provide Copyright notices In Documentation OR Distribution material": {
                         "ATTRIBUTE": [
                             "Appropriately",
                             "Highlighted"
                         ]
                     },
-                    "Provide Copyright notices In Documentation OR Distribution material": {},
-                    "Provide License text": {},
                     "Provide License text In Documentation OR Distribution material": {},
-                    "Provide Warranty disclaimer": {},
-                    "Provide Warranty disclaimer In Documentation OR Distribution material": {}
+                    "Provide Warranty disclaimer In Documentation OR Distribution material": {},
+                    "Use GPL-3.0-or-later License": {}
                 },
                 "YOU MUST NOT": [
                     "Litigate Circumvention Of Technological measures",
                     "Modify License notices",
                     "Modify Warranty disclaimer",
-                    "Promote",
                     "Sublicense"
                 ]
             },
@@ -391,16 +383,11 @@
                             "Provide Modification date": {},
                             "Provide Modification notice": {
                                 "ATTRIBUTE": "Highlighted"
-                            },
-                            "Provide Modification report": {}
+                            }
                         }
                     }
                 },
                 "YOU MUST": {
-                    "Credit FreeType Team": {},
-                    "Forward Copyright notices": {},
-                    "Forward License text": {},
-                    "Forward Warranty disclaimer": {},
                     "Provide Copyright notices": {
                         "ATTRIBUTE": [
                             "Appropriately",
@@ -408,14 +395,13 @@
                         ]
                     },
                     "Provide License text": {},
-                    "Provide Warranty disclaimer": {}
+                    "Provide Warranty disclaimer": {},
+                    "Use GPL-3.0-or-later License": {}
                 },
                 "YOU MUST NOT": [
                     "Litigate Circumvention Of Technological measures",
                     "Modify License notices",
-                    "Modify License text",
                     "Modify Warranty disclaimer",
-                    "Promote",
                     "Sublicense"
                 ]
             }

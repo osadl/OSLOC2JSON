@@ -1,30 +1,61 @@
+COMPATIBILITY 0BSD | GPL-3.0-or-later
 COMPATIBILITY Apache-2.0 | GPL-3.0-or-later
 COMPATIBILITY Artistic-2.0 | GPL-3.0-or-later
 COMPATIBILITY blessing | GPL-3.0-or-later
+COMPATIBILITY BlueOak-1.0.0 | GPL-3.0-or-later
+COMPATIBILITY BSD-1-Clause | GPL-3.0-or-later
 COMPATIBILITY BSD-2-Clause | GPL-3.0-or-later
 COMPATIBILITY BSD-2-Clause-Patent | GPL-3.0-or-later
 COMPATIBILITY BSD-3-Clause | GPL-3.0-or-later
+COMPATIBILITY BSD-3-Clause-Open-MPI | GPL-3.0-or-later
+COMPATIBILITY BSD-Source-Code | GPL-3.0-or-later
 COMPATIBILITY BSL-1.0 | GPL-3.0-or-later
 COMPATIBILITY bzip2-1.0.5 | GPL-3.0-or-later
 COMPATIBILITY bzip2-1.0.6 | GPL-3.0-or-later
 COMPATIBILITY CC0-1.0 | GPL-3.0-or-later
 COMPATIBILITY curl | GPL-3.0-or-later
+COMPATIBILITY ECL-2.0 | GPL-3.0-or-later
 COMPATIBILITY EFL-2.0 | GPL-3.0-or-later
+COMPATIBILITY EUPL-1.2 | GPL-3.0-or-later
 COMPATIBILITY FSFAP | GPL-3.0-or-later
+COMPATIBILITY FSFUL | GPL-3.0-or-later
 COMPATIBILITY FSFULLR | GPL-3.0-or-later
+COMPATIBILITY FSFULLRWD | GPL-3.0-or-later
 COMPATIBILITY GPL-1.0-or-later | GPL-3.0-or-later
 COMPATIBILITY GPL-2.0-or-later | GPL-3.0-or-later
 COMPATIBILITY GPL-3.0-or-later | GPL-3.0-or-later (only copyleft license)
+COMPATIBILITY HPND | GPL-3.0-or-later
 COMPATIBILITY IBM-pibs | GPL-3.0-or-later
 COMPATIBILITY ICU | GPL-3.0-or-later
 COMPATIBILITY ISC | GPL-3.0-or-later
+COMPATIBILITY JasPer-2.0 | GPL-3.0-or-later
+COMPATIBILITY LGPL-2.0-only | GPL-3.0-or-later
+COMPATIBILITY LGPL-2.0-or-later | GPL-3.0-or-later
 COMPATIBILITY LGPL-2.1-only | GPL-3.0-or-later
 COMPATIBILITY LGPL-2.1-or-later | GPL-3.0-or-later
 COMPATIBILITY LGPL-3.0-or-later | GPL-3.0-or-later
 COMPATIBILITY Libpng | GPL-3.0-or-later
+COMPATIBILITY libpng-2.0 | GPL-3.0-or-later
+COMPATIBILITY libtiff | GPL-3.0-or-later
+COMPATIBILITY LicenseRef-scancode-info-zip-2003-05 | GPL-3.0-or-later
+COMPATIBILITY LicenseRef-scancode-ppp | GPL-3.0-or-later
+COMPATIBILITY MirOS | GPL-3.0-or-later
 COMPATIBILITY MIT | GPL-3.0-or-later
+COMPATIBILITY MIT-CMU | GPL-3.0-or-later
 COMPATIBILITY MPL-2.0 | GPL-3.0-or-later
+COMPATIBILITY NCSA | GPL-3.0-or-later
 COMPATIBILITY NTP | GPL-3.0-or-later
+COMPATIBILITY OGC-1.0 | GPL-3.0-or-later
+COMPATIBILITY OLDAP-2.8 | GPL-3.0-or-later
+COMPATIBILITY PostgreSQL | GPL-3.0-or-later
+COMPATIBILITY Saxpath | GPL-3.0-or-later
+COMPATIBILITY SGI-B-2.0 | GPL-3.0-or-later
+COMPATIBILITY SMLNJ | GPL-3.0-or-later
+COMPATIBILITY Spencer-86 | GPL-3.0-or-later
+COMPATIBILITY SSH-OpenSSH | GPL-3.0-or-later
+COMPATIBILITY SSH-short | GPL-3.0-or-later
+COMPATIBILITY SunPro | GPL-3.0-or-later
+COMPATIBILITY Unicode-DFS-2016 | GPL-3.0-or-later
 COMPATIBILITY Unlicense | GPL-3.0-or-later
 COMPATIBILITY UPL-1.0 | GPL-3.0-or-later
 COMPATIBILITY W3C | GPL-3.0-or-later
@@ -32,29 +63,34 @@ COMPATIBILITY W3C-19980720 | GPL-3.0-or-later
 COMPATIBILITY W3C-20150513 | GPL-3.0-or-later
 COMPATIBILITY WTFPL | GPL-3.0-or-later
 COMPATIBILITY X11 | GPL-3.0-or-later
+COMPATIBILITY XFree86-1.1 | GPL-3.0-or-later
 COMPATIBILITY Zlib | GPL-3.0-or-later
 COMPATIBILITY ZPL-2.0 | GPL-3.0-or-later
-COPYLEFT CLAUSE No | Apache-2.0
+COPYLEFT CLAUSE No | Apache-2.0, BSD-2-Clause, MIT
 COPYLEFT CLAUSE Yes | GPL-3.0-or-later
 DEPENDING COMPATIBILITY AGPL-3.0-only | GPL-3.0-or-later
 DEPENDING COMPATIBILITY AGPL-3.0-or-later | GPL-3.0-or-later
 DEPENDING COMPATIBILITY EPL-2.0 | GPL-3.0-or-later
+DEPENDING COMPATIBILITY MPL-1.1 | GPL-3.0-or-later
 INCOMPATIBILITY Apache-1.0 | GPL-3.0-or-later
 INCOMPATIBILITY Apache-1.1 | GPL-3.0-or-later
 INCOMPATIBILITY BSD-4-Clause | GPL-3.0-or-later
 INCOMPATIBILITY BSD-4-Clause-UC | GPL-3.0-or-later
 INCOMPATIBILITY FTL | GPL-3.0-or-later
 INCOMPATIBILITY IJG | GPL-3.0-or-later
+INCOMPATIBILITY Minpack | GPL-3.0-or-later
 INCOMPATIBILITY OpenSSL | GPL-3.0-or-later
+INCOMPATIBILITY PHP-3.01 | GPL-3.0-or-later
 INCOMPATIBILITY Python-2.0 | GPL-3.0-or-later
 INCOMPATIBILITY zlib-acknowledgement | GPL-3.0-or-later
-INCOMPATIBILITY XFree86-1.1 | GPL-3.0-or-later
 PATENT HINTS Yes | Apache-2.0, GPL-3.0-or-later
-USE CASE Source code delivery | Apache-2.0, GPL-3.0-or-later
-	YOU MUST Provide Copyright notices | GPL-3.0-or-later
+PATENT HINTS No | BSD-2-Clause, MIT
+USE CASE Source code delivery | Apache-2.0, BSD-2-Clause, GPL-3.0-or-later, MIT
+	YOU MUST Provide Copyright notices | GPL-3.0-or-later, MIT, (Forward Copyright notices): BSD-2-Clause
 		ATTRIBUTE Appropriately | GPL-3.0-or-later
 		ATTRIBUTE Highlighted | GPL-3.0-or-later
-	YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
+	YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later, MIT, (Forward License text): BSD-2-Clause
+	YOU MUST Provide Warranty disclaimer | MIT, (Forward Warranty disclaimer): BSD-2-Clause
 	YOU MUST Use GPL-3.0-or-later License | GPL-3.0-or-later
 	IF Combined work With AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
 		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
@@ -96,11 +132,12 @@ USE CASE Source code delivery | Apache-2.0, GPL-3.0-or-later
 	YOU MUST NOT Sublicense | GPL-3.0-or-later
 	EXCEPT IF Permitted Non-permissive additional terms | GPL-3.0-or-later
 		YOU MUST NOT Restrict Granted rights | GPL-3.0-or-later
-USE CASE Binary delivery | Apache-2.0, GPL-3.0-or-later
-	YOU MUST Provide Copyright notices | GPL-3.0-or-later
+USE CASE Binary delivery | Apache-2.0, BSD-2-Clause, GPL-3.0-or-later, MIT
+	YOU MUST Provide Copyright notices In Documentation OR Distribution material | BSD-2-Clause, (Provide Copyright notices): GPL-3.0-or-later, MIT
 		ATTRIBUTE Appropriately | GPL-3.0-or-later
 		ATTRIBUTE Highlighted | GPL-3.0-or-later
-	YOU MUST Provide License text | Apache-2.0, GPL-3.0-or-later
+	YOU MUST Provide License text In Documentation OR Distribution material | BSD-2-Clause, (Provide License text): Apache-2.0, GPL-3.0-or-later, MIT
+	YOU MUST Provide Warranty disclaimer In Documentation OR Distribution material | BSD-2-Clause, (Provide Warranty disclaimer): MIT
 	YOU MUST Use GPL-3.0-or-later License | GPL-3.0-or-later
 	IF Combined work With AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later
 		YOU MUST Fulfill License obligations Of AGPL-3.0-only OR AGPL-3.0-or-later | GPL-3.0-or-later

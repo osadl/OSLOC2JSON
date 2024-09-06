@@ -13,7 +13,7 @@ USE CASE Source code delivery
 			ATTRIBUTE Original license
 		YOU MUST Provide Modification notice
 		YOU MUST Provide Modification date
-		IF Interactive AND Displaying License announcement
+		IF Interactive
 			YOU MUST Display License announcement
 			YOU MUST Display Copyright notices
 			YOU MUST Display Warranty disclaimer
@@ -32,13 +32,6 @@ USE CASE Binary delivery
 	EITHER
 		YOU MUST Provide Source code
 			ATTRIBUTE Machine-readable
-			ATTRIBUTE Customary medium
-			ATTRIBUTE Including Tool chain information
-			ATTRIBUTE Including Installation scripts (Send-in solution)
-			IF Binary delivery Via Internet
-				ATTRIBUTE Source code delivery Via Internet
-					ATTRIBUTE On same server
-					ATTRIBUTE Equivalent
 	OR
 		YOU MUST Provide Written offer (Written offer)
 			ATTRIBUTE Duration 3 years
@@ -46,18 +39,15 @@ USE CASE Binary delivery
 			ATTRIBUTE No profit
 			ATTRIBUTE Delayed source code delivery
 				ATTRIBUTE Machine-readable
-				ATTRIBUTE Customary medium
-				ATTRIBUTE Including Tool chain information
-				ATTRIBUTE Including Installation scripts (Send-in solution)
 	IF Software modification
 		YOU MUST Grant License
 			ATTRIBUTE Original license
 		YOU MUST Provide Modification notice
 		YOU MUST Provide Modification date
-		IF Interactive AND Displaying License announcement
-			YOU MUST Display License announcement (Interactive announcement)
+		IF Interactive
+			YOU MUST Display License announcement
 			YOU MUST Display Copyright notices
-			YOU MUST Display Warranty disclaimer (Warranty disclaimer)
+			YOU MUST Display Warranty disclaimer
 			YOU MUST Reference License text
 	YOU MUST NOT Restrict Granted rights
 COMPATIBILITY 0BSD
@@ -76,15 +66,10 @@ COMPATIBILITY bzip2-1.0.6
 COMPATIBILITY CC0-1.0
 COMPATIBILITY curl
 COMPATIBILITY EFL-2.0
-COMPATIBILITY EUPL-1.1
-COMPATIBILITY EUPL-1.2
 COMPATIBILITY FSFAP
 COMPATIBILITY FSFUL
 COMPATIBILITY FSFULLR
 COMPATIBILITY FSFULLRWD
-COMPATIBILITY GPL-1.0-or-later
-COMPATIBILITY GPL-2.0-only WITH Classpath-exception-2.0
-COMPATIBILITY GPL-2.0-or-later
 COMPATIBILITY HPND
 COMPATIBILITY IBM-pibs
 COMPATIBILITY ICU
@@ -94,10 +79,10 @@ COMPATIBILITY Libpng
 COMPATIBILITY libpng-2.0
 COMPATIBILITY libtiff
 COMPATIBILITY LicenseRef-scancode-info-zip-2003-05
+COMPATIBILITY LicenseRef-scancode-ppp
 COMPATIBILITY MirOS
 COMPATIBILITY MIT
 COMPATIBILITY MIT-CMU
-COMPATIBILITY MPL-2.0
 COMPATIBILITY NCSA
 COMPATIBILITY NTP
 COMPATIBILITY OGC-1.0
@@ -121,11 +106,15 @@ COMPATIBILITY X11
 COMPATIBILITY Zlib
 COMPATIBILITY ZPL-2.0
 DEPENDING COMPATIBILITY EPL-2.0
+DEPENDING COMPATIBILITY EUPL-1.1
+DEPENDING COMPATIBILITY AGPL-3.0-only
+DEPENDING COMPATIBILITY AGPL-3.0-or-later
 DEPENDING COMPATIBILITY LGPL-2.0-only
 DEPENDING COMPATIBILITY LGPL-2.0-or-later
 DEPENDING COMPATIBILITY LGPL-2.1-only
 DEPENDING COMPATIBILITY LGPL-2.1-or-later
 DEPENDING COMPATIBILITY MPL-1.1
+DEPENDING COMPATIBILITY MPL-2.0
 INCOMPATIBILITY Apache-1.0
 INCOMPATIBILITY Apache-1.1
 INCOMPATIBILITY Apache-2.0
@@ -140,5 +129,4 @@ INCOMPATIBILITY PHP-3.01
 INCOMPATIBILITY Python-2.0
 INCOMPATIBILITY zlib-acknowledgement
 INCOMPATIBILITY XFree86-1.1
-PATENT HINTS Yes
 COPYLEFT CLAUSE Yes

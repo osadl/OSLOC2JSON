@@ -1,5 +1,33 @@
 #!/bin/bash
 
+# Update license checklists if needed
+cd examples
+for i in `ls -1 *.txt | grep -v ^CHECKLIST-`
+do
+  curl -s https://www.osadl.org/fileadmin/checklists/unreflicenses/$i >$i-updated
+  if ! cmp $i $i-updated
+  then
+    diff -u $i $i-updated
+    mv $i-updated $i
+  else
+    rm -f $i-updated
+  fi
+done
+cd - >/dev/null
+
+# Update rules if needed
+for i in licenseupgraderules.json unifyrules.json
+do
+  curl -s https://www.osadl.org/fileadmin/checklists/$i >$i-updated
+  if ! cmp $i $i-updated
+  then
+    diff -u $i $i-updated
+    mv $i-updated $i
+  else
+    rm -f $i-updated
+  fi
+done
+
 # Forward conversion v1
 ./src/osloc2json.py -1 examples/GPL-3.0-or-later.txt
 if ! cmp examples/GPL-3.0-or-later.json examples/GPL-3.0-or-later-reference-v1.json
@@ -131,6 +159,7 @@ then
 fi
 rm -f CHECKLIST-2.0+CHECKLIST-6.0.json
 
+
 # OSADL filename split
 cd examples
 
@@ -200,6 +229,7 @@ then
   exit 1
 fi
 
+# License upgrade
 ./src/osloc2json.py -emol examples/EPL-2.0.txt examples/MPL-1.1.txt
 if ! cmp examples/EPL-2.0+MPL-2.0.json merged.json
 then
@@ -272,7 +302,13 @@ then
 fi
 
 ./src/osloc2json.py -elmur examples/Apache-2.0.txt examples/GPL-2.0-or-later.txt >merged.checklist
-if ! cmp examples/Apache-2.0+GPL-2.0-or-later.upgraded.unified.json merged.json || ! cmp examples/Apache-3.0+GPL-2.0-or-later.upgraded.unified.checklist merged.checklist
+if ! cmp examples/Apache-2.0+GPL-2.0-or-later.upgraded.unified.json merged.json || ! cmp examples/Apache-2.0+GPL-2.0-or-later.upgraded.unified.checklist merged.checklist
+then
+  exit 1
+fi
+
+./src/osloc2json.py -elmoru examples/Apache-2.0.txt examples/BSD-2-Clause.txt examples/GPL-1.0-or-later.txt examples/GPL-2.0-or-later.txt examples/MIT.txt >merged.checklist
+if ! cmp examples/Apache-2.0+BSD-2-Clause+GPL-1.0-or-later+GPL-2.0-or-later+MIT.upgraded.unified.json merged.json || ! cmp examples/Apache-2.0+BSD-2-Clause+GPL-3.0-or-later+MIT.upgraded.unified.checklist merged.checklist
 then
   exit 1
 fi
