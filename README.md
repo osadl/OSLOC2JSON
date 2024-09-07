@@ -266,6 +266,7 @@ following example:
 {
   "EUPL-1.1": ["EUPL-1.2", "YOU MUST NOT Restrict License change,YOU MUST Use EUPL-1.2 License"],
   "MPL-1.1": ["MPL-2.0", "YOU MUST Notify License change,YOU MUST Use MPL-2.0 License"],
+  "GPL-1.0-or-later": ["GPL-3.0-or-later", "YOU MUST Use GPL-3.0-or-later License"],
   "GPL-2.0-or-later": ["GPL-3.0-or-later", "YOU MUST Use GPL-3.0-or-later License"]
 }
 ```
